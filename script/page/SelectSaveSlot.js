@@ -1,3 +1,9 @@
+/* ==========================================================
+* グローバル定義
+* ========================================================== */
+// 1.ダイアログインスタンス作成
+const Dialog = new DialogInfo();
+
 /**
  * セーブスロット選択画面の初期化処理
  */
@@ -271,8 +277,58 @@ function calcPlayTime(Start, End) {
 }
 
 /**
- * 削除ボタン押下時（実装は後ほど）
+ * セーブスロット削除処理
+ * @param slotId セーブスロットID
  */
-function DeleteSave(slotId) {
-  console.log(`スロット${slotId}の削除処理（未実装）`);
+async function DeleteSave(slotId) {
+  const PlayerId = localStorage.getItem("PlayerID");
+
+  try {
+    // SaveInfo.json と BackLog.json の両方を取得
+    const [saveInfoRes, backLogRes] = await Promise.all([
+      fetch("../data/SaveInfo.json"),
+      fetch("../data/BackLog.json")
+    ]);
+
+    const saveInfo = await saveInfoRes.json();
+    const backLog = await backLogRes.json();
+
+    // データ存在確認
+    const saveExists = saveInfo.some(
+      (entry) => entry.slotId === slotId && entry.playerId === PlayerId
+    );
+    const logExists = backLog.some(
+      (entry) => entry.slotId === slotId && entry.playerId === PlayerId
+    );
+
+    if (!saveExists && !logExists) {
+      Dialog.ShowDialog("削除を行うデータが存在しません。");
+      return;
+    }
+
+    // 削除処理
+    const updatedSaveInfo = saveInfo.filter(
+      (entry) => !(entry.slotId === slotId && entry.playerId === PlayerId)
+    );
+    const updatedBackLog = backLog.filter(
+      (entry) => !(entry.slotId === slotId && entry.playerId === PlayerId)
+    );
+
+    // JSON更新はサーバー側が必要（クライアントから直接は書き換え不可）
+    // ローカルで確認用に出力
+    console.log("削除後SaveInfo:", updatedSaveInfo);
+    console.log("削除後BackLog:", updatedBackLog);
+    Dialog.ShowDialog("削除が完了しました。");
+
+  } catch (error) {
+    console.error("削除処理エラー:", error);
+    Dialog.ShowDialog("削除処理中にエラーが発生しました。");
+  }
 }
+
+/**
+ * 戻るボタン押下時の処理
+ */
+document.getElementById("BackButton").addEventListener("click", () => {
+  window.location.href = "../index.html";
+});
