@@ -50,11 +50,6 @@ function CreateSpinnerDialog() {
 }
 
 /**
- * スピナーダイアログの表示
- */
-CreateSpinnerDialog()
-
-/**
  * スピナーダイアログの表示処理
  */
 function ShowSpinner() {
@@ -69,3 +64,8 @@ function HiddenSpinner() {
     // 1.コンテナにDisplayHiddenクラスを設定
     document.getElementById('SpinnerDialog').classList.add('DisplayHidden');
 }
+
+/**
+ * スピナーダイアログの表示
+ */
+CreateSpinnerDialog()
