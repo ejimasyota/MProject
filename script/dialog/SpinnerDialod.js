@@ -1,7 +1,7 @@
 /**
  * スピナーダイアログの作成処理
  */
-function CreateSpinnerDialog() { 
+function CreateSpinnerDialog(DialogText) { 
   /* ------------------------------
    *  1. コンテナ作成
    * ------------------------------*/
@@ -34,7 +34,7 @@ function CreateSpinnerDialog() {
   // 1.DIV要素作成
   const SpinnerText = document.createElement('div');
   // 2.表示内容の設定
-  SpinnerText.textContent = 'Now Loading...';
+  SpinnerText.textContent = DialogText ? DialogText : 'Now Loading...';
 
   /* ------------------------------
    *  5. 各要素の格納
@@ -51,10 +51,11 @@ function CreateSpinnerDialog() {
 
 /**
  * スピナーダイアログの表示処理
+ * @param DialogText スピナーに表示させるテキスト
  */
-function ShowSpinner() {
+function ShowSpinner(DialogText = "") {
     // 1.スピナーダイアログの作成表示
-    CreateSpinnerDialog()
+    CreateSpinnerDialog(DialogText)
 }
 
 /**
