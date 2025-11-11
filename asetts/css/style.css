@@ -9,6 +9,58 @@ body{
 }
 
 /* --------------------------------------------
+ *  ボタン
+ * --------------------------------------------*/
+/* 1.ボタン基底クラス */
+.ButtonInfo {
+  padding: 10px 15px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  user-select: none;
+}
+/* 2.ピンクボタン */
+.PinkButton {
+  background-color: #ff8fb1;
+  color: #fff;
+  padding: 12px 32px;
+  border-radius: 8px;
+}
+.PinkButton:hover {
+  background-color: #ff6f9f;
+  transform: translateY(-2px);
+}
+.PinkButton:active {
+  transform: translateY(0);
+}
+
+/* --------------------------------------------
+ *  ボタンコンテナ
+ * --------------------------------------------*/
+/* 1.縦並び */
+.ButtonContainer {
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  gap: 16px;
+}
+
+/* --------------------------------------------
+ * スタート画面コンテナ
+ * --------------------------------------------*/
+.StartScreen {
+  width: 100%;
+  height: 100vh; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+}
+
+/* --------------------------------------------
  *  スピナーダイアログ
  * --------------------------------------------*/
 /* 1.スピナーコンテナ */
