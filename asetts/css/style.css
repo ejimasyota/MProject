@@ -36,6 +36,20 @@ body{
 .PinkButton:active {
   transform: translateY(0);
 }
+/* 3.赤色ボタン */
+.RedButton {
+  background-color: #d82958;
+  color: white;
+  padding: 12px 32px;
+  border-radius: 8px;
+}
+.RedButton:hover {
+  background-color: #c1244e;
+  transform: translateY(-2px);
+}
+.RedButton:active {
+  transform: translateY(0);
+}
 
 /* --------------------------------------------
  *  ボタンコンテナ
@@ -49,16 +63,76 @@ body{
 }
 
 /* --------------------------------------------
- * スタート画面コンテナ
+ * スタート画面
  * --------------------------------------------*/
+/* 1.コンテナ */
 .StartScreenContainer {
   width: 100%;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  /* ※本番では別の画像を設定※ */
   background: url("../img/bg/start.png") no-repeat center center / cover;
 }
+
+/* --------------------------------------------
+ * セーブスロット画面
+ * --------------------------------------------*/
+/* 1.セーブスロットコンテナ */
+.SaveSlotContainer {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* ※本番では別の画像を設定※ */
+  background: url("../img/bg/start.png") no-repeat center center / cover;
+}
+/* 2.セーブスロット表示領域 */
+.SaveSlotList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 400px;
+}
+/* 3.セーブスロット */
+.SaveSlot {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0,0,0,0.15);
+  position: relative;
+}
+/* 4.セーブスロットのヘッダー */
+.SaveSlotHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+/* 5.ヘッダーのプレイヤー名 */
+.SaveSlotTitle {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+/* 6.プレイ情報 */
+.SaveSlotInfo {
+  font-size: 0.9rem;
+  color: #333;
+}
+/* 7.空セーブスロット */
+.SaveSlotEmpty {
+  text-align: center;
+  color: #999;
+  padding: 30px;
+  background-color: #fafafa;
+  border-radius: 8px;
+  border: 1px dashed #ccc;
+}
+
 
 
 /* --------------------------------------------
