@@ -158,7 +158,7 @@ body{
  *  コンファームダイアログ
  * --------------------------------------------*/
 
-/* 1.バックドロップ（全体覆い） */
+/* 1.バックドロップ */
 .ConfirmContainer {
   position: fixed;
   top: 0;
@@ -176,7 +176,7 @@ body{
 /* 2.カード本体 */
 .DialogBox {
   background-color: #fff;
-  padding: 24px;
+  padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   display: flex;
@@ -184,7 +184,7 @@ body{
   align-items: center;
   justify-content: center;
   min-width: 240px;
-  gap: 16px;
+  gap: 10px;
 }
 
 /* 3.コンファーム内のボタン要素の親 */
