@@ -47,6 +47,11 @@ function CreateSpinnerDialog() {
   Container.appendChild(SpinerBox);
   // 4.ボディにコンテナを格納
   document.body.appendChild(Container);
+
+  /* ------------------------------
+   *  6. スピナー作成
+   * ------------------------------*/
+  CreateSpinnerDialog()
 }
 
 /**
