@@ -31,7 +31,7 @@ ________________________________________________________________________________
   ↳ 1 .スタート画面(Start.html)
     2 .セーブスロット選択画面(SelectSaveSlot.html)
     3 .説明所画面(優先度 : 低)(GameInfo.html)
-    4 .キャラ説明画面(CharaInfo.html)
+    4 .キャラ説明画面(CharaInfo.html) --不要(2025/11/11)
     5 .ゲーム画面(Game.html)
     6 .ミニゲーム画面(MiniGameInfo.html))
         
