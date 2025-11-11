@@ -60,7 +60,7 @@ function ShowSpinner() {
 /**
  * スピナーダイアログの表示処理
  */
-function HideSpinner() {
+function HiddenSpinner() {
     // 1.コンテナにDisplayHiddenクラスを設定
     document.getElementById('SpinnerDialog').classList.add('DisplayHidden');
 }
