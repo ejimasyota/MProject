@@ -31,7 +31,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     // 2.JSON形式に変換
     const JsonData = await Response.json();
     // 3.プレイヤーIDに紐づくデータを取得
-    const SaveItems = JsonData.SaveItem[PlayerId] || {};
+    const SaveItems = JsonData?.SaveItem[PlayerId] || {};
     // 4.セーブスロットの表示処理
     RenderSaveSlots(SaveSlotList, SaveItems);
 
