@@ -152,7 +152,7 @@ function RenderSaveSlots(container, SaveItems) {
         // 1.セッションにセーブスロットIDを保持
         sessionStorage.setItem("SaveSlotId",SlotKey);
         // 2.ゲーム画面へ遷移
-        window.location.href = "../../pages/Game.html";
+        window.location.href = "../pages/Game.html";
     })
     /* 5. コンテナにスロットを格納 */
     container.appendChild(Slot);
@@ -197,7 +197,7 @@ function RenderEmptySlots(container) {
         // 2.セッションにセーブスロットIDを保持
         sessionStorage.setItem("SaveSlotId",SlotKey);
         // 3.ゲーム画面へ遷移
-        window.location.href = "../../pages/Game.html";
+        window.location.href = "../pages/Game.html";
     })
 
     /* --------------------------------------------
