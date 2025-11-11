@@ -33,7 +33,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     // 3.プレイヤーIDに紐づくデータを取得
     const SaveItems = JsonData.SaveItem[PlayerId] || {};
     // 4.セーブスロットの表示処理
-    RenderSaveSlots(container, SaveItems);
+    RenderSaveSlots(SaveSlotList, SaveItems);
 
   /* ==========================================================
    * 例外処理
@@ -42,7 +42,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     // 1.デバッグ用ログを出力
     console.error("セーブデータの読み込みに失敗しました:", error);
     // 2.からのセーブスロットを表示
-    RenderEmptySlots(container);
+    RenderEmptySlots(SaveSlotList);
   }
 });
 
