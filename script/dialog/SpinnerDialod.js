@@ -32,9 +32,9 @@ function CreateSpinnerDialog() {
    *  4. スピナー表示テキスト作成
    * ------------------------------*/
   // 1.DIV要素作成
-  const Spinnerext = document.createElement('div');
+  const SpinnerText = document.createElement('div');
   // 2.表示内容の設定
-  Spinnerext.textContent = 'Now Loading...';
+  SpinnerText.textContent = 'Now Loading...';
 
   /* ------------------------------
    *  5. 各要素の格納
@@ -42,17 +42,17 @@ function CreateSpinnerDialog() {
   // 1.スピナー表示領域にスピナーを格納
   SpinerBox.appendChild(Spinner);
   // 2.スピナー表示領域に表示テキストを格納
-  SpinerBox.appendChild(Spinnerext);
+  SpinerBox.appendChild(SpinnerText);
   // 3.コンテナにスピナー表示領域を格納
   Container.appendChild(SpinerBox);
   // 4.ボディにコンテナを格納
   document.body.appendChild(Container);
-
-  /* ------------------------------
-   *  6. スピナー作成
-   * ------------------------------*/
-  CreateSpinnerDialog()
 }
+
+/**
+ * スピナーダイアログの表示
+ */
+CreateSpinnerDialog()
 
 /**
  * スピナーダイアログの表示処理
@@ -63,7 +63,7 @@ function ShowSpinner() {
 }
 
 /**
- * スピナーダイアログの表示処理
+ * スピナーダイアログの非表示処理
  */
 function HiddenSpinner() {
     // 1.コンテナにDisplayHiddenクラスを設定
