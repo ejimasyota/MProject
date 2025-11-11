@@ -107,6 +107,13 @@ body{
   box-shadow: 0 0 5px rgba(0,0,0,0.15);
   position: relative;
 }
+.SaveSlot:hover {
+  background-color: #e3e3e3;
+  transform: translateY(-2px);
+}
+.SaveSlot:active {
+  transform: translateY(0);
+}
 /* 4.セーブスロットのヘッダー */
 .SaveSlotHeader {
   display: flex;
