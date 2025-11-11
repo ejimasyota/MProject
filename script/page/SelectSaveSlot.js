@@ -147,7 +147,14 @@ function RenderSaveSlots(container, SaveItems) {
       // 4.スロットに空スロット内容を格納(とどのつまり空のスロット内容の作成・格納処理)
       Slot.appendChild(Empty);
     }
-    /* 4. コンテナにスロットを格納 */
+    /* 4. セーブスロットの選択時処理 */
+    Slot.addEventListener(("click"),function(){
+        // 1.セッションにセーブスロットIDを保持
+        sessionStorage.setItem("SaveSlotId",SlotKey);
+        // 2.ゲーム画面へ遷移
+        window.location.href = "../../pages/Game.html";
+    })
+    /* 5. コンテナにスロットを格納 */
     container.appendChild(Slot);
   }
 }
