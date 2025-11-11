@@ -139,13 +139,6 @@ body{
   border-radius: 8px;
   border: 1px dashed #ccc;
 }
-.SaveSlotEmpty:hover {
-  background-color: #e3e3e3;
-  transform: translateY(-2px);
-}
-.SaveSlotEmpty:active {
-  transform: translateY(0);
-}
 
 /* --------------------------------------------
  *  スピナーダイアログ
