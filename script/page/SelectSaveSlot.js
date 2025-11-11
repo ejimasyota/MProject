@@ -189,6 +189,18 @@ function RenderEmptySlots(container) {
     Empty.textContent = `セーブスロット ${i}`;
 
     /* --------------------------------------------
+     * 3. セーブスロットの選択時イベント
+   　* --------------------------------------------*/
+    Slot.addEventListener(("click"),function(){
+        // 1.セーブスロットの識別キー取得
+        const SlotKey = `SaveSlot${i}`;
+        // 2.セッションにセーブスロットIDを保持
+        sessionStorage.setItem("SaveSlotId",SlotKey);
+        // 3.ゲーム画面へ遷移
+        window.location.href = "../../pages/Game.html";
+    })
+
+    /* --------------------------------------------
      * 3. 各格納処理
    　* --------------------------------------------*/
     // 1.スロットに空スロット内容を格納 
