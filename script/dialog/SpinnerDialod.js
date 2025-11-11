@@ -10,7 +10,7 @@ function CreateSpinnerDialog() {
   // 2.ID設定
   Container.id = 'SpinnerDialog';
   // 3.クラス設定
-  Container.classList.add('DisplayHidden','SpinerContainer');
+  Container.classList.add('SpinerContainer');
 
   /* ------------------------------
    *  2. スピナー表示領域作成
@@ -53,19 +53,14 @@ function CreateSpinnerDialog() {
  * スピナーダイアログの表示処理
  */
 function ShowSpinner() {
-    // 1.コンテナからDisplayHiddenクラスを除去
-    document.getElementById('SpinnerDialog').classList.remove('DisplayHidden'); 
+    // 1.スピナーダイアログの作成表示
+    CreateSpinnerDialog()
 }
 
 /**
  * スピナーダイアログの非表示処理
  */
 function HiddenSpinner() {
-    // 1.コンテナにDisplayHiddenクラスを設定
-    document.getElementById('SpinnerDialog').classList.add('DisplayHidden');
+    // 1.コンテナの削除
+    document.getElementById('SpinnerDialog').remove();
 }
-
-/**
- * スピナーダイアログの表示
- */
-CreateSpinnerDialog()
