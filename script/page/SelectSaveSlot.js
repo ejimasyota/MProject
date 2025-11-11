@@ -16,7 +16,9 @@ window.addEventListener("DOMContentLoaded", async () => {
   if (!PlayerId) {
     // 1.空のセーブスロットを3つ作成
     RenderEmptySlots(SaveSlotList);
-    // 2.処理終了
+    // 2.UUIDをユーザーIDとしてローカルストレージにセット
+    localStorage.setItem("M_PlayerId",CreateUUID())
+    // 3.処理終了
     return;
   }
 
