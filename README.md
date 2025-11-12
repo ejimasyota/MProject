@@ -144,16 +144,64 @@ git config --global --add safe.directory /var/www/html/MProject
 
 # 権限を設定
 sudo chown -R $USER:$USER /var/www/html/MProject
-
+l
 # 下記を実行してApache2の設定ファイルを開く
 sudo nano /etc/apache2/sites-available/000-default.conf
 
 # ドキュメントルートを下記に設定（コマンドではないので注意！！！！）
-DocumentRoot /var/www/html/MProject/pages
+DocumentRoot /var/www/html/MProject/frontend/pages
 
 # 保存後に再起動
 sudo systemctl restart apache2
 
 # ドキュメントルートを確認
 sudo grep -R "DocumentRoot" /etc/apache2/sites-enabled/
+
+表示されているディレクトリ構成を見ると、確かに Apache（`www-data` ユーザー）がアクセスするには微妙な点があります。
+
+ポイントを整理します：
+
+1. `/var/www/html/MProject` の所有者が `ejima:ejima` になっています。
+   Apache（`www-data`）はこのディレクトリに **実行権限（x）** がある必要があります。
+
+2. 現在のパーミッション：
+
+   ```
+   drwxrwxr-x 8 ejima ejima 4096 Nov 12 08:50 MProject
+   ```
+
+   * 所有者 (ejima): rwx
+   * グループ (ejima): rwx
+   * その他: r-x
+     → `www-data` は「その他」としてアクセス可能なので、 **閲覧・実行は可能**
+     → ただし、サブディレクトリやファイルが同じ状態でない場合、Not Found になる可能性があります。
+
+3. `/var/www/html` 自体のパーミッション：
+
+   ```
+   drwxrwxr-x 3 ejima www-data 4096 Nov 12 08:50 .
+   ```
+
+   * グループに `www-data` がいるので、Apache はディレクトリにアクセス可能です。
+
+4. 結論：
+
+   * 権限は現状でも Apache がアクセスできるはずです。
+   * `Not Found` が出る原因は **DocumentRoot の設定やファイルパスの間違い** がほとんどです。
+
+確認すべき点：
+
+* `DocumentRoot /var/www/html/MProject/pages` が正しく設定されているか
+* `Start.php` がそのディレクトリに存在するか
+* Apache 再起動後に設定が反映されているか
+
+念のため確認コマンド：
+
+```bash
+ls -l /var/www/html/MProject/pages/Start.php
+sudo apache2ctl -S
+```
+
+これでファイルが存在するか、Apache がどの VirtualHost を使っているかを確認できます。
+
 
