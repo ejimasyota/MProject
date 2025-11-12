@@ -7,12 +7,6 @@ body{
     padding: 0;
     height: 100%;
 }
-/* 2.フッター */
-footer {
-  align-self: flex-end;      
-  margin-bottom: 20px;  
-}
-
 
 /* --------------------------------------------
  *  ボタン
@@ -111,7 +105,6 @@ footer {
 }
 /* 2.セーブスロット表示領域 */
 .SaveSlotList {
-  flex: 1;   
   display: flex;
   flex-direction: column;
   gap: 20px;
