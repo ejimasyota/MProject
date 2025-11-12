@@ -86,13 +86,7 @@ function RenderSaveSlots(container, SaveItems) {
    * ========================================================== */
   for (let i = 1; i <= 3; i++) {
     /* --------------------------------------------
-     * 1. 定義
-   　* --------------------------------------------*/
-    // 1.セーブスロットの識別キー取得
-    const SlotKey = SaveItems[i].saveslotid;
-
-    /* --------------------------------------------
-     * 2. セーブスロット作成
+     * 1. セーブスロット作成
    　* --------------------------------------------*/
     /* 1. 定義 */
     // 1.DIV要素作成 
@@ -106,9 +100,9 @@ function RenderSaveSlots(container, SaveItems) {
     if (SaveItems[i]) {
       /* 各情報取得 */
       // 1.プレイヤー名取得
-      const PlayerName = SaveItems[i].PlayerName;
+      const PlayerName = SaveItems[i].playername;
       // 2.ストーリーID取得
-      const StoryId = SaveItems[i].StoryId;
+      const StoryId = SaveItems[i].storyid;
       // 3.開始年月日取得
       const StartDate = SaveItems[i].registdate;
       // 4.終了年月日取得
@@ -128,7 +122,7 @@ function RenderSaveSlots(container, SaveItems) {
       // 2.クラス設定
       PlayerNameArea.classList.add("SaveSlotTitle");
       // 3.プレイヤー名設定
-      PlayerNameArea.textContent = PlayerName || "プレイヤー名なし";
+      PlayerNameArea.textContent = PlayerName || "まつのさこ";
 
       /* 削除ボタン作成 */
       // 1.ボタン作成
@@ -138,7 +132,7 @@ function RenderSaveSlots(container, SaveItems) {
       // 3.ラベル作成
       DeleteButton.textContent = "削除";
       // 4.クリックイベント定義
-      DeleteButton.addEventListener("click", () => DeleteSave(i));
+      DeleteButton.addEventListener("click", () => DeleteButtonEvent(i));
 
       /* ヘッダーへの格納 */
       // 1.プレイヤー名設定
@@ -178,9 +172,9 @@ function RenderSaveSlots(container, SaveItems) {
     /* 4. セーブスロットの選択時処理 */
     Slot.addEventListener(("click"),function(){
         // 1.セッションにセーブスロットIDを保持
-        sessionStorage.setItem("SaveSlotId",SlotKey);
+        sessionStorage.setItem("SaveSlotId",this.dataset.slotId);
         // 2.ゲーム画面へ遷移
-        window.location.href = "../pages/Game.html";
+        window.location.href = "../pages/Game.php";
     })
     /* 5. コンテナにスロットを格納 */
     container.appendChild(Slot);
@@ -220,11 +214,10 @@ function RenderEmptySlots(container) {
      * 3. セーブスロットの選択時イベント
    　* --------------------------------------------*/
     Slot.addEventListener(("click"),function(){
-      console.log("dataset.slotId",this.dataset.slotId)
         // 1.セッションにセーブスロットIDを保持
-        // sessionStorage.setItem("SaveSlotId",this.dataset.slotId);
-        // // 2.ゲーム画面へ遷移
-        // window.location.href = "../pages/Game.html";
+        sessionStorage.setItem("SaveSlotId",this.dataset.slotId);
+        // 2.ゲーム画面へ遷移
+        window.location.href = "../pages/Game.php";
     })
 
     /* --------------------------------------------
@@ -298,52 +291,89 @@ function calcPlayTime(Start, End) {
 }
 
 /**
- * セーブスロット削除処理
+ * セーブスロット削除ボタン押下時
+ * コンファームによる削除処理の呼び出し中継
  * @param slotId セーブスロットID
  */
-async function DeleteSave(slotId) {
-  const PlayerId = localStorage.getItem("PlayerID");
-
-  try {
-    // SaveInfo.json と BackLog.json の両方を取得
-    const [saveInfoRes, backLogRes] = await Promise.all([
-      fetch("../data/SaveInfo.json"),
-      fetch("../data/BackLog.json")
-    ]);
-
-    const saveInfo = await saveInfoRes.json();
-    const backLog = await backLogRes.json();
-
-    // データ存在確認
-    const saveExists = saveInfo.some(
-      (entry) => entry.slotId === slotId && entry.playerId === PlayerId
-    );
-    const logExists = backLog.some(
-      (entry) => entry.slotId === slotId && entry.playerId === PlayerId
-    );
-
-    if (!saveExists && !logExists) {
-      Dialog.ShowDialog("削除を行うデータが存在しません。");
+function DeleteButtonEvent(SlotId) {
+  Dialog.ShowConfirmDialog("削除されたデータは復旧できません。削除を行いますか？").then((result) => {
+    // 1.[はい]が選択された場合のみ削除処理を実行
+    if (result) {
+      DeleteSaveInfo(SlotId)
+    }else{
       return;
     }
+  })
+}
 
-    // 削除処理
-    const updatedSaveInfo = saveInfo.filter(
-      (entry) => !(entry.slotId === slotId && entry.playerId === PlayerId)
+/**
+ * セーブスロットの削除処理
+ * @param slotId セーブスロットID
+ */
+async function DeleteSaveInfo(SlotId){
+  /* ==========================================================
+   * 定義
+   * ========================================================== */
+  // 1.ローカルストレージからプレイヤーIDを取得
+  const PlayerId = localStorage.getItem("M_PlayerId");
+
+  /* ==========================================================
+   * 通信処理
+   * ========================================================== */
+  try {
+    /* ------------------------------
+     * 1. APIに対してリクエストを送信
+     * ------------------------------*/
+    const Response = await fetch(
+      "../../backend/API/Delete/DeleteSaveSlotController.php",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        /* リクエストの内容を設定 */
+        body: JSON.stringify({
+          // 1. プレイヤーID
+          PlayerId: PlayerId,
+          // 2. セーブスロットID
+          SlotId: SlotId
+        }),
+      }
     );
-    const updatedBackLog = backLog.filter(
-      (entry) => !(entry.slotId === slotId && entry.playerId === PlayerId)
-    );
 
-    // JSON更新はサーバー側が必要（クライアントから直接は書き換え不可）
-    // ローカルで確認用に出力
-    console.log("削除後SaveInfo:", updatedSaveInfo);
-    console.log("削除後BackLog:", updatedBackLog);
-    Dialog.ShowDialog("削除が完了しました。");
-
+    /* ------------------------------
+     * 2. 処理結果の取得
+     * ------------------------------*/
+    const Result = await Response.json();
+    
+    /* ==========================================================
+     * 通信成功時
+     * ========================================================== */
+    if (Result.success) {
+      // 1.メッセージダイアログを表示
+      await Dialog.ShowDialog(Result.message);
+      // 2.ページ再読み込み
+      location.reload();
+    } else {
+      /* ==========================================================
+       * 通信失敗時
+       * ========================================================== */
+      // 1.メッセージダイアログを表示
+      await Dialog.ShowDialog(Result.message);
+      // 2.ページ再読み込み
+      location.reload();
+    }
+    
+  /* ==========================================================
+   * 例外処理
+   * ========================================================== */
   } catch (error) {
-    console.error("削除処理エラー:", error);
-    Dialog.ShowDialog("削除処理中にエラーが発生しました。");
+    // 1.エラーログ
+    console.error("通信エラー :", error);
+    // 2.ダイアログ表示
+    await Dialog.ShowDialog("セーブデータの削除に失敗しました。");
+    // 3.処理終了
+    return
   }
 }
 
@@ -351,5 +381,5 @@ async function DeleteSave(slotId) {
  * 戻るボタン押下時の処理
  */
 document.getElementById("BackButton").addEventListener("click", () => {
-  window.location.href = "../index.html";
+  window.location.href = "../Start.php";
 });
