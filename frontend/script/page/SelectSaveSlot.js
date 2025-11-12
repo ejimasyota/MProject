@@ -54,7 +54,6 @@ window.addEventListener("DOMContentLoaded", async () => {
      * 2. 処理結果の取得
      * ------------------------------*/
     const Result = await Response.json();
-    console.log("Result",Result)
     
     /* ==========================================================
      * 通信成功時
@@ -62,7 +61,11 @@ window.addEventListener("DOMContentLoaded", async () => {
     if (Result.success && Array.isArray(Result.items)) {
       // 1.セーブスロットの表示処理
       RenderSaveSlots(SaveSlotList, Result.items);
-      console.log("Result.items",Result.items)
+    }else if(Result.success && Array.isArray(Result.items).length === 0){
+      // 2.戻り値の要素が0の場合は空セーブスロットを表示
+      RenderEmptySlots(SaveSlotList);
+      // 3.処理終了
+      return
     }
     
   /* ==========================================================
@@ -73,6 +76,8 @@ window.addEventListener("DOMContentLoaded", async () => {
     console.error("セーブデータの読み込みに失敗しました:", error);
     // 2.からのセーブスロットを表示
     RenderEmptySlots(SaveSlotList);
+    // 3.処理終了
+    return
   }
 });
 
