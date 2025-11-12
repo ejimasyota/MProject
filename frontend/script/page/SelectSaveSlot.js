@@ -58,6 +58,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     /* ==========================================================
      * 通信成功時
      * ========================================================== */
+    console.log("aaaaa",Array.isArray(Result.items).length)
     if (Result.success && Array.isArray(Result.items)) {
       // 1.セーブスロットの表示処理
       RenderSaveSlots(SaveSlotList, Result.items);
