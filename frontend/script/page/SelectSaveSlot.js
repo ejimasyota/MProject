@@ -62,7 +62,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     if (Result.success && Array.isArray(Result.items)) {
       // 1.セーブスロットの表示処理
       RenderSaveSlots(SaveSlotList, Result.items);
-    }else if(Result.success && Array.isArray(Result.items).length === 0){
+    }else if(Result.success && !Array.isArray(Result.items)){
       // 2.戻り値の要素が0の場合は空セーブスロットを表示
       RenderEmptySlots(SaveSlotList);
       // 3.処理終了
