@@ -149,11 +149,14 @@ l
 sudo nano /etc/apache2/sites-available/000-default.conf
 
 # ドキュメントルートを下記に設定（コマンドではないので注意！！！！）
-DocumentRoot /var/www/html/MProject/frontend/pages
+DocumentRoot /var/www/html/MProject
 
 # 保存後に再起動
 sudo systemctl restart apache2
 
 # ドキュメントルートを確認
 sudo grep -R "DocumentRoot" /etc/apache2/sites-enabled/
+
+# サイトを起動（IPはテスト端末のWSLのものなので本番では別のIPを利用する）
+http://172.20.14.20:8080/frontend/pages/Start.php
 
