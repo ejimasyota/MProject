@@ -381,5 +381,5 @@ async function DeleteSaveInfo(SlotId){
  * 戻るボタン押下時の処理
  */
 document.getElementById("BackButton").addEventListener("click", () => {
-  window.location.href = "../Start.php";
+  window.location.href = "../pages/Start.php";
 });
