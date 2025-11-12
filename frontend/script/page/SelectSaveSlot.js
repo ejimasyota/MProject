@@ -16,6 +16,8 @@ window.addEventListener("DOMContentLoaded", async () => {
   // 2.ローカルストレージからプレイヤーIDを取得
   const PlayerId = localStorage.getItem("M_PlayerId");
 
+  console.log("PlayerId",PlayerId)
+
   /* ==========================================================
    * プレイヤーIDが存在しない場合
    * ========================================================== */
