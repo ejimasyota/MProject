@@ -16,8 +16,6 @@ window.addEventListener("DOMContentLoaded", async () => {
   // 2.ローカルストレージからプレイヤーIDを取得
   const PlayerId = localStorage.getItem("M_PlayerId");
 
-  console.log("PlayerId",PlayerId)
-
   /* ==========================================================
    * プレイヤーIDが存在しない場合
    * ========================================================== */
@@ -56,6 +54,7 @@ window.addEventListener("DOMContentLoaded", async () => {
      * 2. 処理結果の取得
      * ------------------------------*/
     const Result = await Response.json();
+    console.log("Result",Result)
     
     /* ==========================================================
      * 通信成功時
