@@ -7,6 +7,12 @@ body{
     padding: 0;
     height: 100%;
 }
+/* 2.フッター */
+footer {
+  align-self: flex-end;      
+  margin-bottom: 20px;  
+}
+
 
 /* --------------------------------------------
  *  ボタン
@@ -105,9 +111,11 @@ body{
 }
 /* 2.セーブスロット表示領域 */
 .SaveSlotList {
+  flex: 1;   
   display: flex;
   flex-direction: column;
   gap: 20px;
+  justify-content: center; 
   width: 400px;
 }
 /* 3.セーブスロット */
@@ -157,7 +165,6 @@ body{
 /* --------------------------------------------
  *  コンファームダイアログ
  * --------------------------------------------*/
-
 /* 1.バックドロップ */
 .ConfirmContainer {
   position: fixed;
