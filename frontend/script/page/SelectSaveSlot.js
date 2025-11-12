@@ -29,18 +29,41 @@ window.addEventListener("DOMContentLoaded", async () => {
   }
 
   /* ==========================================================
-   * JSON読み取り処理
+   * 通信処理
    * ========================================================== */
   try {
-    // 1.レスポンス取得
-    const Response = await fetch("../Data/SaveInfo.json");
-    // 2.JSON形式に変換
-    const JsonData = await Response.json();
-    // 3.プレイヤーIDに紐づくデータを取得
-    const SaveItems = JsonData.SaveItem[PlayerId] || {};
-    // 4.セーブスロットの表示処理
-    RenderSaveSlots(SaveSlotList, SaveItems);
+      /* ------------------------------
+     * 1. APIに対してリクエストを送信
+     * ------------------------------*/
+    const Response = await fetch(
+      "../../backend/API/Select/SelectSaveSlotController.php",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        /* リクエストの内容を設定 */
+        body: JSON.stringify({
+          // 1. プレイヤーID
+          PlayerId: PlayerId,
+        }),
+      }
+    );
 
+    /* ------------------------------
+     * 2. 処理結果の取得
+     * ------------------------------*/
+    const Result = await Response.json();
+    
+    /* ==========================================================
+     * 通信成功時
+     * ========================================================== */
+    if (Result.success && Array.isArray(Result.items)) {
+      // 1.セーブスロットの表示処理
+      RenderSaveSlots(SaveSlotList, Result.items);
+      console.log("Result.items",Result.items)
+    }
+    
   /* ==========================================================
    * 例外処理
    * ========================================================== */
@@ -65,9 +88,7 @@ function RenderSaveSlots(container, SaveItems) {
      * 1. 定義
    　* --------------------------------------------*/
     // 1.セーブスロットの識別キー取得
-    const SlotKey = `SaveSlot${i}`;
-    // 2.セーブスロットに紐づくデータを取得
-    const SlotData = SaveItems[SlotKey];
+    const SlotKey = SaveItems[i].saveslotid;
 
     /* --------------------------------------------
      * 2. セーブスロット作成
@@ -81,16 +102,16 @@ function RenderSaveSlots(container, SaveItems) {
     Slot.dataset.slotId = i;
 
     /* 2. セーブデータが存在する場合 */
-    if (SlotData) {
+    if (SaveItems[i]) {
       /* 各情報取得 */
       // 1.プレイヤー名取得
-      const PlayerName = SlotData.PlayerName;
+      const PlayerName = SaveItems[i].PlayerName;
       // 2.ストーリーID取得
-      const StoryId = SlotData.StoryId;
+      const StoryId = SaveItems[i].StoryId;
       // 3.開始年月日取得
-      const StartDate = SlotData.StartDate;
+      const StartDate = SaveItems[i].registdate;
       // 4.終了年月日取得
-      const EndDate = SlotData.EndDate;
+      const EndDate = SaveItems[i].updatedate;
       // 5.プレイ時間取得
       const PlayTime = calcPlayTime(StartDate, EndDate);
 

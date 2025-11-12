@@ -3,5 +3,5 @@
  */
 function StartButtonEvent(){
     // 1.セーブスロット選択画面へ遷移
-    window.location.href = "../pages/SelectSaveSlot.html";
+    window.location.href = "../pages/SelectSaveSlot.php";
 }
