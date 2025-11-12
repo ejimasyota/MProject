@@ -10,12 +10,8 @@
 <body>
   <div class="SaveSlotContainer">
     <div id="SaveSlotList" class="SaveSlotList"></div>
-  </div>
-
-  <footer style="text-align: left; margin-top: 20px;">
     <button id="BackButton" class="ButtonInfo PinkButton">戻る</button>
-  </footer>
-
+  </div>
   <script src="../script/dialog/ConfirmDialog.js"></script>
   <script src="../script/dialog/SpinnerDialod.js"></script>
   <script src="../script/utility/util.js"></script>
