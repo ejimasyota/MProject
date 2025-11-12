@@ -16,6 +16,7 @@ try {
     $pdo = new PDO("pgsql:host=$host;port=$port;dbname=$dbname", $user, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
+    writeLog("DB接続エラー | error : " . $e->getMessage());
     echo json_encode([
         "success" => false,
         "message" => "DB接続エラーが発生しました。システム管理者にお問い合わせください。"

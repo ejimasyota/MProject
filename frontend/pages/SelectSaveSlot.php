@@ -10,7 +10,9 @@
 <body>
   <div class="SaveSlotContainer">
     <div id="SaveSlotList" class="SaveSlotList"></div>
-    <button id="BackButton" class="ButtonInfo PinkButton">戻る</button>
+    <div class="SaveSlotButtonContainer">
+      <button id="BackButton" class="ButtonInfo PinkButton">戻る</button>
+    </div>
   </div>
   <script src="../script/dialog/ConfirmDialog.js"></script>
   <script src="../script/dialog/SpinnerDialod.js"></script>

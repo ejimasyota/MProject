@@ -95,6 +95,7 @@ body{
  * --------------------------------------------*/
 /* 1.セーブスロットコンテナ */
 .SaveSlotContainer {
+  position: relative;  
   width: 100%;
   height: 100vh;
   display: flex;
@@ -108,7 +109,7 @@ body{
   display: flex;
   flex-direction: column;
   gap: 20px;
-  justify-content: center; 
+  max-height: calc(100vh - 120px); 
   width: 400px;
 }
 /* 3.セーブスロット */
@@ -154,6 +155,14 @@ body{
   border-radius: 8px;
   border: 1px dashed #ccc;
 }
+/* 8.フッター部のボタンコンテナ */
+.SaveSlotButtonContainer {
+  position: absolute;  
+  left: 20px;       
+  bottom: 20px;      
+  z-index: 50; 
+}
+
 
 /* --------------------------------------------
  *  コンファームダイアログ
