@@ -321,8 +321,13 @@ async function DeleteSaveInfo(SlotId){
    * 通信処理
    * ========================================================== */
   try {
+      /* ------------------------------
+     * 1. スピナー表示
+     * ------------------------------*/
+    ShowSpinner();
+
     /* ------------------------------
-     * 1. APIに対してリクエストを送信
+     * 2. APIに対してリクエストを送信
      * ------------------------------*/
     const Response = await fetch(
       "../../backend/API/Delete/DeleteSaveSlotController.php",
@@ -342,7 +347,7 @@ async function DeleteSaveInfo(SlotId){
     );
 
     /* ------------------------------
-     * 2. 処理結果の取得
+     * 3. 処理結果の取得
      * ------------------------------*/
     const Result = await Response.json();
     
@@ -374,6 +379,13 @@ async function DeleteSaveInfo(SlotId){
     await Dialog.ShowDialog("セーブデータの削除に失敗しました。");
     // 3.処理終了
     return
+  }
+  /* ==========================================================
+   * 終了時処理
+   * ========================================================== */
+  finally{
+    // 1.スピナー削除
+    HiddenSpinner();
   }
 }
 
