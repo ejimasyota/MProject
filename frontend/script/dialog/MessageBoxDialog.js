@@ -52,7 +52,7 @@ class MessageBoxDialog { // メッセージボックスを扱うクラス定義�
   * 引数3
   * - ImagePath: 表示するアイコン画像パス
   * =========================================================*/
-  async ShowMessage(MessageText = "", CharacterName = "", ImagePath = "") { 
+  async ShowMessage(MessageText = "", CharacterName = "???", ImagePath = "") { 
     /* --------------------------------------------
      * 1. 事前処理
      * --------------------------------------------*/
@@ -81,6 +81,8 @@ class MessageBoxDialog { // メッセージボックスを扱うクラス定義�
     this.Iconmage.src = IconImagePath;
     // 3. キャラクター名を設定
     this.CharacterNameTag.textContent = CharacterName;
+    // 4. 表示位置を中央に設定
+    this.CharacterNameTag.style.textAlign = "center";
 
     /* --------------------------------------------
      * 3. メッセージタイプ表示処理
