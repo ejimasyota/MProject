@@ -73,6 +73,7 @@ body{
   display: flex;
   flex-direction: column; 
   align-items: center;
+  height: 25px;
   gap: 16px;
 }
 
@@ -201,6 +202,20 @@ body{
   gap: 8px;
   justify-content: center;
   width: 100%;
+}
+
+/* --------------------------------------------
+ *  名前入力フォーム
+ * --------------------------------------------*/
+/* 1.入力フォームとボタンのコンテナ */
+.ConfirmInputButtonForm{
+  display: flex;
+  gap: 4px;
+}
+/* 2.入力フォーム */
+.TextInputForm{
+  border-radius: 4px;
+  height: 25px;
 }
 
 
