@@ -211,11 +211,14 @@ body{
 .ConfirmInputButtonForm{
   display: flex;
   gap: 4px;
+  align-items: center;
 }
 /* 2.入力フォーム */
 .TextInputForm{
   border-radius: 4px;
   height: 25px;
+  border: #ccc 1px solid;
+  width:50px;
 }
 
 
