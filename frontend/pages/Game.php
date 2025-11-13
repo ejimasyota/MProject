@@ -21,8 +21,8 @@
       display: flex;
       gap: 14px;
 
-      /* ← 以下が帯の見た目 */
-      background-color: rgba(0, 0, 0, 0.45) !important;
+background-color: rgba(0, 0, 0, 0.85);
+
       padding: 10px 16px;      /* 白ボタンの周りに十分な余白 */
       border-radius: 12px;
       box-shadow: 0 6px 20px rgba(0,0,0,0.35);
