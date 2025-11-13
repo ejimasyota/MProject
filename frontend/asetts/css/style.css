@@ -237,11 +237,11 @@ button:disabled:active {
   opacity: 0;
   pointer-events: auto;
 }
-.MessageBoxCard.novel-show {
+.MessageBoxCard.ShowMessageBox {
   transform: translateY(0%);
   opacity: 1;
 }
-.MessageBoxCard.novel-hide {
+.MessageBoxCard.HideMessageBox {
   transform: translateY(120%);
   opacity: 0;
 }
