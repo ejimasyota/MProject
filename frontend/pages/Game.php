@@ -7,10 +7,10 @@
   <title>ゲーム画面</title>
   <style>
     .game-root {
-    position: fixed;
+    position: relative;
     inset: 0;               
-    width: 100vw;         
-    height: 100vh;       
+    width: 100%;          
+    height: 100%;       
     overflow: hidden;
     background-size: cover;  
     }
