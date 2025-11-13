@@ -1,0 +1,176 @@
+/* =========================================================
+ * NameFormDialog クラス
+ * =========================================================*/
+class NameFormDialog {
+  ShowNameDialog(Title = "プレイヤー名を入力してください") {
+    return new Promise((Resolve, Reject) => {
+      /* --------------------------------------------
+       * 1. バックドロップ作成
+       * --------------------------------------------*/
+      // 1. DIV要素作成
+      const DialogContainer = document.createElement("div");
+      // 2. クラス設定
+      DialogContainer.className = "ConfirmContainer";
+
+      /* --------------------------------------------
+       * 2. ダイアログカード作成
+       * --------------------------------------------*/
+      // 1. DIV要素作成
+      const DialogBox = document.createElement("div");
+      // 2. クラス設定
+      DialogBox.className = "DialogBox";
+
+      /* --------------------------------------------
+       * 3. タイトル作成
+       * --------------------------------------------*/
+      // 1. P要素作成
+      const TitleElement = document.createElement("p");
+      // 2. タイトルテキストを設定
+      TitleElement.textContent = Title;
+
+      /* --------------------------------------------
+       * 4. 入力フォームとボタンのラッパー要素作成
+       * --------------------------------------------*/
+      // 1. DIV要素作成
+      const InputButtonForm = document.createElement("div");
+      // 2. クラス設定
+      InputButtonForm.className = "ConfirmInputButtonForm";
+
+      /* --------------------------------------------
+       * 5. 入力フォーム作成
+       * --------------------------------------------*/
+      // 1. フォーム要素作成
+      const PlayerNameInput = document.createElement("input");
+      // 2. 入力タイプ設定
+      PlayerNameInput.type = "text";
+      // 3. クラス設定
+      PlayerNameInput.className = "TextInputForm";
+      // 4. プレースホルダを設定
+      PlayerNameInput.placeholder = "プレイヤー名（最大20文字）";
+      // 5. 最大桁数を設定
+      PlayerNameInput.maxLength = 20;
+
+      /* --------------------------------------------
+       * 6. ボタンのラッパー要素作成
+       * --------------------------------------------*/
+      // 1. DIV要素作成
+      const ButtonWrapper = document.createElement("div");
+      // 2. クラス名設定
+      ButtonWrapper.className = "ConfirmButtonWrapper";
+
+      /* --------------------------------------------
+       * 7. ボタン作成
+       * --------------------------------------------*/
+      // 1. ボタン要素作成
+      const ResultButton = document.createElement("button");
+      // 2. ラベル設定
+      ResultButton.textContent = "決定";
+      // 3. クラス設定
+      ResultButton.classList.add("ButtonInfo", "BlueButton");
+      // 4. 非活性に設定
+      ResultButton.disabled = true;
+
+      /* --------------------------------------------
+       * 8. DOMの組み立て
+       * --------------------------------------------*/
+      // 1. ボタンラッパーにボタンを格納
+      ButtonWrapper.appendChild(ResultButton);
+      // 2. 入力フォームコンテナに入力フォームを格納
+      InputButtonForm.appendChild(PlayerNameInput);
+      // 3. 入力フォームコンテナにボタン要素を格納
+      InputButtonForm.appendChild(ButtonWrapper);
+      // 4. ダイアログにタイトルテキストを格納
+      DialogBox.appendChild(TitleElement);
+      // 5. ダイアログに入力フォームコンテナを格納
+      DialogBox.appendChild(InputButtonForm);
+      // 6. ダイアログコンテナにダイアログを格納(コンテナというよりバックドロップ)
+      DialogContainer.appendChild(DialogBox);
+      // 7. ダイアログコンテナをボディに格納
+      document.body.appendChild(DialogContainer);
+
+      /* --------------------------------------------
+       * 9. 入力状況によるボタンの状態制御処理
+       * --------------------------------------------*/
+      PlayerNameInput.addEventListener("input", () => {
+        /* 1. 名前の入力値が空でない場合 */
+        if (PlayerNameInput.value.trim().length > 0) {
+          // 1. ボタンを活性化
+          ResultButton.disabled = false;
+        } else {
+          /* 2. 名前の入力値が空の場合 */
+          // 1. ボタンを非活性化
+          ResultButton.disabled = true;
+        }
+      });
+
+      /* --------------------------------------------
+       * 10. 決定ボタン押下時処理
+       * --------------------------------------------*/
+      ResultButton.addEventListener("click", async () => {
+        /* 1. 事前処理 */
+        // 1. ボタンを非活性化(多重押下防止のため)
+        ResultButton.disabled = true;
+        // 2. ローカルストレージからプレイヤーIDを取得(セーブスロット選択画面にて発行しているため存在しない場合はありえない)
+        const PlayerId = localStorage.getItem("M_PlayerId");
+
+        /* 2. 通信処理 */
+        try {
+          // 1. スピナー表示
+          ShowSpinner();
+          // 2. 通信処理
+          const Response = await fetch(
+            "../../backend/API/Insert/InsertPlayerNameController.php", 
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+                body: JSON.stringify({
+                  // 3. プレイヤーID
+                  PlayerName: PlayerNameInput.value.trim(),
+                  // 4. セーブスロットID
+                  PlayerId: PlayerId
+                }),
+          });
+
+          /* 3. レスポンス処理 */
+          // 1. レスポンスをJSONにパース
+          const Result = await Response.json();
+
+          /* 4. 通信成功時 */
+          if (Result && Result.success) {
+            // 1. ダイアログをDOMから削除
+            document.body.removeChild(DialogContainer);
+            // 2. Promiseを成功で解決
+            Resolve(Result);
+            // 3. 処理終了
+            return;
+          } else {
+            /* 5. 通信失敗時 */
+            // 1. ボタンの活性を入力状態に応じて復帰
+            ResultButton.disabled = PlayerNameInput.value.trim().length === 0;
+            // 2. 処理終了
+            return;
+          }
+        /* 6. 例外処理 */
+        } catch (Error) {
+          // 1. デバッグログ出力
+          console.error("通信エラー :", Error);
+          // 2. ボタンの活性を入力状態に応じて復帰
+          ResultButton.disabled = PlayerNameInput.value.trim().length === 0;
+          // 3. 処理終了
+          return;
+        /* 7. 終了時処理 */
+        } finally{
+          // 1. スピナーを削除
+          HiddenSpinner();
+        }
+      });
+    });
+  }
+}
+
+/* --------------------------------------------
+ * 11. グローバルに設定
+ * --------------------------------------------*/
+window.NameFormDialog = NameFormDialog;

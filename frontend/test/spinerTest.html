@@ -11,12 +11,15 @@
   <button onclick="SpinerTest()">スピナー表示</button>
   <button onclick="ShowDialog()">ダイアログ表示</button>
   <button onclick="ShowConfirm()">コンファーム表示</button>
+  <button onclick="ShowNameForm()">入力フォーム表示</button>
 
   <script src="../script/dialog/ConfirmDialog.js"></script>
   <script src="../script/dialog/SpinnerDialog.js"></script>
+  <script src="../script/dialog/InputPlayerNameDialog.js"></script>
 
   <script>
     const Dialog = new DialogInfo();
+    const NameDialog = new NameFormDialog();
 
     async function ShowDialog() {
       Dialog.ShowDialog("やあ");
@@ -28,6 +31,10 @@
           alert("Happy");
         }
       });
+    }
+
+    async function ShowNameForm(){
+      await ShowNameDialog();
     }
 
     function SpinerTest() {
