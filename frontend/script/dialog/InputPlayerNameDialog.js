@@ -123,9 +123,6 @@ class NameFormDialog {
        * 11. 決定ボタン押下時処理
        * --------------------------------------------*/
       ResultButton.addEventListener("click", async () => {
-        /* ※テストコード※ */
-        localStorage.setItem("M_PlayerId",CreateUUID())
-        
         /* 1. 事前処理 */
         // 1. ボタンを非活性化(多重押下防止のため)
         ResultButton.disabled = true;
