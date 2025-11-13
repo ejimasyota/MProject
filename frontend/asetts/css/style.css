@@ -311,18 +311,19 @@ button:disabled:active {
   bottom: 14px;
   width: 16px;
   height: 16px;
-  clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+  clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
   opacity: 0;
   transition: opacity 260ms ease;
   animation: NovelClickPulse 1100ms infinite;
   background: #fff;
-  opacity: 0;
 }
+
 @keyframes NovelClickPulse {
   0% { transform: translateY(0); }
   50% { transform: translateY(4px); }
   100% { transform: translateY(0); }
 }
+
 
 /* --------------------------------------------
  *  メッセージ
