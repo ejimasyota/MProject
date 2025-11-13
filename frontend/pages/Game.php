@@ -18,9 +18,15 @@
         </svg>
         </button>
 
-      <button class="MenuButton" data-tooltip="セーブする" aria-label="セーブ">
-        <svg viewBox="0 0 24 24"><path d="M17 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14V7l-4-4zM12 19a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm3-11H6V5h9v3z"/></svg>
-      </button>
+        <button class="MenuButton" data-tooltip="セーブする" aria-label="セーブ">
+          <svg xmlns="http://www.w3.org/2000/svg" 
+              viewBox="0 0 24 24" width="100" height="100" fill="currentColor">
+            <path d="M4 3h12l4 4v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>
+            <rect x="7" y="3.5" width="7" height="5" fill="#ffffff"/>
+            <rect x="6" y="12" width="12" height="8" rx="1" ry="1" fill="#ffffff"/>
+            <circle cx="12" cy="16" r="2.5"/>
+          </svg>
+        </button>
 
         <button class="MenuButton" data-tooltip="設定を開く" aria-label="設定">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 2 2" width="100" height="100" fill="currentColor">
