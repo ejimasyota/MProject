@@ -30,7 +30,9 @@
 
 
       <button class="MenuButton" data-tooltip="ホームに戻る" aria-label="ホーム">
-        <svg viewBox="0 0 24 24"><path d="M12 3l9 8h-3v8h-12v-8H3l9-8z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100" height="100">
+          <path d="M12 3l9 8h-3v8h-12v-8H3l9-8z"/>
+        </svg>
       </button>
     </div>
   </div>
