@@ -64,6 +64,10 @@ body{
 .BlueButton:active {
   transform: translateY(0);
 }
+/* 5.ボタン非活性時 */
+button:disabled {
+  background-color: #AAA; 
+}
 
 /* --------------------------------------------
  *  ボタンコンテナ

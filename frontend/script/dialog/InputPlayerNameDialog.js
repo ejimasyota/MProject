@@ -123,11 +123,16 @@ class NameFormDialog {
        * 11. 決定ボタン押下時処理
        * --------------------------------------------*/
       ResultButton.addEventListener("click", async () => {
+        /* ※テストコード※ */
+        localStorage.setItem("M_PlayerId",CreateUUID())
+        
         /* 1. 事前処理 */
         // 1. ボタンを非活性化(多重押下防止のため)
         ResultButton.disabled = true;
         // 2. ローカルストレージからプレイヤーIDを取得(セーブスロット選択画面にて発行しているため存在しない場合はありえない)
         const PlayerId = localStorage.getItem("M_PlayerId");
+        // 3. エラーメッセージを初期化
+        ErrorMessage.textContent = "";
 
         /* 2. 通信処理 */
         try {
