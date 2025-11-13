@@ -2,7 +2,11 @@
  * MessageBoxDialog クラス
  * =========================================================*/
 class MessageBoxDialog {
+  /* --------------------------------------------
+   * 1. コンストラクタ
+   * --------------------------------------------*/
   constructor() {
+    // 1.デフォルトのアイコン画像パス
     this.DefaultIconPath = "../../asetts/img/icon/default_icon.png";
     this.MessageBoxHeight = 300;
     this.TypeIntervalMs = 28;
@@ -81,8 +85,7 @@ class MessageBoxDialog {
     MessageContainer.style.margin = "0 4px 0 4px";
 
     const MessageCard = document.createElement("div");
-    MessageCard.className = "NovelMessageCard";
-    MessageCard.style.height = `${this.MessageBoxHeight}px`;
+    MessageCard.className = "MessageBoxCard";
 
     const AvatarWrapper = document.createElement("div");
     AvatarWrapper.className = "NovelAvatarWrapper";
@@ -96,7 +99,7 @@ class MessageBoxDialog {
     AvatarImage.alt = "avatar";
 
     const CharacterNameTag = document.createElement("div");
-    CharacterNameTag.className = "NovelCharacterNameTag";
+    CharacterNameTag.className = "CharacterNameArea";
 
     const TextArea = document.createElement("div");
     TextArea.className = "NovelTextArea";
@@ -203,31 +206,6 @@ class MessageBoxDialog {
         pointer-events: none;
         z-index: 9999;
       }
-      .NovelMessageCard {
-        box-sizing: border-box;
-        width: calc(100% - 8px);
-        max-width: 100%;
-        height: ${this.MessageBoxHeight}px;
-        background: rgba(20,20,30,0.95);
-        color: #fff;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        padding: 16px;
-        transform: translateY(120%);
-        transition: transform 420ms cubic-bezier(.2,.9,.2,1), opacity 300ms ease;
-        opacity: 0;
-        pointer-events: auto;
-      }
-      .NovelMessageCard.novel-show {
-        transform: translateY(0%);
-        opacity: 1;
-      }
-      .NovelMessageCard.novel-hide {
-        transform: translateY(120%);
-        opacity: 0;
-      }
       .NovelAvatarWrapper {
         flex: 0 0 auto;
         display: flex;
@@ -242,16 +220,6 @@ class MessageBoxDialog {
         width: 200px;
         height: 200px;
         object-fit: cover;
-      }
-      .NovelCharacterNameTag {
-        position: absolute;
-        right: 12px;
-        bottom: ${this.MessageBoxHeight - 48}px;
-        background: rgba(255,255,255,0.06);
-        padding: 8px 12px;
-        border-radius: 6px;
-        font-weight: 600;
-        backdrop-filter: blur(4px);
       }
       .NovelTextArea {
         flex: 1 1 auto;
