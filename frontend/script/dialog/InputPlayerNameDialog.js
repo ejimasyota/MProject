@@ -51,6 +51,8 @@ class NameFormDialog {
       PlayerNameInput.placeholder = "プレイヤー名（最大20文字）";
       // 5. 最大桁数を設定
       PlayerNameInput.maxLength = 20;
+      // 6. フォーカス設定
+      PlayerNameInput.focus();
 
       /* --------------------------------------------
        * 6. ボタンのラッパー要素作成
