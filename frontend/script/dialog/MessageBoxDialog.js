@@ -12,7 +12,7 @@ class MessageBoxDialog { // メッセージボックスを扱うクラス定義�
   * =========================================================*/
   constructor() {
     // 1. デフォルトのアイコン画像パス
-    this.DefaultIconPath = "/asetts/img/icon/default_icon.png";
+    this.DefaultIconPath = "asetts/img/icon/default_icon.png";
     // 2. 文字をタイプ表示するインターバル（ミリ秒）
     this.TypeIntervalMs = 28;
     // 3. コンテナの参照
