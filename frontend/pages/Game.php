@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="../asetts/css/style.css">
   <title>ゲーム画面</title>
   <style>
     .game-root {
@@ -13,7 +14,6 @@
     overflow: hidden;
     background-size: cover;  
     }
-
 
     /* --- メニュー全体（灰色の帯が見えるように確実に定義） --- */
     .menu-container {
