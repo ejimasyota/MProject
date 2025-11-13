@@ -98,7 +98,7 @@
 </head>
 <body>
   <div class="game-root" role="application" aria-label="ゲーム画面"
-     style="background: url('../asetts/img/bg/Bg1.jpg') no-repeat center center fixed;">
+     style="background: url('../asetts/img/bg/Bg1.jpg') no-repeat center center fixed; background-size: cover;">
     <div class="menu-container">
       <button class="menu-button" data-tooltip="バックログを見る" aria-label="バックログ">
         <svg viewBox="0 0 24 24"><path d="M6 2h9a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 2v14h9V4H6zM20 7h1v11a1 1 0 0 1-1 1h-1v-2h1V7z"/></svg>
