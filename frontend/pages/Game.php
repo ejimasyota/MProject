@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>ゲーム画面</title>
   <style>
-    /* 全体コンテナ（bodyは触らない） */
     .game-root {
       position: fixed;
       inset: 0;
@@ -15,52 +14,48 @@
       font-family: "Segoe UI", system-ui, -apple-system, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
     }
 
-    /* 右上メニュー */
+    /* メニュー全体 */
     .menu-container {
       position: absolute;
       top: 20px;
       right: 20px;
       display: flex;
       gap: 14px;
-      background-color: rgba(255,255,255,0.35);
+      background-color: rgba(0,0,0,0.45); /* ←グレー帯はそのまま */
       padding: 10px 14px;
       border-radius: 10px;
       box-shadow: 0 6px 18px rgba(0,0,0,0.25);
       backdrop-filter: blur(4px);
     }
 
+    /* 各ボタン */
     .menu-button {
       position: relative;
       width: 48px;
       height: 48px;
       border: none;
-      background: transparent;
-      color: rgba(0,0,0,0.75); /* ← デフォルト黒っぽく */
-      cursor: pointer;
+      background: white;                /* 白背景 */
+      border-radius: 8px;              /* 角丸 */
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 8px;
-      transition: color 0.18s ease, transform 0.12s ease;
-      user-select: none;
+      color: rgba(0,0,0,0.75);         /* アイコン色 */
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
     }
 
     .menu-button:hover {
-      color: #ffb6c1; /* ホバーでピンク */
-      transform: scale(1.06);
+      background: #ffe6ef; /* ホバーで薄ピンク */
+      color: #ff7fa7;
+      transform: scale(1.05);
     }
 
-    .menu-button:focus {
-      outline: 2px solid rgba(255,182,193,0.45);
-      outline-offset: 3px;
-    }
-
-    /* SVG（やや細めのfillベース） */
     .menu-button svg {
-      width: 28px;
-      height: 28px;
-      display: block;
+      width: 26px;
+      height: 26px;
       fill: currentColor;
+      pointer-events: none;
     }
 
     /* ツールチップ */
@@ -98,6 +93,7 @@
       transition: opacity 0.18s ease;
     }
     .menu-button:hover::before { opacity: 1; }
+
   </style>
 </head>
 <body>
