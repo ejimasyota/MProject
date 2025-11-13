@@ -8,7 +8,6 @@ class MessageBoxDialog {
   constructor() {
     // 1.デフォルトのアイコン画像パス
     this.DefaultIconPath = "../../asetts/img/icon/default_icon.png";
-    this.MessageBoxHeight = 300;
     this.TypeIntervalMs = 28;
     this.MessageContainer = null;
     this.MessageCard = null;
@@ -19,9 +18,6 @@ class MessageBoxDialog {
     this.ClickMarker = null;
     this.IsTyping = false;
     this.TypingAbortController = null;
-    if (!document.getElementById("NovelMessageBox_Styles")) {
-      this._AppendStyles();
-    }
   }
 
   HasBox() {
@@ -81,21 +77,16 @@ class MessageBoxDialog {
 
   _BuildDom() {
     const MessageContainer = document.createElement("div");
-    MessageContainer.className = "NovelMessageContainer";
-    MessageContainer.style.margin = "0 4px 0 4px";
+    MessageContainer.className = "MessageBoxContainer";
 
     const MessageCard = document.createElement("div");
     MessageCard.className = "MessageBoxCard";
 
     const AvatarWrapper = document.createElement("div");
-    AvatarWrapper.className = "NovelAvatarWrapper";
-    AvatarWrapper.style.width = "200px";
-    AvatarWrapper.style.height = "200px";
+    AvatarWrapper.className = "IconWrapper";
 
     const AvatarImage = document.createElement("img");
-    AvatarImage.className = "NovelAvatarImage";
-    AvatarImage.width = 200;
-    AvatarImage.height = 200;
+    AvatarImage.className = "IconImage";
     AvatarImage.alt = "avatar";
 
     const CharacterNameTag = document.createElement("div");
@@ -103,11 +94,9 @@ class MessageBoxDialog {
 
     const TextArea = document.createElement("div");
     TextArea.className = "NovelTextArea";
-    TextArea.style.whiteSpace = "pre-wrap";
 
     const ClickMarker = document.createElement("div");
-    ClickMarker.className = "NovelClickMarker";
-    ClickMarker.style.opacity = "0";
+    ClickMarker.className = "ClickMarker";
 
     MessageCard.addEventListener("click", () => {
       if (this.IsTyping) {
@@ -190,65 +179,6 @@ class MessageBoxDialog {
     if (this.ClickMarker) {
       this.ClickMarker.style.opacity = "0";
     }
-  }
-
-  _AppendStyles() {
-    const Style = document.createElement("style");
-    Style.id = "NovelMessageBox_Styles";
-    Style.textContent = `
-      .NovelMessageContainer {
-        position: fixed;
-        left: 0;
-        right: 0;
-        bottom: 8px;
-        display: flex;
-        justify-content: center;
-        pointer-events: none;
-        z-index: 9999;
-      }
-      .NovelAvatarWrapper {
-        flex: 0 0 auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(255,255,255,0.04);
-        border-radius: 6px;
-        overflow: hidden;
-      }
-      .NovelAvatarImage {
-        display: block;
-        width: 200px;
-        height: 200px;
-        object-fit: cover;
-      }
-      .NovelTextArea {
-        flex: 1 1 auto;
-        min-height: 200px;
-        max-height: 200px;
-        overflow: auto;
-        font-size: 18px;
-        line-height: 1.6;
-        word-break: break-word;
-      }
-      .NovelClickMarker {
-        position: absolute;
-        right: 18px;
-        bottom: 14px;
-        width: 16px;
-        height: 16px;
-        clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
-        opacity: 0;
-        transition: opacity 260ms ease;
-        animation: NovelClickPulse 1100ms infinite;
-        background: #fff;
-      }
-      @keyframes NovelClickPulse {
-        0% { transform: translateY(0); }
-        50% { transform: translateY(4px); }
-        100% { transform: translateY(0); }
-      }
-    `;
-    document.head.appendChild(Style);
   }
 }
 
