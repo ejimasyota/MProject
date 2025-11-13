@@ -6,14 +6,14 @@
   <title>ゲーム画面</title>
   <style>
     .game-root {
-      position: fixed;
-      inset: 0;
-      overflow: hidden;
-      background-size: cover;
-      width: 100vw;
-      height:100vh;
-      font-family: "Segoe UI", system-ui, -apple-system, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+    position: fixed;
+    inset: 0;               
+    width: 100vw;         
+    height: 100vh;       
+    overflow: hidden;
+    background-size: cover;  
     }
+
 
     /* --- メニュー全体（灰色の帯が見えるように確実に定義） --- */
     .menu-container {
