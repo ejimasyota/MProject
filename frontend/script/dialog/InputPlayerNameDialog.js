@@ -171,7 +171,7 @@ class NameFormDialog {
         /* 6. 例外処理 */
         } catch (Error) {
           // 1. エラーメッセージ設定
-          ErrorMessage.textContent = "通信エラーが発生しました。お手数ですが再度実行してください。"
+          ErrorMessage.textContent = "通信エラーが発生しました。"
           // 2. ボタンの活性を入力状態に応じて復帰
           ResultButton.disabled = PlayerNameInput.value.trim().length === 0;
           // 3. 処理終了
