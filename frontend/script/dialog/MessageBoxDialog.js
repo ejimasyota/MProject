@@ -1,7 +1,7 @@
 /* =========================================================
- * NovelMessageBox クラス
+ * MessageBoxDialog クラス
  * =========================================================*/
-class NovelMessageBox {
+class MessageBoxDialog {
   constructor() {
     this.DefaultIconPath = "../asetts/img/icon/default_icon.png";
     this.MessageBoxHeight = 300;
@@ -284,4 +284,4 @@ class NovelMessageBox {
   }
 }
 
-window.NovelMessageBox = NovelMessageBox;
+window.MessageBoxDialog = MessageBoxDialog;
