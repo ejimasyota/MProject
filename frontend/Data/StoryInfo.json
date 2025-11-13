@@ -1,72 +1,94 @@
 [
   {
-      "StoryId":1,
-      "NameInputFlg":true,
-      "Narrator":"A子",
-      "StoryTitle":"始まり",
-      "StoryText":"今日もいい天気",
-      "Next":2,
-      "Back":0,
-      "MessageBoxFlg":false,
-      "BgPath":"",
-      "Voice":"",
-      "EndFlg":"",
-      "MoviePath":"",
-      "CharaImgPath":[
+    "StoryId": 1,
+    "Narrator": "A子",
+    "StoryTitle": "始まり",
+    "StoryText": "今日もいい天気",
+    "Next": 2,
+    "Back": 0,
+    "BgPath": "../assets/img/bg/bg.png",
+    "SePath": "",
+    "Voice": "",
+    "Flg": [
       {
-          "Center":"",
-          "Right":"",
-          "Left":""
+        "MessageBoxFlg": false,
+        "NameInputFlg": true,
+        "EndFlg": "",
+        "CutInFlg": false,
+        "DisabledFlg": false,
+        "EyeCatchFlg": false,
+        "GameFlg": false,
+        "AutoSaveFlg": false
       }
     ],
-      "BgmPath":"",
-      "CutInFlg":false,
-      "Effect":[
+    "MoviePath": "",
+    "CharaImgPath": [
       {
-          "Spin":[
-          {
-              "Center":false,
-              "Right":false,
-              "Left":false
-          }
-        ],
-          "Jump":[
-          {
-              "Center":false,
-              "Right":false,
-              "Left":false
-          }
-        ],
-          "Wave":[
-          {
-              "Center":false,
-              "Right":false,
-              "Left":false
-          }
-        ]
+        "Center": "",
+        "Right": "",
+        "Left": ""
       }
     ],
-      "FaceImgPath":"",
-      "DisabledFlg":false,
-      "EyeCatchFlg":false,
-      "GameFlg":false,
-      "Select":[
+    "BgmPath": "",
+    "FaceImgPath": "",
+    "Effect": [
       {
-          "StoryText":"散歩に出かける",
-          "Next":2,
-          "Back":1
+        "Spin": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "Jump": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "Wave": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "FadeIn": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "FadeOut": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "BgWave": false
+      }
+    ],
+    "Select": [
+      {
+        "StoryText": "散歩に出かける",
+        "Next": 2,
+        "Back": 1
       },
-        {
-          "StoryText":"部屋で本を読む",
-          "Next":3,
-          "Back":1
+      {
+        "StoryText": "部屋で本を読む",
+        "Next": 3,
+        "Back": 1
       }
     ],
-      "$$$$$$$$":"",
-      "||||||||":"",
-      "★★★★":"",
-      "@@@@@@@@":"",
-      "&&&&&&&&":"",
-      "%%%%%%%%":""
+    "$$$$$$$$": "",
+    "||||||||": "",
+    "★★★★": "",
+    "@@@@@@@@": "",
+    "&&&&&&&&": "",
+    "^^^^^^^^": "",
+    "%%%%%%%%": ""
   }
 ]
