@@ -12,18 +12,35 @@
   <button onclick="ShowDialog()">ダイアログ表示</button>
   <button onclick="ShowConfirm()">コンファーム表示</button>
   <button onclick="ShowNameForm()">入力フォーム表示</button>
+  <button onclick="ShowMessageBox()">メッセージボックス表示</button>
 
   <script src="../script/utility/util.js"></script>
   <script src="../script/dialog/ConfirmDialog.js"></script>
+  <script src="../script/dialog/MessageBoxDialog.js"></script>
   <script src="../script/dialog/SpinnerDialod.js"></script>
   <script src="../script/dialog/InputPlayerNameDialog.js"></script>
 
   <script>
     const Dialog = new DialogInfo();
     const NameDialog = new NameFormDialog();
+    const MessageBox = new MessageBoxDialog();
+    
 
     async function ShowDialog() {
       Dialog.ShowDialog("やあ");
+    }
+
+    async function ShowMessageBox() {
+      await MessageBox.ShowMessage(
+        "おはようございます。\n今日もいい天気ですね。\n一緒に出かけませんか？",
+        "ミナト",
+        "/frontend/asetts/img/icon/minato_icon.png"
+      );
+
+      // 数秒後に非表示
+      setTimeout(async () => {
+        await MessageBox.HideMessage();
+      }, 8000);
     }
 
     async function ShowConfirm() {
