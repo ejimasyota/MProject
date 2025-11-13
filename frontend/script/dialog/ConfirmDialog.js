@@ -25,7 +25,7 @@ class DialogInfo {
     // 9.閉じるボタンのテキストを設定
     closeButton.textContent = "閉じる";
     // 10.閉じるボタンのクラス名を設定
-    closeButton.classList.add("ButtonInfo", "BlueButton");
+    closeButton.classList.add("ButtonInfo", "PinkButton");
     // 11.閉じるボタンをカードに追加
     dialogBox.appendChild(closeButton);
     // 12.カードをバックドロップに追加
@@ -64,7 +64,7 @@ class DialogInfo {
       // 9.[はい]ボタンのテキストを設定
       yesButton.textContent = "はい";
       // 10.[はい]ボタンのクラス名を設定
-      yesButton.classList.add("ButtonInfo", "RedButton");
+      yesButton.classList.add("ButtonInfo", "PinkButton");
       // 11.[いいえ]ボタンの要素を作成
       const noButton = document.createElement("button");
       // 12.[いいえ]ボタンのテキストを設定

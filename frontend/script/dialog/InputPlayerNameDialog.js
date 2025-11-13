@@ -70,7 +70,7 @@ class NameFormDialog {
       // 2. ラベル設定
       ResultButton.textContent = "決定";
       // 3. クラス設定
-      ResultButton.classList.add("ButtonInfo", "BlueButton");
+      ResultButton.classList.add("ButtonInfo", "PinkButton");
       // 4. 非活性に設定
       ResultButton.disabled = true;
 
