@@ -3,7 +3,7 @@
  * =========================================================*/
 class MessageBoxDialog {
   constructor() {
-    this.DefaultIconPath = "../asetts/img/icon/default_icon.png";
+    this.DefaultIconPath = "../../asetts/img/icon/default_icon.png";
     this.MessageBoxHeight = 300;
     this.TypeIntervalMs = 28;
     this.MessageContainer = null;
