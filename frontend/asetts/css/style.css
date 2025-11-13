@@ -349,6 +349,7 @@ button:disabled:active {
   height: 40px;
   border: #ccc 1px solid;
   width:300px;
+  font-size: 15px;
 }
 
 
