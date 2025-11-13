@@ -16,21 +16,23 @@
       overflow: hidden;
     }
 
+    /* --- メニューコンテナ --- */
     .menu-container {
       position: absolute;
       top: 15px;
       right: 15px;
       display: flex;
       gap: 16px;
-      background-color: rgba(0,0,0,0.35);
+      background-color: rgba(255, 255, 255, 0.35);
       padding: 12px 18px;
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.3);
       backdrop-filter: blur(4px);
     }
 
+    /* --- ボタン --- */
     .menu-button {
-      color: #fff;
+      color: rgba(0, 0, 0, 0.75); /* デフォルトは黒っぽく */
       width: 48px;
       height: 48px;
       display: inline-flex;
@@ -40,6 +42,7 @@
       position: relative;
       transition: transform 0.2s ease, color 0.25s ease;
       border-radius: 8px;
+      user-select: none;
     }
 
     .menu-button svg {
@@ -49,12 +52,25 @@
       transition: transform 0.2s ease;
     }
 
+    /* --- ホバー時（ピンク化） --- */
     .menu-button:hover {
       color: #ffb6c1;
-      transform: scale(1.12);
+      transform: scale(1.15);
     }
 
-    /* tooltip */
+    /* --- クリック時のぷるっとアニメーション --- */
+    @keyframes click-bounce {
+      0%   { transform: scale(1.0); }
+      25%  { transform: scale(0.9) rotate(-3deg); }
+      50%  { transform: scale(1.1) rotate(3deg); }
+      75%  { transform: scale(0.98) rotate(-2deg); }
+      100% { transform: scale(1.0) rotate(0); }
+    }
+    .menu-button:active {
+      animation: click-bounce 0.35s ease;
+    }
+
+    /* --- ツールチップ --- */
     .menu-button::after {
       content: attr(data-tooltip);
       position: absolute;
@@ -72,10 +88,12 @@
       transition: opacity 0.22s ease, transform 0.22s ease;
       box-shadow: 0 2px 8px rgba(0,0,0,0.25);
     }
-    .menu-button:hover::after{
+
+    .menu-button:hover::after {
       opacity: 1;
       transform: translateX(-50%) scale(1);
     }
+
     .menu-button::before {
       content: "";
       position: absolute;
@@ -87,32 +105,46 @@
       opacity: 0;
       transition: opacity 0.22s ease;
     }
-    .menu-button:hover::before{ opacity: 1; }
 
-    /* optional: focus for keyboard users */
-    .menu-button:focus { outline: 2px solid rgba(255,182,193,0.5); outline-offset: 2px; }
+    .menu-button:hover::before {
+      opacity: 1;
+    }
+
+    /* キーボード操作時のフォーカス強調 */
+    .menu-button:focus {
+      outline: 2px solid rgba(255,182,193,0.5);
+      outline-offset: 2px;
+    }
   </style>
 </head>
 <body>
   <div class="menu-container">
-    <!-- Backlog (book) -->
+    <!-- Backlog -->
     <button class="menu-button" data-tooltip="バックログを見る" aria-label="バックログ">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 2v14h9V4H6zM20 7h1v11a1 1 0 0 1-1 1h-1v-2h1V7z"></path></svg>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M6 2h9a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 2v14h9V4H6zM20 7h1v11a1 1 0 0 1-1 1h-1v-2h1V7z"></path>
+      </svg>
     </button>
 
-    <!-- Save (floppy) -->
+    <!-- Save -->
     <button class="menu-button" data-tooltip="セーブする" aria-label="セーブ">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14V7l-4-4zM12 19a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm3-11H6V5h9v3z"></path></svg>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M17 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14V7l-4-4zM12 19a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm3-11H6V5h9v3z"></path>
+      </svg>
     </button>
 
-    <!-- Settings (cog) -->
+    <!-- Settings -->
     <button class="menu-button" data-tooltip="設定を開く" aria-label="設定">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.14 12.94a7.14 7.14 0 0 0 0-1.88l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7.02 7.02 0 0 0-1.6-.93l-.36-2.54A.5.5 0 0 0 14.7 2h-3.4a.5.5 0 0 0-.5.42l-.36 2.54c-.57.22-1.1.52-1.6.93L6.44 5.93a.5.5 0 0 0-.6.22L3.92 9.47a.5.5 0 0 0 .12.64L6.07 11.7a7.14 7.14 0 0 0 0 1.88L4 15.16a.5.5 0 0 0-.12.64l1.92 3.32c.14.24.43.35.68.26l2.39-.96c.5.41 1.03.71 1.6.93l.36 2.54c.05.28.29.48.58.48h3.4c.29 0 .53-.2.58-.48l.36-2.54c.57-.22 1.1-.52 1.6-.93l2.39.96c.25.09.54-.02.68-.26l1.92-3.32a.5.5 0 0 0-.12-.64l-2.03-1.58zM12 15.5A3.5 3.5 0 1 1 12 8a3.5 3.5 0 0 1 0 7.5z"></path></svg>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M19.14 12.94a7.14 7.14 0 0 0 0-1.88l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7.02 7.02 0 0 0-1.6-.93l-.36-2.54A.5.5 0 0 0 14.7 2h-3.4a.5.5 0 0 0-.5.42l-.36 2.54c-.57.22-1.1.52-1.6.93L6.44 5.93a.5.5 0 0 0-.6.22L3.92 9.47a.5.5 0 0 0 .12.64L6.07 11.7a7.14 7.14 0 0 0 0 1.88L4 15.16a.5.5 0 0 0-.12.64l1.92 3.32c.14.24.43.35.68.26l2.39-.96c.5.41 1.03.71 1.6.93l.36 2.54c.05.28.29.48.58.48h3.4c.29 0 .53-.2.58-.48l.36-2.54c.57-.22 1.1-.52 1.6-.93l2.39.96c.25.09.54-.02.68-.26l1.92-3.32a.5.5 0 0 0-.12-.64l-2.03-1.58zM12 15.5A3.5 3.5 0 1 1 12 8a3.5 3.5 0 0 1 0 7.5z"></path>
+      </svg>
     </button>
 
     <!-- Home -->
     <button class="menu-button" data-tooltip="ホームに戻る" aria-label="ホーム">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 8h-3v8h-12v-8H3l9-8z"></path></svg>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 3l9 8h-3v8h-12v-8H3l9-8z"></path>
+      </svg>
     </button>
   </div>
 </body>
