@@ -6,118 +6,30 @@
   <link rel="stylesheet" href="../asetts/css/style.css">
   <title>ゲーム画面</title>
   <style>
-    .game-root {
-    position: relative;
-    inset: 0;               
-    width: 100%;          
-    height: 100%;       
-    overflow: hidden;
-    background-size: cover;  
-    }
-
-    /* --- メニュー全体（灰色の帯が見えるように確実に定義） --- */
-    .menu-container {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      display: flex;
-      gap: 14px;
-
-      /* ← 以下が帯の見た目 */
-      background-color: #ffc4d7ff;
-      padding: 10px 16px;      /* 白ボタンの周りに十分な余白 */
-      border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.35);
-      backdrop-filter: blur(4px);
-
-      z-index: 50;             /* 他要素より前面に出す（必要時） */
-    }
-
-    /* 各ボタン（白背景） */
-    .menu-button {
-      position: relative;
-      width: 48px;
-      height: 48px;
-      border: none;
-      background: #fff;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: rgba(0,0,0,0.75);
-      cursor: pointer;
-      transition: all 0.18s ease;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.18);
-    }
-
-    .menu-button:hover {
-      background: #ffe6ef;
-      color: #ff7fa7;
-      transform: translateY(-2px) scale(1.03);
-    }
-
-    .menu-button svg {
-      width: 26px;
-      height: 26px;
-      fill: currentColor;
-      pointer-events: none;
-    }
-
-    /* ツールチップ */
-    .menu-button::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      bottom: -46px;
-      left: 50%;
-      transform: translateX(-50%) scale(0.96);
-      background: rgba(255,192,203,0.95);
-      color: #fff;
-      padding: 6px 10px;
-      border-radius: 8px;
-      font-size: 13px;
-      opacity: 0;
-      pointer-events: none;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      transition: opacity 0.18s ease, transform 0.18s ease;
-      white-space: nowrap;
-    }
-    .menu-button:hover::after { opacity: 1; transform: translateX(-50%) scale(1); }
-    .menu-button::before {
-      content: "";
-      position: absolute;
-      bottom: -14px;
-      left: 50%;
-      transform: translateX(-50%);
-      border: 6px solid transparent;
-      border-top-color: rgba(255,192,203,0.95);
-      opacity: 0;
-      transition: opacity 0.18s ease;
-    }
-    .menu-button:hover::before { opacity: 1; }
   </style>
 </head>
 <body>
-  <div class="game-root" role="application" aria-label="ゲーム画面"
+  <div class="GameContainer" role="application" aria-label="ゲーム画面"
      style="background: url('../asetts/img/bg/Bg1.jpg') no-repeat center center fixed; background-size: cover;">
-    <div class="menu-container">
-        <button class="menu-button" data-tooltip="バックログを見る" aria-label="バックログ">
+    <div class="MenuContainer">
+        <button class="MenuButton" data-tooltip="バックログを見る" aria-label="バックログ">
         <svg viewBox="0 0 24 24">
             <path d="M6 2h9a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 2v14h9V4H6zM19 6h2v12a1 1 0 0 1-1 1h-1v-2h1V6z"/>
         </svg>
         </button>
 
-      <button class="menu-button" data-tooltip="セーブする" aria-label="セーブ">
+      <button class="MenuButton" data-tooltip="セーブする" aria-label="セーブ">
         <svg viewBox="0 0 24 24"><path d="M17 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14V7l-4-4zM12 19a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm3-11H6V5h9v3z"/></svg>
       </button>
 
-        <button class="menu-button" data-tooltip="設定を開く" aria-label="設定">
+        <button class="MenuButton" data-tooltip="設定を開く" aria-label="設定">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 2 2" width="100" height="100" fill="currentColor">
                 <path d="M0,-1A1,1,0,0,1,0.17365,-0.98481L0.27362,-0.75175A0.80000,0.80000,0,0,1,0.33809,-0.72505L0.57358,-0.81915A1,1,0,0,1,0.70711,-0.70711A1,1,0,0,1,0.81915,-0.57358L0.72505,-0.33809A0.80000,0.80000,0,0,1,0.75175,-0.27362L0.98481,-0.17365A1,1,0,0,1,1.00000,-0.00000A1,1,0,0,1,0.98481,0.17365L0.75175,0.27362A0.80000,0.80000,0,0,1,0.72505,0.33809L0.81915,0.57358A1,1,0,0,1,0.70711,0.70711A1,1,0,0,1,0.57358,0.81915L0.33809,0.72505A0.80000,0.80000,0,0,1,0.27362,0.75175L0.17365,0.98481A1,1,0,0,1,0.00000,1.00000A1,1,0,0,1,-0.17365,0.98481L-0.27362,0.75175A0.80000,0.80000,0,0,1,-0.33809,0.72505L-0.57358,0.81915A1,1,0,0,1,-0.70711,0.70711A1,1,0,0,1,-0.81915,0.57358L-0.72505,0.33809A0.80000,0.80000,0,0,1,-0.75175,0.27362L-0.98481,0.17365A1,1,0,0,1,-1.00000,0.00000A1,1,0,0,1,-0.98481,-0.17365L-0.75175,-0.27362A0.80000,0.80000,0,0,1,-0.72505,-0.33809L-0.81915,-0.57358A1,1,0,0,1,-0.70711,-0.70711A1,1,0,0,1,-0.57358,-0.81915L-0.33809,-0.72505A0.80000,0.80000,0,0,1,-0.27362,-0.75175L-0.17365,-0.98481A1,1,0,0,1,-0.00000,-1.00000L0,-0.3A0.3,0.3,0,1,0,0,0.3A0.3,0.3,0,1,0,0,-0.3Z" />
             </svg>
         </button>
 
 
-      <button class="menu-button" data-tooltip="ホームに戻る" aria-label="ホーム">
+      <button class="MenuButton" data-tooltip="ホームに戻る" aria-label="ホーム">
         <svg viewBox="0 0 24 24"><path d="M12 3l9 8h-3v8h-12v-8H3l9-8z"/></svg>
       </button>
     </div>
