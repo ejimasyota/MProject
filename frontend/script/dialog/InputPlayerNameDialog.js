@@ -3,7 +3,7 @@
  * =========================================================*/
 class NameFormDialog {
   ShowNameDialog(Title = "プレイヤー名を入力してください") {
-    return new Promise((Resolve, Reject) => {
+    return new Promise((Resolve) => {
       /* --------------------------------------------
        * 1. バックドロップ作成
        * --------------------------------------------*/
@@ -19,6 +19,8 @@ class NameFormDialog {
       const DialogBox = document.createElement("div");
       // 2. クラス設定
       DialogBox.className = "DialogBox";
+      // 3. 最小幅を設定
+      DialogBox.style.minWidth = "300px"
 
       /* --------------------------------------------
        * 3. タイトル作成
