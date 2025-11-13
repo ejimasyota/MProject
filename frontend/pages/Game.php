@@ -31,68 +31,60 @@
       backdrop-filter: blur(4px);
     }
 
+    /* 各ボタン */
     .menu-button {
-      color: rgba(0,0,0,0.75);
-      width: 48px;
-      height: 48px;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      border-radius:8px;
-      cursor:pointer;
-      transition: transform .16s ease, color .16s ease;
-      user-select:none;
-      border: none;
-      background: transparent;
-    }
-    .menu-button {
-      color: rgba(0, 0, 0, 0.75); /* 通常時：黒（半透明） */
-      width: 48px;
-      height: 48px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+      color: #fff;
+      font-size: 28px;
       cursor: pointer;
       position: relative;
-      transition: transform 0.2s ease, color 0.25s ease;
-      border-radius: 8px;
-      user-select: none;
+      transition: transform 0.2s ease, color 0.3s ease;
     }
 
-    .menu-button svg {
-      width: 28px;
-      height: 28px;
-      fill: currentColor;
-      transition: transform 0.2s ease;
-    }
-
-    /* --- ホバー時（淡いピンクに） --- */
     .menu-button:hover {
       color: #ffb6c1;
-      transform: scale(1.1);
+      transform: scale(1.2);
     }
-    .menu-button:focus { outline: 2px solid rgba(255,182,193,0.45); outline-offset: 3px; }
 
-    /* ツールチップ（同じ仕組み） */
+    /* --- ツールチップ --- */
     .menu-button::after {
       content: attr(data-tooltip);
       position: absolute;
-      bottom: -44px;
+      bottom: -40px;
       left: 50%;
-      transform: translateX(-50%) scale(.96);
-      background: rgba(255,192,203,0.95);
-      color:#fff;
-      padding:6px 10px;
-      border-radius:8px;
-      font-size:13px;
-      opacity:0; pointer-events:none;
-      box-shadow:0 2px 8px rgba(0,0,0,0.2);
-      transition: opacity .18s ease, transform .18s ease;
-      white-space:nowrap;
+      transform: translateX(-50%) scale(0.9);
+      background: rgba(255, 192, 203, 0.9);
+      color: #fff;
+      font-size: 13px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
     }
-    .menu-button:hover::after { opacity:1; transform: translateX(-50%) scale(1); }
-    .menu-button::before{ content:""; position:absolute; bottom:-14px; left:50%; transform:translateX(-50%); border:6px solid transparent; border-top-color: rgba(255,192,203,0.95); opacity:0; transition:opacity .18s ease; }
-    .menu-button:hover::before{ opacity:1; }
+
+    .menu-button:hover::after {
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
+    }
+
+    /* ツールチップに矢印を付ける */
+    .menu-button::before {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: rgba(255, 192, 203, 0.9);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .menu-button:hover::before {
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
