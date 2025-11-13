@@ -45,8 +45,32 @@
       border: none;
       background: transparent;
     }
-    .menu-button svg { width:28px; height:28px; fill: currentColor; }
-    .menu-button:hover { color: #ffb6c1; transform: scale(1.08); }
+    .menu-button {
+      color: rgba(0, 0, 0, 0.75); /* 通常時：黒（半透明） */
+      width: 48px;
+      height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.2s ease, color 0.25s ease;
+      border-radius: 8px;
+      user-select: none;
+    }
+
+    .menu-button svg {
+      width: 28px;
+      height: 28px;
+      fill: currentColor;
+      transition: transform 0.2s ease;
+    }
+
+    /* --- ホバー時（淡いピンクに） --- */
+    .menu-button:hover {
+      color: #ffb6c1;
+      transform: scale(1.1);
+    }
     .menu-button:focus { outline: 2px solid rgba(255,182,193,0.45); outline-offset: 3px; }
 
     /* ツールチップ（同じ仕組み） */
