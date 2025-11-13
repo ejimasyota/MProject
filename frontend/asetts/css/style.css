@@ -250,12 +250,16 @@ button:disabled:active {
   position: absolute;
   top: 8px; 
   left: 12px;
-  width: 200px;
+  width: 200px; 
   background: rgba(255,255,255,0.06);
   padding: 8px 12px;
+  box-sizing: border-box; 
   border-radius: 6px;
   font-weight: 600;
   backdrop-filter: blur(4px);
+  white-space: nowrap;
+  overflow: hidden; 
+  text-overflow: ellipsis; 
 }
 
 /* 3.メッセージボックスコンテナ */
