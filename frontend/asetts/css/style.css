@@ -249,7 +249,7 @@ button:disabled:active {
 .CharacterNameArea {
   position: absolute;
   top: 8px; 
-  left: 12px;     /* 左からの位置 */
+  left: 12px;
   background: rgba(255,255,255,0.06);
   padding: 8px 12px;
   border-radius: 6px;
