@@ -24,33 +24,77 @@
       top: 15px;
       right: 15px;
       display: flex;
-      gap: 12px;
-      background-color: rgba(0, 0, 0, 0.3);
-      padding: 10px 15px;
-      border-radius: 10px;
+      gap: 16px;
+      background-color: rgba(0, 0, 0, 0.35);
+      padding: 12px 18px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(4px);
     }
 
     /* 各ボタン */
     .menu-button {
       color: #fff;
-      font-size: 22px;
+      font-size: 28px;
       cursor: pointer;
-      transition: transform 0.2s, color 0.2s;
+      position: relative;
+      transition: transform 0.2s ease, color 0.3s ease;
     }
 
     .menu-button:hover {
-      color: #ffcc00;
-      transform: scale(1.15);
+      color: #ffb6c1;
+      transform: scale(1.2);
+    }
+
+    /* --- ツールチップ --- */
+    .menu-button::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%) scale(0.9);
+      background: rgba(255, 192, 203, 0.9);
+      color: #fff;
+      font-size: 13px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+
+    .menu-button:hover::after {
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
+    }
+
+    /* ツールチップに矢印を付ける */
+    .menu-button::before {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: rgba(255, 192, 203, 0.9);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .menu-button:hover::before {
+      opacity: 1;
     }
   </style>
 </head>
 <body>
 
   <div class="menu-container">
-    <i class="fas fa-book menu-button" title="バックログ表示"></i>
-    <i class="fas fa-save menu-button" title="セーブ"></i>
-    <i class="fas fa-cog menu-button" title="設定"></i>
-    <i class="fas fa-home menu-button" title="ホームへ戻る"></i>
+    <i class="fas fa-book menu-button" data-tooltip="バックログを見る"></i>
+    <i class="fas fa-save menu-button" data-tooltip="セーブする"></i>
+    <i class="fas fa-cog menu-button" data-tooltip="設定を開く"></i>
+    <i class="fas fa-home menu-button" data-tooltip="ホームに戻る"></i>
   </div>
 
 </body>
