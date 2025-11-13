@@ -9,7 +9,7 @@
       position: fixed;
       inset: 0;
       overflow: hidden;
-      background: url("../asetts/img/bg/Bg1.jpg") no-repeat center center fixed;
+   
       background-size: cover;
       font-family: "Segoe UI", system-ui, -apple-system, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
     }
