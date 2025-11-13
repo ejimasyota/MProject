@@ -10,6 +10,8 @@
       inset: 0;
       overflow: hidden;
       background-size: cover;
+      width: 100vw;
+      height:100vh;
       font-family: "Segoe UI", system-ui, -apple-system, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
     }
 
