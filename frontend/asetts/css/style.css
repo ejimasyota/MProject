@@ -248,14 +248,15 @@ button:disabled:active {
 /* 2.キャラクター名表示エリア */
 .CharacterNameArea {
   position: absolute;
-  right: 12px;
-  bottom: 300 - 48px;
+  top: 8px; 
+  left: 12px;     /* 左からの位置 */
   background: rgba(255,255,255,0.06);
   padding: 8px 12px;
   border-radius: 6px;
   font-weight: 600;
   backdrop-filter: blur(4px);
 }
+
 /* 3.メッセージボックスコンテナ */
 .MessageBoxContainer {
   position: fixed;
