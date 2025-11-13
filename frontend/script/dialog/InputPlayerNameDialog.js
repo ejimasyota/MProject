@@ -48,9 +48,9 @@ class NameFormDialog {
       // 3. クラス設定
       PlayerNameInput.className = "TextInputForm";
       // 4. プレースホルダを設定
-      PlayerNameInput.placeholder = "プレイヤー名（最大20文字）";
+      PlayerNameInput.placeholder = "プレイヤー名（最大10文字）";
       // 5. 最大桁数を設定
-      PlayerNameInput.maxLength = 20;
+      PlayerNameInput.maxLength = 10;
       // 6. フォーカス設定
       PlayerNameInput.focus();
 

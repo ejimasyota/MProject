@@ -116,7 +116,7 @@ ________________________________________________________________________________
   -- 1.プレイヤーテーブル
   CREATE TABLE PlayerInfo (
     playerid UUID PRIMARY KEY,                         --プレイヤーID
-    playername VARCHAR(20) NOT NULL,                   --プレイヤー名
+    playername VARCHAR(10) NOT NULL,                   --プレイヤー名
     registdate TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP  --登録年月日
   )
   -- 2.セーブテーブル
@@ -197,6 +197,7 @@ ________________________________________________________________________________
                                             "Right" : false,  --右画像をフェードアウトさせるFLG
                                             "Left"  : false   --左画像をフェードアウトさせるFLG
                                             }],
+                                  "BgWave" : false;           --背景画像を揺らすFLG
                                 }],
                      "Select": [                           --選択肢
                           {
