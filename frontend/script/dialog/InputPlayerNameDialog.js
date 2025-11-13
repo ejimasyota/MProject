@@ -71,7 +71,19 @@ class NameFormDialog {
       ResultButton.disabled = true;
 
       /* --------------------------------------------
-       * 8. DOMの組み立て
+       * 8. エラーメッセージ作成
+       * --------------------------------------------*/
+      // 1. ボタン要素作成
+      const ErrorMessage = document.createElement("p");
+      // 2. クラス設定
+      ErrorMessage.className = "ErrorMessage"
+      // 3. 表示位置設定
+      ErrorMessage.style.textAlign = "center"
+      // 4. 空文字を設定
+      ErrorMessage.textContent = "";
+
+      /* --------------------------------------------
+       * 9. DOMの組み立て
        * --------------------------------------------*/
       // 1. ボタンラッパーにボタンを格納
       ButtonWrapper.appendChild(ResultButton);
@@ -83,13 +95,15 @@ class NameFormDialog {
       DialogBox.appendChild(TitleElement);
       // 5. ダイアログに入力フォームコンテナを格納
       DialogBox.appendChild(InputButtonForm);
-      // 6. ダイアログコンテナにダイアログを格納(コンテナというよりバックドロップ)
+      // 6. ダイアログにエラーメッセージを格納
+      DialogBox.appendChild(ErrorMessage);
+      // 7. ダイアログコンテナにダイアログを格納(コンテナというよりバックドロップ)
       DialogContainer.appendChild(DialogBox);
-      // 7. ダイアログコンテナをボディに格納
+      // 8. ダイアログコンテナをボディに格納
       document.body.appendChild(DialogContainer);
 
       /* --------------------------------------------
-       * 9. 入力状況によるボタンの状態制御処理
+       * 10. 入力状況によるボタンの状態制御処理
        * --------------------------------------------*/
       PlayerNameInput.addEventListener("input", () => {
         /* 1. 名前の入力値が空でない場合 */
@@ -104,7 +118,7 @@ class NameFormDialog {
       });
 
       /* --------------------------------------------
-       * 10. 決定ボタン押下時処理
+       * 11. 決定ボタン押下時処理
        * --------------------------------------------*/
       ResultButton.addEventListener("click", async () => {
         /* 1. 事前処理 */
@@ -154,8 +168,8 @@ class NameFormDialog {
           }
         /* 6. 例外処理 */
         } catch (Error) {
-          // 1. デバッグログ出力
-          console.error("通信エラー :", Error);
+          // 1. エラーメッセージ設定
+          ErrorMessage.textContent = "通信エラーが発生しました。お手数ですが再度実行してください。"
           // 2. ボタンの活性を入力状態に応じて復帰
           ResultButton.disabled = PlayerNameInput.value.trim().length === 0;
           // 3. 処理終了
@@ -171,6 +185,6 @@ class NameFormDialog {
 }
 
 /* --------------------------------------------
- * 11. グローバルに設定
+ * 12. グローバルに設定
  * --------------------------------------------*/
 window.NameFormDialog = NameFormDialog;
