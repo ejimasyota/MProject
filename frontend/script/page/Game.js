@@ -49,6 +49,7 @@ document.addEventListener("DOMContentLoaded", function() {
  * ストーリーJSONの読み込み・配列化
  * =========================================================*/
 async function StoryInfoGetJson() {
+    console.log("STORY_INFO_JSON_PATH",STORY_INFO_JSON_PATH)
   // 1. JSONファイルを読み込み
   const Response = await fetch(STORY_INFO_JSON_PATH);
   console.log("Response",Response)
