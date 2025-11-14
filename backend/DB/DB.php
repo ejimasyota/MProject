@@ -1,6 +1,6 @@
 <?php
 /* ログ関数 */
-require_once "../Utility/LogWrite.php";
+require_once __DIR__ . "/../Utility/LogWrite.php";
 
 /* 各接続情報をenvから取得 */
 // 1.サーバホスト(仮のIP。本番では別端末のIPを使用する)
