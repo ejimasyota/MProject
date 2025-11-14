@@ -12,7 +12,6 @@
     "Flg": [
       {
         "MessageBoxFlg": false,
-        "NameInputFlg": true,
         "EndFlg": "",
         "CutInFlg": false,
         "DisabledFlg": false,
