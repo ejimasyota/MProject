@@ -132,6 +132,8 @@ class NameFormDialog {
         const PlayerId = localStorage.getItem("M_PlayerId");
         // 3. エラーメッセージを初期化
         ErrorMessage.textContent = "";
+        // 4. セーブスロットIDをセッションから取得
+        const SaveSlotId = sessionStorage.getItem("SaveSlotId");
 
         /* 2. 通信処理 */
         try {
@@ -146,10 +148,12 @@ class NameFormDialog {
                 "Content-Type": "application/json",
               },
                 body: JSON.stringify({
-                  // 3. プレイヤーID
+                  // 3. プレイヤー名
                   PlayerName: PlayerNameInput.value.trim(),
-                  // 4. セーブスロットID
-                  PlayerId: PlayerId
+                  // 4. プレイヤーID
+                  PlayerId: PlayerId,
+                  // 5. セーブスロットID
+                  SaveSlotId : SaveSlotId
                 }),
           });
 

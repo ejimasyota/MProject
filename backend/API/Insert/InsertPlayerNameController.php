@@ -29,20 +29,11 @@ $PostData = json_decode(file_get_contents("php://input"), true);
 $PlayerName = $PostData["PlayerName"] ?? null;
 // 3.プレイヤーIDを取得
 $PlayerId = $PostData["PlayerId"] ?? null;
+// 4.セーブスロットIDを取得
+$SaveSlotId = $PostData["SaveSlotId"] ?? null;
 
 /* ==========================================================
- * 3. 入力チェック
- * ========================================================== */
-if (empty($PlayerName) || empty($PlayerId)) {
-    echo json_encode([
-        "success" => false,
-        "message" => "入力データが不足しています。"
-    ]);
-    exit;
-}
-
-/* ==========================================================
- * 4. 登録処理
+ * 3. 登録処理
  * ========================================================== */
 try {
     /* ------------------------------
@@ -54,16 +45,15 @@ try {
      * 1. PlayerInfo テーブル更新処理
      * ------------------------------ */
     $stmt = $pdo->prepare("
-        INSERT INTO PlayerInfo (playerid, playername)
-        VALUES (:playerid, :playername)
-        ON DUPLICATE KEY UPDATE playername = :playername_update
+        INSERT INTO PlayerInfo (playerid, playername, saveslotid)
+        VALUES (:playerid, :playername, :saveslotid)
     ");
     // 1.プレイヤーID設定
     $stmt->bindValue(":playerid", $PlayerId, PDO::PARAM_STR);
     // 2.プレイヤー名設定
     $stmt->bindValue(":playername", $PlayerName, PDO::PARAM_STR);
-    // 3.重複時更新用のプレイヤー名設定
-    $stmt->bindValue(":playername_update", $PlayerName, PDO::PARAM_STR);
+    // 3.セーブスロットID設定
+    $stmt->bindValue(":saveslotid", $SaveSlotId, PDO::PARAM_STR);
     // 4.SQL実行
     $stmt->execute();
 
@@ -71,12 +61,14 @@ try {
      * 2. SaveInfo テーブル登録処理
      * ------------------------------ */
     $stmt = $pdo->prepare("
-        INSERT INTO SaveInfo (playerid, registdate)
-        VALUES (:playerid, CURRENT_TIMESTAMP)
+        INSERT INTO SaveInfo (playerid, registdate, saveslotid)
+        VALUES (:playerid, CURRENT_TIMESTAMP, :saveslotid)
     ");
     // 1.プレイヤーID設定
     $stmt->bindValue(":playerid", $PlayerId, PDO::PARAM_STR);
-    // 2.SQL実行
+    // 2.セーブスロットID設定
+    $stmt->bindValue(":saveslotid", $SaveSlotId, PDO::PARAM_STR);
+    // 3.SQL実行
     $stmt->execute();
 
     /* ------------------------------
@@ -93,7 +85,7 @@ try {
     ]);
 
 /* ==========================================================
- * 5. 例外処理
+ * 4. 例外処理
  * ========================================================== */
 } catch (PDOException $e) {
     // 1.ロールバック

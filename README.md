@@ -163,6 +163,12 @@ sudo chgrp -R www-data /var/www/html/MProject/backend
 # グループに書き込み権限を付与  
 sudo chmod -R 775 /var/www/html/MProject/backend
 
+# PlayerInfoテーブルにSaveSlotを追加(設計レベルのミス)  
+psql -U ejima -d Matu -p 5433  
+  
+ALTER TABLE PlayerInfo
+ADD saveslotid INTEGER NOT NULL,
+
 # サイトを起動（IPはテスト端末のWSLのものなので本番では別のIPを利用する）
 http://172.20.14.20:8080/frontend/pages/Start.php
 

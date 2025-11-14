@@ -117,6 +117,7 @@ ________________________________________________________________________________
   CREATE TABLE PlayerInfo (
     playerid UUID PRIMARY KEY,                         --プレイヤーID
     playername VARCHAR(10) NOT NULL,                   --プレイヤー名
+    saveslotid INTEGER NOT NULL,                       --セーブスロットID
     registdate TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP  --登録年月日
   )
   -- 2.セーブテーブル
