@@ -7,7 +7,7 @@ const Dialog = new DialogInfo();
 /**
  * セーブスロット選択画面の初期化処理
  */
-window.addEventListener("DOMContentLoaded", async () => {
+window.addEventListener("DOMContentLoaded", function() {
   /* ==========================================================
    * 定義
    * ========================================================== */
