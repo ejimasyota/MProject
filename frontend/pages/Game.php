@@ -26,10 +26,6 @@
         <line x1="7" y1="11" x2="15" y2="11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
         <line x1="7" y1="14" x2="15" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
         <line x1="7" y1="17" x2="12" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-
-        <path d="M19.5 14.5l-5 5c-.2.2-.4.3-.7.4l-3 .6c-.5.1-.9-.4-.8-.8l.6-3c0-.3.2-.5.4-.7l5-5 
-                c.8-.8 2-.8 2.8 0s.8 2 0 2.8z"
-              fill="currentColor"/>
       </svg>
     </button>
 
