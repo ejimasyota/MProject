@@ -18,7 +18,7 @@ window.addEventListener("DOMContentLoaded", async function() {
    * 各処理実行
    * ========================================================== */
   // 1. 初期開始時に、セーブをせずに終了したセーブスロットの削除処理
-  await DeleteTrashSaveSlot(PlayerId);
+  //await DeleteTrashSaveSlot(PlayerId);
   // 2. セーブスロット表示内容の取得処理
   await GetSaveSlot(PlayerId);
 });
