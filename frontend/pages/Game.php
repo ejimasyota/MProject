@@ -12,17 +12,20 @@
   <div class="GameContainer" role="application" aria-label="ゲーム画面"
      style="background: url('../asetts/img/bg/Bg1.jpg') no-repeat center center fixed; background-size: cover;">
     <div class="MenuContainer">
-      <button class="MenuButton" data-tooltip="バックログを見る" aria-label="バックログ">
-        <svg xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24" width="100" height="100" fill="currentColor">
-          <rect x="5" y="3" width="14" height="18" rx="2" ry="2" />
-          <rect x="5" y="3" width="3" height="18" fill="#ffffff" />
-          <circle cx="6.5" cy="7" r="1.2" />
-          <circle cx="6.5" cy="12" r="1.2" />
-          <circle cx="6.5" cy="17" r="1.2" />
-        </svg>
-      </button>
-      
+    <button class="MenuButton" data-tooltip="バックログを見る" aria-label="バックログ">
+      <svg xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24" width="100" height="100" fill="currentColor">->
+        <rect x="6" y="2" width="14" height="20" rx="2.5" ry="2.5"/>
+        <circle cx="6" cy="5"  r="1.2" fill="#ffffff"/>
+        <circle cx="6" cy="8.5" r="1.2" fill="#ffffff"/>
+        <circle cx="6" cy="12" r="1.2" fill="#ffffff"/>
+        <circle cx="6" cy="15.5" r="1.2" fill="#ffffff"/>
+        <circle cx="6" cy="19" r="1.2" fill="#ffffff"/>
+        <path d="M4.8 4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2z"/>
+      </svg>
+    </button>
+
+
         <button class="MenuButton" data-tooltip="セーブする" aria-label="セーブ">
           <svg xmlns="http://www.w3.org/2000/svg" 
               viewBox="0 0 24 24" width="100" height="100" fill="currentColor">
