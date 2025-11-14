@@ -161,9 +161,11 @@ class NameFormDialog {
           if (Result && Result.success) {
             // 1. ダイアログをDOMから削除
             document.body.removeChild(DialogContainer);
-            // 2. Promiseを成功で解決
+            // 2. セッションにプレイヤー名を保持
+            sessionStorage.setItem("PlayerName",PlayerNameInput.value.trim())
+            // 3. Promiseを成功で解決
             Resolve(Result);
-            // 3. 処理終了
+            // 4. 処理終了
             return;
           } else {
             /* 5. 通信失敗時 */
