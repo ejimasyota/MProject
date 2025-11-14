@@ -157,6 +157,12 @@ sudo systemctl restart apache2
 # ドキュメントルートを確認
 sudo grep -R "DocumentRoot" /etc/apache2/sites-enabled/
 
+# バックエンドのグループをwww-dataに変更  
+sudo chgrp -R www-data /var/www/html/MProject/backend
+
+# グループに書き込み権限を付与  
+sudo chmod -R 775 /var/www/html/MProject/backend
+
 # サイトを起動（IPはテスト端末のWSLのものなので本番では別のIPを利用する）
 http://172.20.14.20:8080/frontend/pages/Start.php
 
