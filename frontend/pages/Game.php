@@ -12,24 +12,16 @@
   <div class="GameContainer" role="application" aria-label="ゲーム画面"
      style="background: url('../asetts/img/bg/Bg1.jpg') no-repeat center center fixed; background-size: cover;">
     <div class="MenuContainer">
-    <button class="MenuButton" data-tooltip="バックログを見る" aria-label="バックログ">
-      <svg xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24" width="100" height="100" fill="currentColor">
-        <rect x="4" y="5" width="14" height="15" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/>
-
-        <line x1="4"  y1="7" x2="18" y2="7" stroke="currentColor" stroke-width="2"/>
-        <circle cx="6"  cy="5" r="1.3" fill="currentColor"/>
-        <circle cx="10" cy="5" r="1.3" fill="currentColor"/>
-        <circle cx="14" cy="5" r="1.3" fill="currentColor"/>
-        <circle cx="18" cy="5" r="1.3" fill="currentColor"/>
-
-        <line x1="7" y1="11" x2="15" y2="11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        <line x1="7" y1="14" x2="15" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        <line x1="7" y1="17" x2="12" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-    </button>
-
-
+      <button class="MenuButton" data-tooltip="バックログを見る" aria-label="バックログ">
+        <svg xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24" width="100" height="100" fill="currentColor">
+          <rect x="4" y="5" width="14" height="15" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/>
+          <line x1="4"  y1="7" x2="18" y2="7" stroke="currentColor" stroke-width="2"/>
+          <line x1="7" y1="11" x2="15" y2="11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="7" y1="14" x2="15" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="7" y1="17" x2="12" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
 
         <button class="MenuButton" data-tooltip="セーブする" aria-label="セーブ">
           <svg xmlns="http://www.w3.org/2000/svg" 
