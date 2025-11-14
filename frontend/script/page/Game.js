@@ -86,6 +86,7 @@ async function GetSaveDataInfo(){
                 PlayerId: PLAYER_ID
             }),
         });
+        console.log("Response",Response)
 
        /* --------------------------------------------
         *  3. レスポンス処理
