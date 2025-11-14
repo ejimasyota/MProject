@@ -167,7 +167,7 @@ sudo chmod -R 775 /var/www/html/MProject/backend
 psql -U ejima -d Matu -p 5433  
   
 ALTER TABLE PlayerInfo
-ADD saveslotid INTEGER NOT NULL,
+ADD COLUMN saveslotid INTEGER NOT NULL;
 
 # SaveInfoテーブルのstoryidをNULL許容に変更  
 psql -U ejima -d Matu -p 5433  

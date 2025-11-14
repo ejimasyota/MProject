@@ -7,7 +7,7 @@ const Dialog = new DialogInfo();
 /**
  * セーブスロット選択画面の初期化処理
  */
-window.addEventListener("DOMContentLoaded", function() {
+window.addEventListener("DOMContentLoaded", async function() {
   /* ==========================================================
    * 定義
    * ========================================================== */
@@ -18,9 +18,9 @@ window.addEventListener("DOMContentLoaded", function() {
    * 各処理実行
    * ========================================================== */
   // 1. 初期開始時に、セーブをせずに終了したセーブスロットの削除処理
-  DeleteTrashSaveSlot(PlayerId);
+  await DeleteTrashSaveSlot(PlayerId);
   // 2. セーブスロット表示内容の取得処理
-  GetSaveSlot(PlayerId);
+  await GetSaveSlot(PlayerId);
 });
 
 async function DeleteTrashSaveSlot(PlayerId){
