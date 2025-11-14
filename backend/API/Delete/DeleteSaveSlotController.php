@@ -70,6 +70,21 @@ try {
     $stmt->execute();
 
     /* ------------------------------
+     * 3. PlayerInfoテーブル削除
+     * ------------------------------ */
+    $stmt = $pdo->prepare("
+        DELETE FROM PlayerInfo
+        WHERE playerid = :playerid
+          AND saveslotid = :slotid
+    ");
+    // 1.プレイヤーID設定
+    $stmt->bindValue(":playerid", $PlayerId, PDO::PARAM_STR);
+    // 2.セーブスロットID設定
+    $stmt->bindValue(":slotid", $SlotId, PDO::PARAM_INT);
+    // 3.SQL実行
+    $stmt->execute();
+
+    /* ------------------------------
      * コミット処理
      * ------------------------------ */
     $pdo->commit();

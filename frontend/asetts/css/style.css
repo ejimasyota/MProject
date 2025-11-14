@@ -10,6 +10,47 @@ html,body{
 }
 
 /* --------------------------------------------
+ *  ページ共通レイアウト（ヘッダー＋メイン）
+ * --------------------------------------------*/
+header {
+  background-color: #00ca92;
+  width: 100%;
+  height: 50px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+body {
+  background-color: #f9f9f9;
+  margin: 0;
+}
+main {
+  display: flex;
+  align-items: center;      /* 垂直方向の中央寄せ */
+  justify-content: center;  /* 水平方向の中央寄せ */
+  height: calc(100vh - 50px); /* ヘッダー分を差し引いた高さ */
+  background-color: #ededed;
+  padding: 20px; /* 小さなインナー余白 */
+  box-sizing: border-box;
+}
+
+/* ListContainer を中央に表示するためのスタイル */
+.ListContainer {
+  width: 700px;
+  max-width: calc(100% - 40px);
+  margin: 0; /* main の flex で中央に配置されるのでマージン不要 */
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 6px gray;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+/* --------------------------------------------
  *  ボタン
  * --------------------------------------------*/
 /* 1.ボタン基底クラス */
