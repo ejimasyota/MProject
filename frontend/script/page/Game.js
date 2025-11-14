@@ -108,18 +108,17 @@ async function GetSaveDataInfo(){
                 *  6. 取得内容が存在しない場合
                 * --------------------------------------------*/
                 // 1. メッセージダイアログを表示
-                MESSAGE_DIALOG.ShowDialog("セーブデータが存在しないため最初から開始します。"), () => {
-                    // 2. 名前入力ダイアログを表示
-                    NAME_FORM_DIALOG.ShowNameDialog().then((Result) => {
-                        // 3. Promise解決時(rejectは無い)
-                        if(Result){
-                            // 4. プレイヤー名を保持
-                            PLAYER_NAME = sessionStorage.getItem("PlayerName");
-                            // 5. セッションからプレイヤー名を削除(セッション内容の管理が複雑になるのは嫌なので)
-                            sessionStorage.removeItem("PlayerName");
-                        }
-                    })
-                };
+                MESSAGE_DIALOG.ShowDialog("セーブデータが存在しないため最初から開始します。")
+                // 2. 名前入力ダイアログを表示
+                NAME_FORM_DIALOG.ShowNameDialog().then((Result) => {
+                    // 3. Promise解決時(rejectは無い)
+                    if(Result){
+                        // 4. プレイヤー名を保持
+                        PLAYER_NAME = sessionStorage.getItem("PlayerName");
+                        // 5. セッションからプレイヤー名を削除(セッション内容の管理が複雑になるのは嫌なので)
+                        sessionStorage.removeItem("PlayerName");
+                    }
+                })
             }
         }
     /* 6. 例外処理 */
