@@ -14,16 +14,25 @@
     <div class="MenuContainer">
     <button class="MenuButton" data-tooltip="バックログを見る" aria-label="バックログ">
       <svg xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24" width="100" height="100" fill="currentColor">->
-        <rect x="6" y="2" width="14" height="20" rx="2.5" ry="2.5"/>
-        <circle cx="6" cy="5"  r="1.2" fill="#ffffff"/>
-        <circle cx="6" cy="8.5" r="1.2" fill="#ffffff"/>
-        <circle cx="6" cy="12" r="1.2" fill="#ffffff"/>
-        <circle cx="6" cy="15.5" r="1.2" fill="#ffffff"/>
-        <circle cx="6" cy="19" r="1.2" fill="#ffffff"/>
-        <path d="M4.8 4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2z"/>
+          viewBox="0 0 24 24" width="100" height="100" fill="currentColor">
+        <rect x="4" y="5" width="14" height="15" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/>
+
+        <line x1="4"  y1="7" x2="18" y2="7" stroke="currentColor" stroke-width="2"/>
+        <circle cx="6"  cy="5" r="1.3" fill="currentColor"/>
+        <circle cx="10" cy="5" r="1.3" fill="currentColor"/>
+        <circle cx="14" cy="5" r="1.3" fill="currentColor"/>
+        <circle cx="18" cy="5" r="1.3" fill="currentColor"/>
+
+        <line x1="7" y1="11" x2="15" y2="11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="7" y1="14" x2="15" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="7" y1="17" x2="12" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+
+        <path d="M19.5 14.5l-5 5c-.2.2-.4.3-.7.4l-3 .6c-.5.1-.9-.4-.8-.8l.6-3c0-.3.2-.5.4-.7l5-5 
+                c.8-.8 2-.8 2.8 0s.8 2 0 2.8z"
+              fill="currentColor"/>
       </svg>
     </button>
+
 
 
         <button class="MenuButton" data-tooltip="セーブする" aria-label="セーブ">
