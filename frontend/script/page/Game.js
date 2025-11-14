@@ -23,7 +23,7 @@ let PLAYER_NAME = "";
 // 1. ストーリー管理JSON
 const STORY_INFO_JSON_PATH = "../Data/StoryInfo.json";
 // 2. セーブデータ取得API
-const SELECT_SAVE_API_PATH = "../../backend/API/SelectSaveInfoController.php";
+const SELECT_SAVE_API_PATH = "../../backend/API/Select/SelectSaveInfoController.php";
 
 /* --------------------------------------------
  *  3. インスタンス管理変数
@@ -39,9 +39,26 @@ const MESSAGE_BOX_DIALOG = new MessageBoxDialog();
  * 画面ロード時処理
  * =========================================================*/
 document.addEventListener("DOMContentLoaded", function() {
-    // 1. セーブデータの取得処理呼び出し
+    // 1. ストーリー内容のJSONを読み込み・配列化
+    StoryInfoGetJson();
+    // 2. セーブデータの取得処理呼び出し
     GetSaveDataInfo();
 });
+
+/* =========================================================
+ * ストーリーJSONの読み込み・配列化
+ * =========================================================*/
+async function StoryInfoGetJson() {
+  // 1. JSONファイルを読み込み
+  const Response = await fetch(STORY_INFO_JSON_PATH);
+  // 2. 読み込み成功時
+  if(Response.ok) {
+    // 3. レスポンスをJSONにパース
+    const JsonResponse = await Response.json();
+    // 4. ストーリー内容を保持する配列に展開
+    STORY_INFO.push(...JsonResponse);
+  }
+}
 
 /* =========================================================
  * セーブデータの取得処理
@@ -84,13 +101,25 @@ async function GetSaveDataInfo(){
             *  5. 取得内容が存在する場合
             * --------------------------------------------*/
            if(Result.Items && Result.Items.length > 0){
-                
+
            }else{
-            /* --------------------------------------------
-            *  6. 取得内容が存在しない場合
-            * --------------------------------------------*/
-           }
-            return;
+                /* --------------------------------------------
+                *  6. 取得内容が存在しない場合
+                * --------------------------------------------*/
+                // 1. メッセージダイアログを表示
+                MESSAGE_DIALOG.ShowDialog("セーブデータが存在しないため最初から開始します。"), () => {
+                    // 2. 名前入力ダイアログを表示
+                    NAME_FORM_DIALOG.ShowNameDialog().then((Result) => {
+                        // 3. Promise解決時(rejectは無い)
+                        if(Result){
+                            // 4. プレイヤー名を保持
+                            PLAYER_NAME = sessionStorage.getItem("PlayerName");
+                            // 5. セッションからプレイヤー名を削除(セッション内容の管理が複雑になるのは嫌なので)
+                            sessionStorage.removeItem("PlayerName");
+                        }
+                    })
+                };
+            }
         }
     /* 6. 例外処理 */
     } catch (Error) {
