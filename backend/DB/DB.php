@@ -8,7 +8,7 @@ $host = "localhost";
 // 2.ポート
 $port = "5433";
 // 3.DB
-$dbname = "matu";
+$dbname = "Matu";
 // 4.ユーザー
 $user = "ejima";
 // 5.パスワード
