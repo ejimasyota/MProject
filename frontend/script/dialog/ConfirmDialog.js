@@ -6,38 +6,42 @@ class DialogInfo {
    *  ダイアログの表示処理
    * --------------------------------------------*/
   ShowDialog(message = "") {
-    // 1.ダイアログの親要素の作成（バックドロップ）
-    const dialogContainer = document.createElement("div");
-    // 2.ダイアログの親要素のクラス名を設定
-    dialogContainer.className = "ConfirmContainer";
-    // 3.ダイアログ本体カードの作成
-    const dialogBox = document.createElement("div");
-    // 4.カードのクラス名を設定
-    dialogBox.className = "DialogBox";
-    // 5.ダイアログ表示テキストの作成
-    const dialogMessage = document.createElement("p");
-    // 6.ダイアログ表示テキストにメッセージを設定
-    dialogMessage.textContent = message;
-    // 7.表示テキストをカードにセット
-    dialogBox.appendChild(dialogMessage);
-    // 8.閉じるボタンの要素を作成
-    const closeButton = document.createElement("button");
-    // 9.閉じるボタンのテキストを設定
-    closeButton.textContent = "閉じる";
-    // 10.閉じるボタンのクラス名を設定
-    closeButton.classList.add("ButtonInfo", "PinkButton");
-    // 11.閉じるボタンをカードに追加
-    dialogBox.appendChild(closeButton);
-    // 12.カードをバックドロップに追加
-    dialogContainer.appendChild(dialogBox);
-    // 13.ダイアログ本体をボディに追加
-    document.body.appendChild(dialogContainer);
+    return new Promise((resolve) => {
+      // 1.ダイアログの親要素の作成（バックドロップ）
+      const dialogContainer = document.createElement("div");
+      // 2.ダイアログの親要素のクラス名を設定
+      dialogContainer.className = "ConfirmContainer";
+      // 3.ダイアログ本体カードの作成
+      const dialogBox = document.createElement("div");
+      // 4.カードのクラス名を設定
+      dialogBox.className = "DialogBox";
+      // 5.ダイアログ表示テキストの作成
+      const dialogMessage = document.createElement("p");
+      // 6.ダイアログ表示テキストにメッセージを設定
+      dialogMessage.textContent = message;
+      // 7.表示テキストをカードにセット
+      dialogBox.appendChild(dialogMessage);
+      // 8.閉じるボタンの要素を作成
+      const closeButton = document.createElement("button");
+      // 9.閉じるボタンのテキストを設定
+      closeButton.textContent = "閉じる";
+      // 10.閉じるボタンのクラス名を設定
+      closeButton.classList.add("ButtonInfo", "PinkButton");
+      // 11.閉じるボタンをカードに追加
+      dialogBox.appendChild(closeButton);
+      // 12.カードをバックドロップに追加
+      dialogContainer.appendChild(dialogBox);
+      // 13.ダイアログ本体をボディに追加
+      document.body.appendChild(dialogContainer);
 
-    /* 閉じるボタンの押下時イベントを定義 */
-    closeButton.onclick = () => {
-      // 1.ダイアログを閉じる
-      document.body.removeChild(dialogContainer);
-    };
+      /* 閉じるボタンの押下時イベントを定義 */
+      closeButton.onclick = () => {
+        // 1.ダイアログを閉じる
+        document.body.removeChild(dialogContainer);
+        // 2.Promiseを解決
+        resolve(true);
+      };
+    })
   }
 
   /* --------------------------------------------
