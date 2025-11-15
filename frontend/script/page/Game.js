@@ -104,9 +104,9 @@ async function GetSaveDataInfo(){
            /* --------------------------------------------
             *  5. 取得内容が存在する場合
             * --------------------------------------------*/
-           if(Result.Items && Result.Items.length > 0){
+           if(Result.items && Result.items.length > 0){
             /* 1. バックログの設定処理 */
-            Result.Items.forEach((BackLogItem)=>{
+            Result.items.forEach((BackLogItem)=>{
                 BACKLOG_INFO.push({
                    // 1. ストーリーテキスト
                    StoryText :  BackLogItem.storytext,
@@ -118,9 +118,9 @@ async function GetSaveDataInfo(){
 
             })
             /* 2. プレイヤー名設定 */
-            PLAYER_NAME = Result.Items[0].playername;
+            PLAYER_NAME = Result.items[0].playername;
             /* 3. ストーリーIDを渡す */
-            GameDisplayInfo(Result.Items[0].storyid);
+            GameDisplayInfo(Result.items[0].storyid);
            }else{
                 /* --------------------------------------------
                 *  6. 取得内容が存在しない場合
