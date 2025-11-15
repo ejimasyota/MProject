@@ -140,7 +140,7 @@ async function GetSaveDataInfo(){
  * ホームへ戻る処理
  * =========================================================*/
 function HomeRedirect() {
-  Dialog.ShowConfirmDialog("セーブスロット選択画面へ戻りますか？").then((Result) => {
+  MESSAGE_DIALOG.ShowConfirmDialog("セーブスロット選択画面へ戻りますか？").then((Result) => {
     if(Result){
        /* --------------------------------------------
         *  1. リファラーを取得
