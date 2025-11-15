@@ -389,7 +389,7 @@ async function GameDisplayInfo(StoryId){
 /* =========================================================
  * キャラクター画像表示処理
  * =========================================================*/
-function ShowCharaImages(ImgPath, StoryItem) {
+function ShowCharaImages(ImgPath) {
  /* --------------------------------------------
   *  1. 事前処理
   * --------------------------------------------*/
@@ -419,7 +419,6 @@ function ShowCharaImages(ImgPath, StoryItem) {
     // 4. ゲームコンテナの直下に追加
     GameContainer.appendChild(CharaLayer);
   }
-  console.log("ImgPath",ImgPath)
   /* 3. 画像パスオブジェクトが存在しない場合 */
   if (!ImgPath){
     // 1. 処理終了
@@ -433,65 +432,52 @@ function ShowCharaImages(ImgPath, StoryItem) {
     /* 1. 定義 */
     // 1. 位置ごとの画像パスを取得
     const ImagePath = ImgPath[Position] ?? "";
-    console.log("ImagePath",ImagePath)
-    /* 2. 各アニメーションFLG定義(画像表示アニメーションは今後も追加していく想定) */
-    // 1. フェードインFLG
-    const FadeInFlg = StoryItem?.Effect?.[0]?.FadeIn?.[0] ?? {};
-    // 2. フェードアウトFLG
-    const FadeOutFlg = StoryItem?.Effect?.[0]?.FadeOut?.[0] ?? {};
 
-    /* 3. 画像パスが存在する場合 */
+    /* 2. 画像パスが存在する場合 */
     if (ImagePath && typeof ImagePath === "string" && ImagePath.trim() !== "") {
       /* 事前処理 */
       // 1. 同位置のimg要素を取得
       const Existing = CharaLayer.querySelector(`img.CharaImage.Position-${Position}`);
-      console.log("Existing",Existing)
-      /* 既存画像が存在する場合 */
+
+      /* 同位置に存在する画像があれば削除 */
       if (Existing) {
-        if (FadeOutFlg[Position]) {
-          // ラッパーでフェードアウト
-          const Wrapper = document.createElement("div");
-          Wrapper.style.position = "absolute";
-          Wrapper.appendChild(Existing.cloneNode(true));
-          CharaLayer.appendChild(Wrapper);
-
-          // 元の画像は即削除
-          Existing.remove();
-
-          const FadeImg = Wrapper.firstChild;
-          FadeImg.classList.add("FadeOut");
-          FadeImg.addEventListener("transitionend", () => Wrapper.remove());
-          setTimeout(() => { if (document.contains(Wrapper)) Wrapper.remove(); }, 1000);
-        } else {
-          Existing.remove();
-        }
+        // 1. クラスの除去
+        Existing.classList.remove("Show");
+        // 2. クラス設定
+        Existing.classList.add("Hide");
+        // 3. 要素の除去
+        setTimeout(() => {
+          try { Existing.remove(); } catch (e) {}
+        }, 300);
       }
 
-      // 新しい画像は追加
-      if (ImagePath && ImagePath.trim()) {
-        const Img = document.createElement("img");
-        Img.alt = Position + " Character";
-        Img.classList.add("CharaImage", `Position-${Position}`);
-        Img.src = ImagePath;
-        Img.decoding = "async";
-        Img.loading = "lazy";
+      /* 画像の作成処理 */
+      // 1. IMG要素作成
+      const Img = document.createElement("img");
+      // 2. ALT属性設定
+      Img.alt = Position + " Character";
+      // 3. クラス設定
+      Img.classList.add("CharaImage", `Position-${Position}`);
+      // 4. パスを設定
+      Img.src = ImagePath;
+      // 5. 画像の読み込み準備
+      Img.decoding = "async";
+      // 6. 画像読込
+      Img.loading = "lazy";
 
-        const applyFadeIn = () => {
-          requestAnimationFrame(() => {
-            Img.classList.remove("FadeOut");
-            if (FadeInFlg[Position]) Img.classList.add("FadeIn");
-          });
-        };
+      /* アニメーション設定 */
+      Img.addEventListener("load", () => {
+        // 1. フレームでの設定
+        requestAnimationFrame(() => {
+          // 2. クラス除去
+          Img.classList.remove("Hide");
+          // 3. クラス設定
+          Img.classList.add("Show");
+        });
+      });
 
-        if (Img.complete && Img.naturalWidth !== 0) {
-          applyFadeIn();
-        } else {
-          Img.addEventListener("load", applyFadeIn);
-        }
-
-        Img.addEventListener("error", () => Img.remove());
-        CharaLayer.appendChild(Img);
-      }
+      /* 画像の追加 */
+      CharaLayer.appendChild(Img);
     }
   });
 }
@@ -542,13 +528,13 @@ function HideCharaImages(Positions = null) {
   TargetNodeList.forEach((Element) => {
     /* 1. 事前処理 */
     // 1. 既に非表示処理中の要素はスキップ
-    if (Element.classList.contains("FadeOut")){
+    if (Element.classList.contains("Hide")){
        return;
     }
-    // 2. フェードインクラス除去
-    Element.classList.remove("FadeIn");
+    // 2. クラス除去
+    Element.classList.remove("Show");
     // 3. クラス設定
-    Element.classList.add("FadeOut");
+    Element.classList.add("Hide");
 
     /* 2. DOMからの削除処理 */
     setTimeout(() => {
@@ -561,6 +547,7 @@ function HideCharaImages(Positions = null) {
     }, 300); 
   });
 }
+
 
 /* =========================================================
  * BGM再生処理
