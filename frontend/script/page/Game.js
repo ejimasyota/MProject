@@ -451,8 +451,7 @@ function ShowCharaImages(ImgPath, StoryItem) {
           Existing.classList.remove("FadeIn");
         }
 
-
-        // 2. 要素の除去
+        /* 要素の除去 */
         setTimeout(() => {
           try { Existing.remove(); } catch (e) {}
         }, 300);
@@ -476,10 +475,15 @@ function ShowCharaImages(ImgPath, StoryItem) {
       Img.addEventListener("load", () => {
         // 1. フレームでの設定
         requestAnimationFrame(() => {
-          // 2. クラス除去
+          /* 事前処理 */
+          // 1. クラス除去
           Img.classList.remove("FadeOut");
-          // 3. クラス設定
-          Img.classList.add("FadeIn");
+
+          /* 各アニメーション定義 */
+          // 1. フェードインFLGがTRUEの場合
+          if(FadeInFlg){
+            Img.classList.add("FadeIn");
+          }
         });
       });
 
