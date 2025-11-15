@@ -520,9 +520,9 @@ function ShowCharaImages(ImgPath, StoryItem) {
           }
           // 5. 背景ウェーブ
           if(BgWaveFlg){
-            Img.classList.add("BgWave");
+            GameContainer.classList.add("BgWave");
           }else{
-            Img.classList.remove("BgWave");
+            GameContainer.classList.remove("BgWave");
           }
         });
       });
