@@ -143,13 +143,7 @@ async function GetSaveSlot(PlayerId){
     /* ==========================================================
      * 通信成功時
      * ========================================================== */
-    console.log("Result.items.length",Result.items.length)
-    console.log("Result",Result)
-    console.log("Result.items",Result.items)
-    console.log("Result.Items",Result.items)
-    console.log("Result.success",Result.success)
-    console.log("Array.isArray(Result.items)",Array.isArray(Result.items))
-    if (Result && Result.success && Array.isArray(Result.items) && Result.items.length > 0) {
+    if (Result.success && Array.isArray(Result.items) && Result.items.length > 0) {
      /* ------------------------------
       * 1. 取得結果が存在する場合
       * ------------------------------*/
@@ -203,7 +197,7 @@ function RenderSaveSlots(container, SaveItems) {
     Slot.classList.add("SaveSlot");
     // 3.スロットIDを設定(どうせ連番なのでインデントを設定)
     Slot.dataset.slotId = i;
-
+    console.log("SaveItems",SaveItems)
     /* 2. セーブデータが存在する場合 */
     if (SaveItems[i]) {
       console.log("SaveItems",SaveItems[i])
