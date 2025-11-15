@@ -436,7 +436,6 @@ function ShowCharaImages(ImgPath, StoryItem) {
     /* 2. アニメーションFLG定義 */
     // 1. フェードインFLG
     const FadeInFlg = StoryItem.Effect[0].FadeIn[0]?.[Position];
-    console.log("FadeInFlg",FadeInFlg)
 
     /* 3. 画像パスが存在する場合 */
     if (ImagePath && typeof ImagePath === "string" && ImagePath.trim() !== "") {
@@ -446,8 +445,11 @@ function ShowCharaImages(ImgPath, StoryItem) {
 
       /* 同位置に存在する画像があれば削除 */
       if (Existing) {
-        // 1. クラスの除去
-        Existing.classList.remove("FadeIn");
+        if(!FadeInFlg){
+          // 1. クラスの除去
+          Existing.classList.remove("FadeIn");
+        }
+
         // 2. クラス設定
         Existing.classList.add("FadeOut");
         // 3. 要素の除去
