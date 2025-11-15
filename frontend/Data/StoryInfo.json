@@ -29,7 +29,7 @@
       }
     ],
     "BgmPath": "",
-    "FaceImgPath": "../asetts/img/icon/chara1/Chara1-Icon-1.png",
+    "FaceImgPath": "/frontend/asetts/img/icon/chara1/Chara1-Icon-1.png",
     "Effect": [
       {
         "Spin": [
@@ -240,11 +240,11 @@
     "%%%%%%%%": ""
   },
   {
-    "StoryId": 5,
+    "StoryId": 4,
     "Narrator": "A男",
     "StoryTitle": "始まり",
     "StoryText": "おはよう!{PlayerName}君！",
-    "Next": 6,
+    "Next": 5,
     "BgPath": "../asetts/img/bg/Bg-School-1.jpg",
     "SePath": "",
     "Voice": "",
@@ -320,7 +320,7 @@
     "%%%%%%%%": ""
   },
   {
-    "StoryId": 6,
+    "StoryId": 5,
     "Narrator": "",
     "StoryTitle": "始まり",
     "StoryText": "どうする？",
@@ -393,11 +393,11 @@
     "Select": [
       {
         "StoryText": "挨拶する",
-        "Next": 7
+        "Next": 6
       },
       {
         "StoryText": "決して挨拶はしない",
-        "Next": 8
+        "Next": 7
       }
     ],
     "$$$$$$$$": "",
@@ -409,11 +409,11 @@
     "%%%%%%%%": ""
   },
   {
-    "StoryId": 7,
+    "StoryId": 6,
     "Narrator": "{PlayerName}",
     "StoryTitle": "始まり",
     "StoryText": "おはよう",
-    "Next": 9,
+    "Next": 8,
     "BgPath": "../asetts/img/bg/Bg-School-1.jpg",
     "SePath": "",
     "Voice": "",
@@ -489,11 +489,11 @@
     "%%%%%%%%": ""
   },
   {
-    "StoryId": 8,
+    "StoryId": 7,
     "Narrator": "{PlayerName}",
     "StoryTitle": "始まり",
     "StoryText": "・・・",
-    "Next": 10,
+    "Next": 9,
     "BgPath": "../asetts/img/bg/Bg-School-1.jpg",
     "SePath": "",
     "Voice": "",
