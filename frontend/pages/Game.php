@@ -15,7 +15,7 @@
     <!-- メニューコンテナ -->
     <div class="MenuContainer">
       <!-- 1. バックログ表示ボタン -->
-      <button class="MenuButton" data-tooltip="バックログを見る" aria-label="バックログ" onClick="ShowBacklogDialog()">
+      <button class="MenuButton" data-tooltip="バックログを見る" aria-label="バックログ" onClick="ShowBacklogDialog(event)">
         <svg xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24" width="100" height="100" fill="currentColor">
           <rect x="4" y="5" width="14" height="15" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/>
@@ -27,7 +27,7 @@
       </button>
 
       <!-- 3. セーブボタン -->
-      <button class="MenuButton" data-tooltip="セーブする" aria-label="セーブ" onClick="SaveInfo()">
+      <button class="MenuButton" data-tooltip="セーブする" aria-label="セーブ" onClick="SaveInfo(event)">
         <svg xmlns="http://www.w3.org/2000/svg" 
             viewBox="0 0 24 24" width="100" height="100" fill="currentColor">
           <path d="M4 3h12l4 4v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>
@@ -45,7 +45,7 @@
       </button>
 
       <!-- 5. ホームへ戻るボタン -->
-      <button class="MenuButton" data-tooltip="ホームに戻る" aria-label="ホーム" onClick="HomeRedirect()">
+      <button class="MenuButton" data-tooltip="ホームに戻る" aria-label="ホーム" onClick="HomeRedirect(event)">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100" height="100">
           <path d="M12 3l9 8h-3v8h-12v-8H3l9-8z"/>
         </svg>
