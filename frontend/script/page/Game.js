@@ -447,13 +447,43 @@ function ShowCharaImages(ImgPath, StoryItem) {
 
       /* 既存画像が存在する場合 */
       if (Existing) {
+        /* 事前定義 */
         // 1. フェードイン用クラスを除去
         Existing.classList.remove("FadeIn");
-        // 2. 既存画像は即削除
-        try { Existing.remove(); } catch (e) {}
-        // 3. レイヤー内が空の場合はレイヤーも削除
-        if (CharaLayer && CharaLayer.children.length === 0) {
-          try { CharaLayer.remove(); } catch (e) {}
+
+        /* フェードアウトFLGに応じた処理 */
+        if (FadeOutFlg[Position]) {
+          /* 事前定義 */
+          // 1. フェードアウトクラスを設定
+          Existing.classList.add("FadeOut");
+
+          /* アニメーション終了後の削除処理 */
+          const onEnd = () => {
+            // 1. 画像要素の削除
+            try { Existing.remove(); } catch(e){}
+            // 2. イベント解除
+            Existing.removeEventListener("transitionend", onEnd);
+            // 3. レイヤー内が空の場合はレイヤー自体を削除
+            if (CharaLayer && CharaLayer.children.length === 0) {
+              try { CharaLayer.remove(); } catch(e){}
+            }
+          };
+          // 4. transition終了を監視
+          Existing.addEventListener("transitionend", onEnd);
+
+          /* フォールバック削除 */
+          setTimeout(() => {
+            // 1. 対象要素がまだ存在する場合
+            if (document.contains(Existing)) onEnd();
+          }, 1000);
+        } else {
+          /* フェードアウト不要なら即削除 */
+          // 1. 画像要素を削除
+          try { Existing.remove(); } catch(e){}
+          // 2. レイヤー内が空の場合はレイヤーも削除
+          if (CharaLayer && CharaLayer.children.length === 0) {
+            try { CharaLayer.remove(); } catch(e){}
+          }
         }
       }
 
