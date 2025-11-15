@@ -432,7 +432,13 @@ function CalcPlayTime(Start, End) {
  /* ==========================================================
   * 戻り値の設定
   * ========================================================== */
-  return `${DiffHours}時間${DiffMinutes}分`;
+ /* 1. どちらも0の場合は0時間として返す */
+  if (DiffHours === 0 && DiffMinutes === 0) {
+    return `0時間`;
+  } else {
+    /* 2. そうでない場合は正常に返す */
+    return `${DiffHours}時間${DiffMinutes}分`;
+  }
 }
 
 /**
