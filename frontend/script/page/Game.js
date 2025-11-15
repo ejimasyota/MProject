@@ -103,7 +103,7 @@ async function GetSaveDataInfo(){
            /* --------------------------------------------
             *  5. 取得内容が存在する場合
             * --------------------------------------------*/
-           if(Result.items && Result.items.SaveInfo){
+           if(Result.items && Result.items.SaveInfo.length > 0){
             /* 1. バックログの設定処理 */
             Result.items.BackLogInfo.forEach((BackLogItem)=>{
                 BACKLOG_INFO.push({

@@ -119,7 +119,11 @@ try {
         echo json_encode([
             "success" => true,
             "message" => "データが存在しません。",
-            "items"   => []
+            "items"   => [
+                "PlayerInfo"  => [],
+                "SaveInfo"    => [],
+                "BackLogInfo" => []
+            ]
         ]);
     }
 /* ==========================================================
