@@ -267,6 +267,8 @@ button:disabled:active {
   border-radius: 6px;
   background-color: #f0f0f0;
   border: 1px solid #ccc;
+  min-width: 500px;
+  max-width: 500px;
 }
 /* 2.キャラ名部分 */
 .BacklogLine span.NarratorName {
@@ -301,6 +303,8 @@ button:disabled:active {
     font-weight: bold;
     border: none;         
     transition: background-color 0.2s ease; 
+    min-width: 200px;
+    max-width: 200px;
 }
 .SelectButton:hover {
     background-color: #ff6f9f;
