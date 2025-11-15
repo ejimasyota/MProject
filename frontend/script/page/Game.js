@@ -310,7 +310,7 @@ async function GameDisplayInfo(StoryId){
           typeof ImagePath[pos] === "string" && ImagePath[pos].trim() !== ""
         )
       ) {
-        ShowCharaImages(ImagePath);
+        ShowCharaImages(ImagePath, StoryItem);
     } else {
       /* --------------------------------------------
         *  9. キャラ画像のいずれかも存在しない場合
