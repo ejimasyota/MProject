@@ -1,9 +1,9 @@
 [
   {
     "StoryId": 1,
-    "Narrator": "A子",
+    "Narrator": "{PlayerName}",
     "StoryTitle": "始まり",
-    "StoryText": "今日もいい天気",
+    "StoryText": "おれ{PlayerName}だけど、今日もいい天気",
     "Next": 2,
     "Back": 0,
     "BgPath": "../assets/img/bg/bg.png",

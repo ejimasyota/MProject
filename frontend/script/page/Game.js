@@ -162,7 +162,7 @@ async function GameDisplayInfo(StoryId){
     });
 
     /* --------------------------------------------
-    *  3. プレイヤー名置換処理
+    *  3. テキスト内のプレイヤー名置換処理
     * --------------------------------------------*/
     // 1. ストーリーテキストを取得
     let StoryText = StoryItem.StoryText;
@@ -172,8 +172,19 @@ async function GameDisplayInfo(StoryId){
         StoryText = StoryText.replaceAll("{PlayerName}", PLAYER_NAME);
     }
 
+    /* --------------------------------------------
+    *  4. キャラ名のプレイヤー名置換処理
+    * --------------------------------------------*/
+    // 1. キャラ名を取得
+    let CharaName = StoryItem.Narrator;
+
+    // 2. {PlayerName} が含まれている場合はプレイヤー名で置換処理を実行
+    if (typeof CharaName === "string" && CharaName.includes("{PlayerName}")) {
+        CharaName = CharaName.replaceAll("{PlayerName}", PLAYER_NAME);
+    }
+
    /* --------------------------------------------
-    *  4. メッセージボックス表示FLGがTRUEの場合
+    *  5. メッセージボックス表示FLGがTRUEの場合
     * --------------------------------------------*/
    console.log("StoryItem.Flg[0].MessageBoxFlg",StoryItem.Flg[0].MessageBoxFlg)
     if(StoryItem.Flg[0].MessageBoxFlg){
@@ -181,7 +192,7 @@ async function GameDisplayInfo(StoryId){
         // 1. テキスト設定
         StoryText,
         // 2. キャラ名設定
-        StoryItem.Narrator,
+        CharaName,
         // 3. 顔アイコンの表示
         ""
       );
