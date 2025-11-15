@@ -237,7 +237,7 @@ function RenderSaveSlots(container, SaveItems) {
       const EndDate = SaveSlotItem.updatedate ?? SaveSlotItem.updateDate
         ? (() => { 
             const DateObject = new Date(SaveSlotItem.updatedate ?? SaveSlotItem.updateDate); 
-            return `${DateObject.getFullYear()}/${(DateObject.getMonth()+1).toString().padStart(2,'0')}/${DateObject.getDate().toString().padStart(2,'0')} ${DateObject.getHours().toString().padStart(2,'0')}:${DateObject.getMinutes().toString().padStart(2,'0')}` 
+            return `${DateObject.getFullYear()}年${(DateObject.getMonth()+1).toString().padStart(2,'0')}月${DateObject.getDate().toString().padStart(2,'0')}日 ${DateObject.getHours().toString().padStart(2,'0')}時${DateObject.getMinutes().toString().padStart(2,'0')}分` 
           })()
         : null;
 
