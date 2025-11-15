@@ -247,8 +247,22 @@ async function GameDisplayInfo(StoryId){
       GameContainer.style.backgroundSize = "cover";
     }
 
+    /* --------------------------------------------
+    *  8. キャラ画像のいずれかが存在する場合
+    * --------------------------------------------*/
+    if(StoryItem.CharaImgPath[0] && (StoryItem.CharaImgPath[0].Center !== "" || StoryItem.CharaImgPath[0].Right !== "" || StoryItem.CharaImgPath[0].Left !== "")){
+      // 1. キャラ画像表示関数を設定
+      ShowCharaImages(StoryItem.CharaImgPath[0]);
+    }else{
+     /* --------------------------------------------
+      *  9. キャラ画像のいずれかも存在しない場合
+      * --------------------------------------------*/
+      // 1. 非表示関数を呼び出し
+      HideCharaImages()
+    }
+
    /* --------------------------------------------
-    *  8. メッセージボックス表示FLGがTRUEの場合
+    *  10. メッセージボックス表示FLGがTRUEの場合
     * --------------------------------------------*/
     if(StoryItem.Flg[0].MessageBoxFlg){
       await MESSAGE_BOX_DIALOG.ShowMessage(
@@ -261,7 +275,7 @@ async function GameDisplayInfo(StoryId){
       );
     }else{
        /* --------------------------------------------
-        *  9. メッセージボックス表示FLGがFALSEの場合
+        *  11. メッセージボックス表示FLGがFALSEの場合
         * --------------------------------------------*/
        // 1. メッセージボックスの非表示処理を実行
        await MESSAGE_BOX_DIALOG.HideMessage();
@@ -277,40 +291,204 @@ async function GameDisplayInfo(StoryId){
     })
 
     /* --------------------------------------------
-     *  11. 選択肢表示を行わない場合
+     *  12. 選択肢表示を行わない場合
      * --------------------------------------------*/
     if(StoryItem.Select.length === 0 && StoryItem.Next){
         // 1. 次のシーンIDを保持
         NEXT_STORY_ID = StoryItem.Next;
     }else{
       /* --------------------------------------------
-       *  12. 選択肢表示を行う場合
+       *  13. 選択肢表示を行う場合
        * --------------------------------------------*/
        // 1. 選択肢の表示
        DisplaySelectButton(StoryItem.Select);
     }
 
     /* --------------------------------------------
-    *  13. ボイス再生処理
+    *  14. ボイス再生処理
     * --------------------------------------------*/
     if (StoryItem.Voice && StoryItem.Voice !== "") {
       LoadVoice(StoryItem.Voice);
     }
 
     /* --------------------------------------------
-    *  14. SE再生処理
+    *  15. SE再生処理
     * --------------------------------------------*/
     if (StoryItem.SePath && StoryItem.SePath !== "") {
       LoadSe(StoryItem.SePath);
     }
 
     /* --------------------------------------------
-    *  15. BGM再生処理
+    *  16. BGM再生処理
     * --------------------------------------------*/
     if (StoryItem.BgmPath && StoryItem.BgmPath !== "") {
       PlayBgm(StoryItem.BgmPath);
     }
 }
+
+/* =========================================================
+ * キャラクター画像表示処理
+ * =========================================================*/
+function ShowCharaImages(ImgPath) {
+ /* --------------------------------------------
+  *  1. 事前処理
+  * --------------------------------------------*/
+  // 1. ゲームコンテナ取得
+  const GameContainer = document.querySelector(".GameContainer");
+  // 2. キャラレイヤー取得
+  let CharaLayer = document.getElementById("CharaLayer");
+  // 3. 表示位置
+  const Positions = ["Center", "Left", "Right"];
+
+ /* --------------------------------------------
+  *  2. バリデーションチェック
+  * --------------------------------------------*/
+  /* 1. ゲームコンテナが存在しない場合 */
+  if (!GameContainer){
+    // 1. 処理終了
+    return;
+  }
+  /* 2. キャラレイヤーが存在しない場合 */
+  if (!CharaLayer) {
+    // 1. DIV要素作成
+    CharaLayer = document.createElement("div");
+    // 2. ID設定
+    CharaLayer.id = "CharaLayer";
+    // 3. クラス設定
+    CharaLayer.className = "CharaLayer";
+    // 4. ゲームコンテナの直下に追加
+    GameContainer.appendChild(CharaLayer);
+  }
+  /* 3. 画像パスオブジェクトが存在しない場合 */
+  if (!ImgPath){
+    // 1. 処理終了
+    return;
+  }
+
+ /* --------------------------------------------
+  *  3. 位置ごとの表示処理
+  * --------------------------------------------*/
+  Positions.forEach(Position => {
+    /* 1. 定義 */
+    // 1. 位置ごとの画像パスを取得
+    const ImagePath = ImgPath[Position] ?? "";
+
+    /* 2. 画像パスが存在する場合 */
+    if (ImagePath && typeof ImagePath === "string" && ImagePath.trim() !== "") {
+      /* 事前処理 */
+      // 1. 同位置のimg要素を取得
+      const Existing = CharaLayer.querySelector(`img.CharaImage.Position-${Position}`);
+
+      /* 同位置に存在する画像があれば削除 */
+      if (Existing) {
+        // 1. クラスの除去
+        Existing.classList.remove("Show");
+        // 2. クラス設定
+        Existing.classList.add("Hide");
+        // 3. 要素の除去
+        setTimeout(() => {
+          try { Existing.remove(); } catch (e) {}
+        }, 300);
+      }
+
+      /* 画像の作成処理 */
+      // 1. IMG要素作成
+      const Img = document.createElement("img");
+      // 2. ALT属性設定
+      Img.alt = Position + " Character";
+      // 3. クラス設定
+      Img.classList.add("CharaImage", `Position-${Position}`);
+      // 4. パスを設定
+      Img.src = ImagePath;
+      // 5. 画像の読み込み準備
+      Img.decoding = "async";
+      // 6. 画像読込
+      Img.loading = "lazy";
+
+      /* アニメーション設定 */
+      Img.addEventListener("load", () => {
+        // 1. フレームでの設定
+        requestAnimationFrame(() => {
+          // 2. クラス除去
+          Img.classList.remove("Hide");
+          // 3. クラス設定
+          Img.classList.add("Show");
+        });
+      });
+
+      /* 画像の追加 */
+      CharaLayer.appendChild(Img);
+    }
+  });
+}
+
+/* =========================================================
+ * キャラクター画像非表示処理
+ * =========================================================*/
+function HideCharaImages(Positions = null) {
+  /* --------------------------------------------
+   *  1. 事前処理
+   * --------------------------------------------*/
+  // 1. キャラクターレイヤーを取得
+  const CharaLayer = document.getElementById("CharaLayer");
+  // 2. 非表示対象のノードリストを保持する
+  let TargetNodeList;
+
+  /* --------------------------------------------
+   *  2. バリデーションチェック
+   * --------------------------------------------*/
+  // 1. キャラクターレイヤーが存在しない場合は処理終了
+  if (!CharaLayer) return;
+
+  /* --------------------------------------------
+   *  3. 非表示対象の画像を取得
+   * --------------------------------------------*/
+  if (!Positions) {
+    /* 1. Positionsが指定されていない場合 */
+    // 1. すべての画像を指定
+    TargetNodeList = Array.from(CharaLayer.querySelectorAll("img.CharaImage"));
+  } else {
+    /* 2. Positionsが指定されている場合 */
+    // 1. ノードリストを初期化
+    TargetNodeList = [];
+    // 2. 初期化処理を実行
+    Positions.forEach(Position => {
+      // 3. 指定位置のimg要素を取得
+      const Element = CharaLayer.querySelector(`img.CharaImage.Position-${Position}`);
+      // 4. 存在する場合のみリストに追加
+      if (Element) {
+        TargetNodeList.push(Element);
+      }
+    });
+  }
+
+  /* --------------------------------------------
+   *  4. 非表示アニメーション処理
+   * --------------------------------------------*/
+  TargetNodeList.forEach((Element) => {
+    /* 1. 事前処理 */
+    // 1. 既に非表示処理中の要素はスキップ
+    if (Element.classList.contains("Hide")){
+       return;
+    }
+    // 2. クラス除去
+    Element.classList.remove("Show");
+    // 3. クラス設定
+    Element.classList.add("Hide");
+
+    /* 2. DOMからの削除処理 */
+    setTimeout(() => {
+      // 1. エラー発生時(まぁ関係なく削除)
+      try { Element.remove(); } catch (e) {}
+      // 2. キャラレイヤーの削除
+      if (CharaLayer && CharaLayer.children.length === 0) {
+        try { CharaLayer.remove(); } catch (e) {}
+      }
+    }, 300); 
+  });
+}
+
+
 
 /* =========================================================
  * BGM再生処理
