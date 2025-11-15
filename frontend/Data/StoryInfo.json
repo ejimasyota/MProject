@@ -2,8 +2,8 @@
   {
     "StoryId": 1,
     "Narrator": "{PlayerName}",
-    "StoryTitle": "始まり",
-    "StoryText": "おれ{PlayerName}だけど、今日もいい天気",
+    "StoryTitle": "目覚め",
+    "StoryText": "おれ{PlayerName}だけど、今日もいつも通り…かな？",
     "Next": 2,
     "BgPath": "../asetts/img/bg/Bg-School-1.jpg",
     "SePath": "",
@@ -17,7 +17,7 @@
         "EyeCatchFlg": false,
         "GameFlg": false,
         "AutoSaveFlg": false,
-        "NarratorFlg" : false
+        "NarratorFlg": false
       }
     ],
     "MoviePath": "",
@@ -33,39 +33,19 @@
     "Effect": [
       {
         "Spin": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
         ],
         "Jump": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
         ],
         "Wave": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
         ],
         "FadeIn": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
         ],
         "FadeOut": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
         ],
         "BgWave": false
       }
@@ -81,9 +61,9 @@
   },
   {
     "StoryId": 2,
-    "Narrator": "???",
-    "StoryTitle": "始まり",
-    "StoryText": "おーい",
+    "Narrator": "通学路",
+    "StoryTitle": "登校",
+    "StoryText": "駅までの道はいつもと同じ景色だ。誰かの声が聞こえる気がしたが……",
     "Next": 3,
     "BgPath": "../asetts/img/bg/Bg-School-1.jpg",
     "SePath": "",
@@ -97,7 +77,7 @@
         "EyeCatchFlg": false,
         "GameFlg": false,
         "AutoSaveFlg": false,
-        "NarratorFlg" : false
+        "NarratorFlg": false
       }
     ],
     "MoviePath": "",
@@ -113,39 +93,19 @@
     "Effect": [
       {
         "Spin": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
         ],
         "Jump": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
         ],
         "Wave": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
         ],
         "FadeIn": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
         ],
         "FadeOut": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
         ],
         "BgWave": false
       }
@@ -162,12 +122,12 @@
   {
     "StoryId": 3,
     "Narrator": "{PlayerName}",
-    "StoryTitle": "始まり",
-    "StoryText": "あ!",
+    "StoryTitle": "呼び声",
+    "StoryText": "あっ！聞こえた。誰かが呼んでいる――",
     "Next": 4,
     "BgPath": "../asetts/img/bg/Bg-School-1.jpg",
     "SePath": "",
-    "Voice": "../asetts/music/voice/chara1/Chara1-voice-1.mp3",
+    "Voice": "",
     "Flg": [
       {
         "MessageBoxFlg": true,
@@ -177,7 +137,7 @@
         "EyeCatchFlg": false,
         "GameFlg": false,
         "AutoSaveFlg": false,
-        "NarratorFlg" : false
+        "NarratorFlg": false
       }
     ],
     "MoviePath": "",
@@ -193,39 +153,19 @@
     "Effect": [
       {
         "Spin": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
         ],
         "Jump": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
         ],
         "Wave": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
         ],
         "FadeIn": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
         ],
         "FadeOut": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
         ],
         "BgWave": false
       }
@@ -242,8 +182,8 @@
   {
     "StoryId": 4,
     "Narrator": "A男",
-    "StoryTitle": "始まり",
-    "StoryText": "おはよう!{PlayerName}君！",
+    "StoryTitle": "登場",
+    "StoryText": "おはよう！{PlayerName}、今いいところだよ。",
     "Next": 5,
     "BgPath": "../asetts/img/bg/Bg-School-1.jpg",
     "SePath": "",
@@ -257,7 +197,7 @@
         "EyeCatchFlg": false,
         "GameFlg": false,
         "AutoSaveFlg": false,
-        "NarratorFlg" : false
+        "NarratorFlg": false
       }
     ],
     "MoviePath": "",
@@ -273,39 +213,19 @@
     "Effect": [
       {
         "Spin": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
         ],
         "Jump": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
         ],
         "Wave": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
         ],
         "FadeIn": [
-          {
-            "Center": true,
-            "Right": true,
-            "Left": true
-          }
+          { "Center": true, "Right": true, "Left": true }
         ],
         "FadeOut": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
         ],
         "BgWave": true
       }
@@ -322,7 +242,7 @@
   {
     "StoryId": 5,
     "Narrator": "",
-    "StoryTitle": "始まり",
+    "StoryTitle": "選択",
     "StoryText": "どうする？",
     "Next": null,
     "BgPath": "../asetts/img/bg/Bg-School-1.jpg",
@@ -337,7 +257,7 @@
         "EyeCatchFlg": false,
         "GameFlg": false,
         "AutoSaveFlg": false,
-        "NarratorFlg" : true
+        "NarratorFlg": true
       }
     ],
     "MoviePath": "",
@@ -353,52 +273,26 @@
     "Effect": [
       {
         "Spin": [
-          {
-            "Center": false,
-            "Right": true,
-            "Left": false
-          }
+          { "Center": false, "Right": true, "Left": false }
         ],
         "Jump": [
-          {
-            "Center": true,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": true, "Right": false, "Left": false }
         ],
         "Wave": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": true
-          }
+          { "Center": false, "Right": false, "Left": true }
         ],
         "FadeIn": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
         ],
         "FadeOut": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
         ],
         "BgWave": false
       }
     ],
     "Select": [
-      {
-        "StoryText": "挨拶する",
-        "Next": 6
-      },
-      {
-        "StoryText": "決して挨拶はしない",
-        "Next": 7
-      }
+      { "StoryText": "挨拶する", "Next": 6 },
+      { "StoryText": "無視する", "Next": 7 }
     ],
     "$$$$$$$$": "",
     "||||||||": "",
@@ -411,8 +305,8 @@
   {
     "StoryId": 6,
     "Narrator": "{PlayerName}",
-    "StoryTitle": "始まり",
-    "StoryText": "おはよう",
+    "StoryTitle": "挨拶",
+    "StoryText": "おはよう！と言い返すと、雰囲気が和らいだ。",
     "Next": 8,
     "BgPath": "../asetts/img/bg/Bg-School-1.jpg",
     "SePath": "",
@@ -426,7 +320,7 @@
         "EyeCatchFlg": false,
         "GameFlg": false,
         "AutoSaveFlg": false,
-        "NarratorFlg" : false
+        "NarratorFlg": false
       }
     ],
     "MoviePath": "",
@@ -442,39 +336,19 @@
     "Effect": [
       {
         "Spin": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
         ],
         "Jump": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
         ],
         "Wave": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
         ],
         "FadeIn": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": true, "Left": false }
         ],
         "FadeOut": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
         ],
         "BgWave": false
       }
@@ -491,9 +365,9 @@
   {
     "StoryId": 7,
     "Narrator": "{PlayerName}",
-    "StoryTitle": "始まり",
-    "StoryText": "・・・",
-    "Next": 9,
+    "StoryTitle": "無視",
+    "StoryText": "知らんぷりをして歩き去る。相手は少し驚いた顔をした。",
+    "Next": 8,
     "BgPath": "../asetts/img/bg/Bg-School-1.jpg",
     "SePath": "",
     "Voice": "",
@@ -506,7 +380,7 @@
         "EyeCatchFlg": false,
         "GameFlg": false,
         "AutoSaveFlg": false,
-        "NarratorFlg" : false
+        "NarratorFlg": false
       }
     ],
     "MoviePath": "",
@@ -522,39 +396,319 @@
     "Effect": [
       {
         "Spin": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
         ],
         "Jump": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
         ],
         "Wave": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
         ],
         "FadeIn": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
         ],
         "FadeOut": [
-          {
-            "Center": false,
-            "Right": false,
-            "Left": false
-          }
+          { "Center": false, "Right": false, "Left": false }
+        ],
+        "BgWave": false
+      }
+    ],
+    "Select": [],
+    "$$$$$$$$": "",
+    "||||||||": "",
+    "★★★★": "",
+    "@@@@@@@@": "",
+    "&&&&&&&&": "",
+    "^^^^^^^^": "",
+    "%%%%%%%%": ""
+  },
+  {
+    "StoryId": 8,
+    "Narrator": "A男",
+    "StoryTitle": "小さな事件",
+    "StoryText": "おい、ちょっと待て！話があるんだ。突然、近くの自転車が倒れ、周囲がざわつく。",
+    "Next": 9,
+    "BgPath": "../asetts/img/bg/Bg-School-1.jpg",
+    "SePath": "",
+    "Voice": "",
+    "Flg": [
+      {
+        "MessageBoxFlg": true,
+        "EndFlg": "",
+        "CutInFlg": false,
+        "DisabledFlg": false,
+        "EyeCatchFlg": false,
+        "GameFlg": false,
+        "AutoSaveFlg": false,
+        "NarratorFlg": false
+      }
+    ],
+    "MoviePath": "",
+    "CharaImgPath": [
+      {
+        "Center": "../asetts/img/chara/chara2/Chara2-1.png",
+        "Right": "../asetts/img/chara/chara1/Chara1-1.png",
+        "Left": "../asetts/img/chara/chara3/Chara3-1.png"
+      }
+    ],
+    "BgmPath": "",
+    "FaceImgPath": "../asetts/img/icon/chara3/Chara3-Icon-1.png",
+    "Effect": [
+      {
+        "Spin": [
+          { "Center": false, "Right": false, "Left": false }
+        ],
+        "Jump": [
+          { "Center": false, "Right": false, "Left": false }
+        ],
+        "Wave": [
+          { "Center": false, "Right": false, "Left": false }
+        ],
+        "FadeIn": [
+          { "Center": false, "Right": false, "Left": false }
+        ],
+        "FadeOut": [
+          { "Center": true, "Right": true, "Left": true }
+        ],
+        "BgWave": true
+      }
+    ],
+    "Select": [],
+    "$$$$$$$$": "",
+    "||||||||": "",
+    "★★★★": "",
+    "@@@@@@@@": "",
+    "&&&&&&&&": "",
+    "^^^^^^^^": "",
+    "%%%%%%%%": ""
+  },
+  {
+    "StoryId": 9,
+    "Narrator": "{PlayerName}",
+    "StoryTitle": "驚き",
+    "StoryText": "わっ！　大きな音と揺れに驚く。周囲が一瞬騒然となる。",
+    "Next": 10,
+    "BgPath": "../asetts/img/bg/Bg-School-1.jpg",
+    "SePath": "",
+    "Voice": "",
+    "Flg": [
+      {
+        "MessageBoxFlg": true,
+        "EndFlg": "",
+        "CutInFlg": false,
+        "DisabledFlg": false,
+        "EyeCatchFlg": false,
+        "GameFlg": false,
+        "AutoSaveFlg": false,
+        "NarratorFlg": false
+      }
+    ],
+    "MoviePath": "",
+    "CharaImgPath": [
+      {
+        "Center": "../asetts/img/chara/chara2/Chara2-1.png",
+        "Right": "../asetts/img/chara/chara1/Chara1-1.png",
+        "Left": "../asetts/img/chara/chara3/Chara3-1.png"
+      }
+    ],
+    "BgmPath": "",
+    "FaceImgPath": "",
+    "Effect": [
+      {
+        "Spin": [
+          { "Center": false, "Right": false, "Left": false }
+        ],
+        "Jump": [
+          { "Center": false, "Right": false, "Left": false }
+        ],
+        "Wave": [
+          { "Center": false, "Right": true, "Left": false }
+        ],
+        "FadeIn": [
+          { "Center": false, "Right": false, "Left": false }
+        ],
+        "FadeOut": [
+          { "Center": false, "Right": false, "Left": false }
+        ],
+        "BgWave": true
+      }
+    ],
+    "Select": [],
+    "$$$$$$$$": "",
+    "||||||||": "",
+    "★★★★": "",
+    "@@@@@@@@": "",
+    "&&&&&&&&": "",
+    "^^^^^^^^": "",
+    "%%%%%%%%": ""
+  },
+  {
+    "StoryId": 10,
+    "Narrator": "A男",
+    "StoryTitle": "大丈夫か？",
+    "StoryText": "大丈夫か？　転んだ人を手伝おうと皆が寄ってくる。状況が落ち着き始める。",
+    "Next": 11,
+    "BgPath": "../asetts/img/bg/Bg-School-1.jpg",
+    "SePath": "",
+    "Voice": "",
+    "Flg": [
+      {
+        "MessageBoxFlg": true,
+        "EndFlg": "",
+        "CutInFlg": false,
+        "DisabledFlg": false,
+        "EyeCatchFlg": false,
+        "GameFlg": false,
+        "AutoSaveFlg": false,
+        "NarratorFlg": false
+      }
+    ],
+    "MoviePath": "",
+    "CharaImgPath": [
+      {
+        "Center": "../asetts/img/chara/chara2/Chara2-1.png",
+        "Right": "../asetts/img/chara/chara1/Chara1-1.png",
+        "Left": "../asetts/img/chara/chara3/Chara3-1.png"
+      }
+    ],
+    "BgmPath": "",
+    "FaceImgPath": "../asetts/img/icon/chara3/Chara3-Icon-1.png",
+    "Effect": [
+      {
+        "Spin": [
+          { "Center": false, "Right": false, "Left": false }
+        ],
+        "Jump": [
+          { "Center": false, "Right": false, "Left": false }
+        ],
+        "Wave": [
+          { "Center": false, "Right": false, "Left": false }
+        ],
+        "FadeIn": [
+          { "Center": false, "Right": false, "Left": false }
+        ],
+        "FadeOut": [
+          { "Center": false, "Right": false, "Left": false }
+        ],
+        "BgWave": false
+      }
+    ],
+    "Select": [],
+    "$$$$$$$$": "",
+    "||||||||": "",
+    "★★★★": "",
+    "@@@@@@@@": "",
+    "&&&&&&&&": "",
+    "^^^^^^^^": "",
+    "%%%%%%%%": ""
+  },
+  {
+    "StoryId": 11,
+    "Narrator": "{PlayerName}",
+    "StoryTitle": "その後",
+    "StoryText": "一通りの騒ぎが収まって、みんなは学校に向かって歩き始める。朝の時間が戻る。",
+    "Next": 12,
+    "BgPath": "../asetts/img/bg/Bg-School-1.jpg",
+    "SePath": "",
+    "Voice": "",
+    "Flg": [
+      {
+        "MessageBoxFlg": true,
+        "EndFlg": "",
+        "CutInFlg": false,
+        "DisabledFlg": false,
+        "EyeCatchFlg": false,
+        "GameFlg": false,
+        "AutoSaveFlg": false,
+        "NarratorFlg": false
+      }
+    ],
+    "MoviePath": "",
+    "CharaImgPath": [
+      {
+        "Center": "../asetts/img/chara/chara2/Chara2-1.png",
+        "Right": "../asetts/img/chara/chara1/Chara1-1.png",
+        "Left": "../asetts/img/chara/chara3/Chara3-1.png"
+      }
+    ],
+    "BgmPath": "",
+    "FaceImgPath": "../asetts/img/icon/chara1/Chara1-Icon-1.png",
+    "Effect": [
+      {
+        "Spin": [
+          { "Center": false, "Right": false, "Left": false }
+        ],
+        "Jump": [
+          { "Center": false, "Right": false, "Left": false }
+        ],
+        "Wave": [
+          { "Center": false, "Right": false, "Left": false }
+        ],
+        "FadeIn": [
+          { "Center": false, "Right": false, "Left": false }
+        ],
+        "FadeOut": [
+          { "Center": false, "Right": false, "Left": false }
+        ],
+        "BgWave": false
+      }
+    ],
+    "Select": [],
+    "$$$$$$$$": "",
+    "||||||||": "",
+    "★★★★": "",
+    "@@@@@@@@": "",
+    "&&&&&&&&": "",
+    "^^^^^^^^": "",
+    "%%%%%%%%": ""
+  },
+  {
+    "StoryId": 12,
+    "Narrator": "{PlayerName}",
+    "StoryTitle": "登校完了",
+    "StoryText": "教室の前。今日はどう進むか、少し考えながらドアを開ける。",
+    "Next": null,
+    "BgPath": "../asetts/img/bg/Bg-School-1.jpg",
+    "SePath": "",
+    "Voice": "",
+    "Flg": [
+      {
+        "MessageBoxFlg": true,
+        "EndFlg": "",
+        "CutInFlg": false,
+        "DisabledFlg": false,
+        "EyeCatchFlg": false,
+        "GameFlg": false,
+        "AutoSaveFlg": false,
+        "NarratorFlg": false
+      }
+    ],
+    "MoviePath": "",
+    "CharaImgPath": [
+      {
+        "Center": "",
+        "Right": "",
+        "Left": ""
+      }
+    ],
+    "BgmPath": "",
+    "FaceImgPath": "",
+    "Effect": [
+      {
+        "Spin": [
+          { "Center": false, "Right": false, "Left": false }
+        ],
+        "Jump": [
+          { "Center": false, "Right": false, "Left": false }
+        ],
+        "Wave": [
+          { "Center": false, "Right": false, "Left": false }
+        ],
+        "FadeIn": [
+          { "Center": false, "Right": false, "Left": false }
+        ],
+        "FadeOut": [
+          { "Center": false, "Right": false, "Left": false }
         ],
         "BgWave": false
       }
