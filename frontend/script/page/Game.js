@@ -264,6 +264,7 @@ async function GameDisplayInfo(StoryId){
     /* 1. 定義 */
     // 1. ゲーム画面のコンテナの取得
     const GameContainer = document.querySelector(".GameContainer");
+    console.log("GameContainer",GameContainer)
 
     /* 2. ゲーム画面のコンテナの取得が行えない場合 */
     if (!GameContainer) {
