@@ -315,7 +315,6 @@ async function GameDisplayInfo(StoryId){
      /* --------------------------------------------
       *  9. キャラ画像のいずれかも存在しない場合
       * --------------------------------------------*/
-     console.log("dddd")
       HideCharaImages();
     }
 
@@ -434,7 +433,13 @@ function ShowCharaImages(ImgPath, StoryItem) {
     // 1. 位置ごとの画像パスを取得
     const ImagePath = ImgPath[Position] ?? "";
 
-    /* 2. 画像パスが存在する場合 */
+    /* 2. 各アニメーションFLG定義(画像表示アニメーションは今後も追加していく想定) */
+    // 1. フェードインFLG
+    const FadeInFlg = StoryItem?.Effect?.[0]?.FadeIn?.[0] ?? {};
+    // 2. フェードアウトFLG
+    const FadeOutFlg = StoryItem?.Effect?.[0]?.FadeOut?.[0] ?? {};
+
+    /* 3. 画像パスが存在する場合 */
     if (ImagePath && typeof ImagePath === "string" && ImagePath.trim() !== "") {
       /* 事前処理 */
       // 1. 同位置のimg要素を取得
@@ -444,8 +449,10 @@ function ShowCharaImages(ImgPath, StoryItem) {
       if (Existing) {
         // 1. フェードインクラスの除去
         Existing.classList.remove("FadeIn");
-        // 2. クラス設定
-        Existing.classList.add("Hide");
+        // 2. フェードアウトクラスを設定
+        if (FadeOutFlg[Position]) {
+          Existing.classList.add("FadeOut");
+        } 
         // 3. 要素の除去
         setTimeout(() => {
           try { Existing.remove(); } catch (e) {}
@@ -458,7 +465,7 @@ function ShowCharaImages(ImgPath, StoryItem) {
       // 2. ALT属性設定
       Img.alt = Position + " Character";
       // 3. クラス設定
-      Img.classList.add("CharaImage", `Position-${Position}`, "FadeOut");
+      Img.classList.add("CharaImage", `Position-${Position}`);
       // 4. パスを設定
       Img.src = ImagePath;
       // 5. 画像の読み込み準備
@@ -468,16 +475,13 @@ function ShowCharaImages(ImgPath, StoryItem) {
 
       /* アニメーション設定 */
       Img.addEventListener("load", () => {
-        /* 各定義(画像表示アニメーションは今後も追加していく想定) */
-        // 1. フェードインFLG
-        const FadeInFlg = StoryItem?.Effect?.[0]?.FadeIn?.[0] ?? {};
-        // 2. フェードアウトFLG
-        const FadeOutFlg = StoryItem?.Effect?.[0]?.FadeOut?.[0] ?? {};
-
         /* フレームでの設定 */
         requestAnimationFrame(() => {
           /* 事前処理 */
-          // 1. フェードアウトFLGがFALSEの場合はクラスを除去
+          // 1. フェードアウトを外す
+          Img.classList.remove("FadeOut");
+
+          // 2. フェードアウトFLGがFALSEの場合はクラスを除去
           if(!FadeOutFlg[Position]){
             Img.classList.remove("FadeOut");
           }
