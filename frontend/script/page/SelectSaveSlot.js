@@ -18,7 +18,7 @@ window.addEventListener("DOMContentLoaded", async function() {
    * 各処理実行
    * ========================================================== */
   // 1. 初期開始時に、セーブをせずに終了したセーブスロットの削除処理
-  // await DeleteTrashSaveSlot(PlayerId);
+  await DeleteTrashSaveSlot(PlayerId);
   // 2. セーブスロット表示内容の取得処理
   await GetSaveSlot(PlayerId);
 });
@@ -278,7 +278,7 @@ function RenderSaveSlots(container, SaveItems) {
       // 1. 終了時間格納
       const EndInfo  = CreateInfoElement(`プレイ終了日 : ${EndDate ?? "-"}`);
       // 2. プレイ時間格納
-      const TimeInfo = CreateInfoElement(`プレイ時間 : ${PlayTime}`);
+      const TimeInfo = CreateInfoElement(`プレイ時間   : ${PlayTime}`);
 
       /* 各情報の格納 */
       // 1. セーブスロットにヘッダー格納
