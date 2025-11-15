@@ -305,7 +305,7 @@ async function GameDisplayInfo(StoryId){
     * --------------------------------------------*/
     if(StoryItem.CharaImgPath[0] && (StoryItem.CharaImgPath[0].Center !== "" || StoryItem.CharaImgPath[0].Right !== "" || StoryItem.CharaImgPath[0].Left !== "")){
       // 1. キャラ画像表示関数を設定
-      ShowCharaImages(StoryItem.CharaImgPath[0]);
+      ShowCharaImages(StoryItem.CharaImgPath[0],StoryItem);
     }else{
      /* --------------------------------------------
       *  9. キャラ画像のいずれかも存在しない場合
@@ -385,7 +385,7 @@ async function GameDisplayInfo(StoryId){
 /* =========================================================
  * キャラクター画像表示処理
  * =========================================================*/
-function ShowCharaImages(ImgPath) {
+function ShowCharaImages(ImgPath, StoryItem) {
  /* --------------------------------------------
   *  1. 事前処理
   * --------------------------------------------*/
@@ -437,8 +437,8 @@ function ShowCharaImages(ImgPath) {
 
       /* 同位置に存在する画像があれば削除 */
       if (Existing) {
-        // 1. クラスの除去
-        Existing.classList.remove("Show");
+        // 1. フェードインクラスの除去
+        Existing.classList.remove("FadeIn");
         // 2. クラス設定
         Existing.classList.add("Hide");
         // 3. 要素の除去
@@ -463,12 +463,21 @@ function ShowCharaImages(ImgPath) {
 
       /* アニメーション設定 */
       Img.addEventListener("load", () => {
-        // 1. フレームでの設定
+        /* 各定義(画像表示アニメーションは今後も追加していく想定) */
+        // 1. フェードインFLG
+        const FadeInFlg = StoryItem.Effect?.[0]?.FadeIn ?? {};
+
+        /* フレームでの設定 */
         requestAnimationFrame(() => {
-          // 2. クラス除去
+          /* 事前処理 */
+          // 1. クラス除去
           Img.classList.remove("Hide");
-          // 3. クラス設定
-          Img.classList.add("Show");
+          
+          /* アニメーション設定 */
+          // 1. フェードイン
+          if (FadeInFlg[Position]) {
+            Img.classList.add("FadeIn");
+          }
         });
       });
 
