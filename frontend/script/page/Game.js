@@ -716,9 +716,6 @@ function PlayBgm(LoadPath) {
     });
 }
 
-
-
-
 /* =========================================================
  * ボイス再生処理
  * =========================================================*/
@@ -1173,8 +1170,8 @@ function SettingInfo(Event) {
   * 5. SEスライダー作成
   * ------------------------------*/
   // 1. スライダー作成関数を呼び出し
-  const SeSlider = CreateSlider("SE", SE_VOLUME, (val) => {
-    SE_VOLUME = val;
+  const SeSlider = CreateSlider("SE", SE_VOLUME, (Value) => {
+    SE_VOLUME = Value;
     document.querySelectorAll(".SEAudio").forEach(SeAudio => SeAudio.volume = SE_VOLUME);
   });
   // 2. SEスライダーをダイアログに格納
@@ -1184,8 +1181,8 @@ function SettingInfo(Event) {
   * 6. ボイススライダー作成
   * ------------------------------*/
   // 1. スライダー作成関数を呼び出し
-  const VoiceSlider = CreateSlider("VOICE", VOICE_VOLUME, (val) => {
-    VOICE_VOLUME = val;
+  const VoiceSlider = CreateSlider("VOICE", VOICE_VOLUME, (Value) => {
+    VOICE_VOLUME = Value;
     document.querySelectorAll(".VoiceAudio").forEach(SeAudio => SeAudio.volume= VOICE_VOLUME);
   });
   // 2. ボイススライダーをダイアログに格納
@@ -1195,11 +1192,19 @@ function SettingInfo(Event) {
   * 7. BGMスライダー作成
   * ------------------------------*/
   // 1. スライダー作成関数を呼び出し
-  const BgmSlider = CreateSlider("BGM", BGM_VOLUME, (val) => {
-    BGM_VOLUME = val;
-    document.querySelectorAll(".BGMAudio").forEach(SeAudio => SeAudio.volume = BGM_VOLUME);
+  const BgmSlider = CreateSlider("BGM", BGM_VOLUME, (Value) => {
+    // 1. BGM音量を更新
+    BGM_VOLUME = Value;
+
+    // 2. DOM上のBGM用AUDIO要素に反映
+    document.querySelectorAll(".BGMAudio").forEach(BgmAudio => BgmAudio.volume = BGM_VOLUME);
+
+    // 3. 現在再生しているBgmAudioオブジェクトがあれば音量を反映
+    if (window.BgmAudio) {
+      try { window.BgmAudio.volume = BGM_VOLUME; } catch (e) {}
+    }
   });
-  // 2. BGMスライダーをダイアログに格納
+  // 4. BGMスライダーをダイアログに格納
   SettingDialog.appendChild(BgmSlider);
 
  /* ------------------------------
@@ -1232,7 +1237,6 @@ function SettingInfo(Event) {
   // 3. バックドロップをボディに格納
   document.body.appendChild(Backdrop);
 }
-
 
 /* =========================================================
  * ホームへ戻る処理
