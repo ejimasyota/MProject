@@ -443,7 +443,7 @@ function ShowCharaImages(ImgPath, StoryItem) {
     // 4. ウェーブFLG
     const WaveFlg = StoryItem.Effect[0].Wave[0]?.[Position];
     // 5. 背景ウェーブFLG
-    const BgWaveFlg = StoryItem.Effect[0].BgWave[0]?.[Position];
+    const BgWaveFlg = StoryItem.Effect[0].BgWave;
 
     /* 3. 画像パスが存在する場合 */
     if (ImagePath && typeof ImagePath === "string" && ImagePath.trim() !== "") {
