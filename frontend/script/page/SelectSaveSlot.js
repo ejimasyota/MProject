@@ -18,7 +18,7 @@ window.addEventListener("DOMContentLoaded", async function() {
    * 各処理実行
    * ========================================================== */
   // 1. 初期開始時に、セーブをせずに終了したセーブスロットの削除処理
-  await DeleteTrashSaveSlot(PlayerId);
+  // await DeleteTrashSaveSlot(PlayerId);
   // 2. セーブスロット表示内容の取得処理
   await GetSaveSlot(PlayerId);
 });
@@ -200,6 +200,7 @@ function RenderSaveSlots(container, SaveItems) {
 
     /* 2. セーブデータが存在する場合 */
     if (SaveItems[i]) {
+      console.log("SaveItems",SaveItems[i])
       /* 各情報取得 */
       // 1.プレイヤー名取得
       const PlayerName = SaveItems[i].playername;
