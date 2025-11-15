@@ -489,7 +489,7 @@ function ShowCharaImages(ImgPath, StoryItem) {
             Img.classList.add("ShowImage");
           }
           // 2. スピン
-          if(FadeInFlg){
+          if(SpinFlg){
             Img.classList.add("Spin");
           }else{
             Img.classList.add("ShowImage");
