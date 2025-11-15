@@ -253,7 +253,7 @@ async function GameDisplayInfo(StoryId){
 
 
 /* =========================================================
- * 選択肢ボタン表示処理
+ * 選択肢ボタン表示処理（バックドロップ対応）
  * =========================================================*/
 function DisplaySelectButton(SelectArray) {
    /* --------------------------------------------
@@ -261,9 +261,30 @@ function DisplaySelectButton(SelectArray) {
     * --------------------------------------------*/
     // 1. 選択肢コンテナを呼び出し
     let SelectContainer = document.getElementById("SelectContainer");
+    // 2. バックドロップを呼び出し
+    let SelectBackdrop = document.getElementById("SelectBackdrop");
 
    /* --------------------------------------------
-    *  2. コンテナが存在しない場合
+    *  2. バックドロップが存在しない場合は作成
+    * --------------------------------------------*/
+    if (!SelectBackdrop) {
+      // 1. DIV要素作成
+      SelectBackdrop = document.createElement("div");
+      // 2. ID設定
+      SelectBackdrop.id = "SelectBackdrop";
+      // 3. クラス設定
+      SelectBackdrop.classList.add("SelectBackdrop");
+      // 4. 背景のクリックイベントを停止させる
+      SelectBackdrop.addEventListener("click", (Event) => {
+          Event.stopPropagation();
+          Event.preventDefault();
+      });
+      // 5. ボディにバックドロップを格納
+      document.body.appendChild(SelectBackdrop);
+    }
+
+   /* --------------------------------------------
+    *  3. コンテナが存在しない場合は作成
     * --------------------------------------------*/
     if (!SelectContainer) {
         // 1. DIV要素作成
@@ -271,18 +292,18 @@ function DisplaySelectButton(SelectArray) {
         // 2. ID設定
         SelectContainer.id = "SelectContainer";
         // 3. クラス設定
-        SelectContainer.classList.add("SelectContainer"); 
-        // 4. ボディに格納
+        SelectContainer.classList.add("SelectContainer");
+        // 4. ボディにコンテナを格納
         document.body.appendChild(SelectContainer);
     }
 
    /* --------------------------------------------
-    *  3. 既存の選択肢を初期化
+    *  4. 既存の選択肢を初期化
     * --------------------------------------------*/
     SelectContainer.innerHTML = "";
 
    /* --------------------------------------------
-    *  4. 選択肢の作成
+    *  5. 選択肢の作成
     * --------------------------------------------*/
     SelectArray.forEach((SelectItem) => {
         /* 1. 定義 */
@@ -291,20 +312,32 @@ function DisplaySelectButton(SelectArray) {
         // 2. ラベル設定
         SelectButton.textContent = SelectItem.StoryText;
         // 3. クラス設定
-        SelectButton.classList.add("SelectButton"); 
-        
+        SelectButton.classList.add("SelectButton");
+        // 4. アクセシビリティ向上のため tabindex を付与
+        SelectButton.setAttribute("tabindex", "0");
+
         /* 2. 選択肢選択時処理 */
         SelectButton.addEventListener("click", () => {
-            // 1. 選択肢押下時に次のストーリーIDを渡して画面表示を更新
-            GameDisplayInfo(SelectItem.Next);
-            // 2. 選択肢ボタンを非表示にする
-            SelectContainer.innerHTML = "";
+            try {
+                // 1. 選択肢押下時に次のストーリーIDを渡して画面表示を更新
+                GameDisplayInfo(SelectItem.Next);
+            } finally {
+                // 2. 選択肢ボタンを削除
+                if (SelectContainer){
+                   SelectContainer.remove();
+                };
+                // 3. バックドロップを削除
+                if (SelectBackdrop) {
+                   SelectContainer.remove();
+                }
+            }
         });
 
         /* 3. コンテナに選択肢を格納 */
         SelectContainer.appendChild(SelectButton);
     });
 }
+
 
 /* =========================================================
  * バックログダイアログ表示処理
