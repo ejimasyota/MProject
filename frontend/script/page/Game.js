@@ -389,98 +389,64 @@ async function GameDisplayInfo(StoryId){
 /* =========================================================
  * キャラクター画像表示処理
  * =========================================================*/
-function ShowCharaImages(ImgPath) {
- /* --------------------------------------------
-  *  1. 事前処理
-  * --------------------------------------------*/
-  // 1. ゲームコンテナ取得
+function ShowCharaImages(ImgPath, StoryItem) {
   const GameContainer = document.querySelector(".GameContainer");
-  // 2. キャラレイヤー取得
-  let CharaLayer = document.getElementById("CharaLayer");
-  // 3. 表示位置
-  const Positions = ["Center", "Left", "Right"];
+  if (!GameContainer) return;
 
- /* --------------------------------------------
-  *  2. バリデーションチェック
-  * --------------------------------------------*/
-  /* 1. ゲームコンテナが存在しない場合 */
-  if (!GameContainer){
-    // 1. 処理終了
-    return;
-  }
-  /* 2. キャラレイヤーが存在しない場合 */
+  let CharaLayer = document.getElementById("CharaLayer");
   if (!CharaLayer) {
-    // 1. DIV要素作成
     CharaLayer = document.createElement("div");
-    // 2. ID設定
     CharaLayer.id = "CharaLayer";
-    // 3. クラス設定
     CharaLayer.className = "CharaLayer";
-    // 4. ゲームコンテナの直下に追加
     GameContainer.appendChild(CharaLayer);
   }
-  /* 3. 画像パスオブジェクトが存在しない場合 */
-  if (!ImgPath){
-    // 1. 処理終了
-    return;
-  }
 
- /* --------------------------------------------
-  *  3. 位置ごとの表示処理
-  * --------------------------------------------*/
+  const Positions = ["Center", "Left", "Right"];
+  const Effect = StoryItem?.Effect?.[0] ?? {};
+
   Positions.forEach(Position => {
-    /* 1. 定義 */
-    // 1. 位置ごとの画像パスを取得
-    const ImagePath = ImgPath[Position] ?? "";
+    const ImagePath = ImgPath?.[Position] ?? "";
 
-    /* 2. 画像パスが存在する場合 */
-    if (ImagePath && typeof ImagePath === "string" && ImagePath.trim() !== "") {
-      /* 事前処理 */
-      // 1. 同位置のimg要素を取得
-      const Existing = CharaLayer.querySelector(`img.CharaImage.Position-${Position}`);
-
-      /* 同位置に存在する画像があれば削除 */
-      if (Existing) {
-        // 1. クラスの除去
-        Existing.classList.remove("FadeIn");
-        // 2. クラス設定
+    // 既存画像取得
+    const Existing = CharaLayer.querySelector(`img.CharaImage.Position-${Position}`);
+    if (Existing) {
+      if (Effect.FadeOut?.[0]?.[Position]) {
         Existing.classList.add("FadeOut");
-        // 3. 要素の除去
-        setTimeout(() => {
-          try { Existing.remove(); } catch (e) {}
-        }, 300);
+        const onEnd = () => { Existing.remove(); Existing.removeEventListener("transitionend", onEnd); };
+        Existing.addEventListener("transitionend", onEnd);
+        setTimeout(onEnd, 1000);
+      } else {
+        Existing.remove();
       }
-
-      /* 画像の作成処理 */
-      // 1. IMG要素作成
-      const Img = document.createElement("img");
-      // 2. ALT属性設定
-      Img.alt = Position + " Character";
-      // 3. クラス設定
-      Img.classList.add("CharaImage", `Position-${Position}`);
-      // 4. パスを設定
-      Img.src = ImagePath;
-      // 5. 画像の読み込み準備
-      Img.decoding = "async";
-      // 6. 画像読込
-      Img.loading = "lazy";
-
-      /* アニメーション設定 */
-      Img.addEventListener("load", () => {
-        // 1. フレームでの設定
-        requestAnimationFrame(() => {
-          // 2. クラス除去
-          Img.classList.remove("FadeOut");
-          // 3. クラス設定
-          Img.classList.add("FadeIn");
-        });
-      });
-
-      /* 画像の追加 */
-      CharaLayer.appendChild(Img);
     }
+
+    if (!ImagePath) return;
+
+    const Img = document.createElement("img");
+    Img.alt = Position + " Character";
+    Img.classList.add("CharaImage", `Position-${Position}`);
+    Img.src = ImagePath;
+    Img.decoding = "async";
+    Img.loading = "lazy";
+
+    Img.addEventListener("load", () => {
+      requestAnimationFrame(() => {
+        // すべてのEffectキーをクラス付与
+        for (const Key in Effect) {
+          if (Array.isArray(Effect[Key]) && Effect[Key][0]?.[Position]) {
+            Img.classList.add(Key); // 例: FadeIn, Spin, Jump, Wave ...
+          }
+        }
+      });
+    });
+
+    Img.addEventListener("error", () => Img.remove());
+    CharaLayer.appendChild(Img);
   });
+
+  if (CharaLayer.children.length === 0) CharaLayer.remove();
 }
+
 
 /* =========================================================
  * キャラクター画像非表示処理
