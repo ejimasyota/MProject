@@ -28,7 +28,7 @@
         "Left": ""
       }
     ],
-    "BgmPath": "",
+    "BgmPath": "../asetts/music/bgm/BGM-1.mp3",
     "FaceImgPath": "../asetts/img/icon/chara1/Chara1-Icon-1.png",
     "Effect": [
       {
@@ -108,7 +108,7 @@
         "Left": ""
       }
     ],
-    "BgmPath": "",
+    "BgmPath": "../asetts/music/bgm/BGM-1.mp3",
     "FaceImgPath": "",
     "Effect": [
       {
@@ -188,7 +188,7 @@
         "Left": ""
       }
     ],
-    "BgmPath": "",
+    "BgmPath": "../asetts/music/bgm/BGM-1.mp3",
     "FaceImgPath": "../asetts/img/icon/chara1/Chara1-Icon-1.png",
     "Effect": [
       {
@@ -268,7 +268,7 @@
         "Left": "../asetts/img/chara/chara3/Chara3-1.png"
       }
     ],
-    "BgmPath": "",
+    "BgmPath": "../asetts/music/bgm/BGM-1.mp3",
     "FaceImgPath": "../asetts/img/icon/chara3/Chara3-Icon-1.png",
     "Effect": [
       {
@@ -348,7 +348,7 @@
         "Left": "../asetts/img/chara/chara3/Chara3-1.png"
       }
     ],
-    "BgmPath": "",
+    "BgmPath": "../asetts/music/bgm/BGM-1.mp3",
     "FaceImgPath": "",
     "Effect": [
       {
@@ -437,7 +437,7 @@
         "Left": "../asetts/img/chara/chara3/Chara3-1.png"
       }
     ],
-    "BgmPath": "",
+    "BgmPath": "../asetts/music/bgm/BGM-1.mp3",
     "FaceImgPath": "../asetts/img/icon/chara1/Chara1-Icon-1.png",
     "Effect": [
       {
@@ -517,7 +517,7 @@
         "Left": "../asetts/img/chara/chara3/Chara3-1.png"
       }
     ],
-    "BgmPath": "",
+    "BgmPath": "../asetts/music/bgm/BGM-1.mp3",
     "FaceImgPath": "../asetts/img/icon/chara1/Chara1-Icon-1.png",
     "Effect": [
       {

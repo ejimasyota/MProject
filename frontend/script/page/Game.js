@@ -615,59 +615,107 @@ function HideCharaImages(Positions = null) {
  * BGM再生処理
  * =========================================================*/
 function PlayBgm(LoadPath) {
-    /* --------------------------------------------
-     *  1. 既にBGMが再生中の場合は停止・破棄
-     * --------------------------------------------*/
+   /* --------------------------------------------
+    *  1. 絶対URLに変換(念のためね)
+    * --------------------------------------------*/
+    /* 1. 定義 */
+    // 1. 絶対URLを保持する変数
+    let TargetUrl;
+
+    /* 2. 絶対URLの定義処理 */
+    try {
+      // 1. 絶対URLを設定
+      TargetUrl = new URL(LoadPath, location.href).href;
+    } catch (error) {
+      /* 3. 例外発生時 */
+      // 1. 受け取ったパスをそのまま使用
+      TargetUrl = LoadPath;
+    }
+
+   /* --------------------------------------------
+    *  2. 既にBGMが存在するか判定
+    * --------------------------------------------*/
     if (window.BgmAudio) {
-        // 1. 再生中の BGM を停止
-        try { window.BgmAudio.pause(); } catch (e) {}
+      /* 1. 定義 */
+      // 1. 現在再生中BGMの音源URLを保持する
+      let ExistSrc = "";
 
-        // 2. 音源パスをクリア（解放処理）
-        try { window.BgmAudio.src = ""; } catch (e) {}
+      /* 2. 現在再生中BGMの音源URLを取得する処理 */
+      try {
+          // 1. Audio.srcは常に絶対URLに展開されるため比較用に取得
+          ExistSrc = window.BgmAudio.src || "";
+      } catch (error) {
+          // 例外発生時は空文字を設定(念のため)
+          ExistSrc = "";
+      }
 
-        // 3. オブジェクトの破棄
-        window.BgmAudio = null;
+      /* 3. 新規指定パスと同一BGMか判定 */
+      if (ExistSrc && ExistSrc === TargetUrl) {
+        // 1. 音量を設定
+        try { window.BgmAudio.volume = BGM_VOLUME; } catch (error) {}
+        // 2. ループを設定
+        window.BgmAudio.loop = true;
+
+        /* 停止状態であれば再生再開 */
+        if (window.BgmAudio.paused) {
+            window.BgmAudio.play().catch(error => {
+              console.warn("自動再生に失敗 : ", error);
+            });
+        }
+
+        /* 処理終了 */
+        return;
+      }
+
+      /* 4. 別のBGMが指定された場合は既存BGMを破棄 */
+      // 1. 再生中のBGMを停止
+      try { window.BgmAudio.pause(); } catch (error) {}
+      // 2. 音源パスをクリア
+      try { window.BgmAudio.src = ""; } catch (error) {}
+      // 3. Audioオブジェクトを破棄
+      window.BgmAudio = null;
     }
 
     /* --------------------------------------------
-     *  2. BGM 用Audio オブジェクト作成
+     *  3. 新規Audioオブジェクト作成
      * --------------------------------------------*/
-    // 1. 新しいAudioオブジェクトを生成
+    // 1. Audioオブジェクトの作成
     window.BgmAudio = new Audio();
 
-    // 2. 音声データを事前読み込み
+    // 2. 読み込み
     window.BgmAudio.preload = "auto";
 
-    // 3. 読み込むBGMのパスを設定
-    window.BgmAudio.src = LoadPath;
+    // 3. BGMのパスを絶対URLで設定
+    window.BgmAudio.src = TargetUrl;
 
     // 4. 音量を設定
     window.BgmAudio.volume = BGM_VOLUME;
 
-    // 5. BGM は自動でループ再生
+    // 5. BGMは自動でループ再生
     window.BgmAudio.loop = true;
 
     /* --------------------------------------------
-     *  3. 各種イベント処理
+     *  4. 各種イベント処理
      * --------------------------------------------*/
-    // 1. BGMファイルが読み込めない・再生不可の場合
-    window.BgmAudio.addEventListener("error", (ev) => {
-        console.warn("BGM 再生エラー:", ev);
+    // 1. BGM読込エラー発生時
+    window.BgmAudio.addEventListener("error", (error) => {
+      console.warn("BGM再生エラー:", error);
     });
 
-    // 2. ループ再生のためendedは基本使わないが、念のための停止時の後処理
+    // 2. BGMが終了した場合
     window.BgmAudio.addEventListener("ended", () => {
-        try { window.BgmAudio.src = ""; } catch (e) {}
-        window.BgmAudio = null;
+      try { window.BgmAudio.src = ""; } catch (error) {}
+      window.BgmAudio = null;
     });
 
     /* --------------------------------------------
      *  4. 再生開始
      * --------------------------------------------*/
-    window.BgmAudio.play().catch(err => {
-        console.warn("BGM 自動再生に失敗:", err);
+    window.BgmAudio.play().catch(error => {
+        console.warn("自動再生に失敗 : ", error);
     });
 }
+
 
 
 
