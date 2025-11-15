@@ -465,7 +465,7 @@ function ShowCharaImages(ImgPath, StoryItem) {
       Img.addEventListener("load", () => {
         /* 各定義(画像表示アニメーションは今後も追加していく想定) */
         // 1. フェードインFLG
-        const FadeInFlg = StoryItem.Effect?.[0]?.FadeIn ?? {};
+        const FadeInFlg = StoryItem?.Effect?.[0]?.FadeIn?.[0] ?? {};
 
         /* フレームでの設定 */
         requestAnimationFrame(() => {
@@ -480,6 +480,9 @@ function ShowCharaImages(ImgPath, StoryItem) {
           }
         });
       });
+
+      /* 例外発生時に画像を削除 */
+      Img.addEventListener('error', () => { try { Img.remove(); } catch(e){} });
 
       /* 画像の追加 */
       CharaLayer.appendChild(Img);
