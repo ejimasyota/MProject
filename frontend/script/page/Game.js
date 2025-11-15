@@ -102,8 +102,20 @@ async function GetSaveDataInfo(){
             *  5. 取得内容が存在する場合
             * --------------------------------------------*/
            if(Result.Items && Result.Items.length > 0){
+            /* 1. バックログの設定処理 */
+            Result.Items.forEach((BackLogItem)=>{
+                BACKLOG_INFO.push({
+                   // 1. ストーリーテキスト
+                   StoryText :  BackLogItem.storytext,
+                   // 2. キャラ名
+                   Narrator : BackLogItem.narrator,
+                   // 3. ログID(既存ログの取得時のみ保持される属性。新規ログ登録時はDBでシーケンスの登録を行う)
+                   LogId : BackLogItem.logid
+                })
+
+            })
             // 1. ストーリーIDを渡す
-            GameDisplayInfo(Result.Items.storyid);
+            GameDisplayInfo(Result.Items[0].storyid);
            }else{
                 /* --------------------------------------------
                 *  6. 取得内容が存在しない場合
