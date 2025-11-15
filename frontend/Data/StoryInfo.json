@@ -11,12 +11,12 @@
     "Voice": "",
     "Flg": [
       {
-        "MessageBoxFlg": false,
+        "MessageBoxFlg": true,
         "EndFlg": "",
         "CutInFlg": false,
         "DisabledFlg": false,
         "EyeCatchFlg": false,
-        "GameFlg": true,
+        "GameFlg": false,
         "AutoSaveFlg": false
       }
     ],
