@@ -270,7 +270,7 @@ async function GameDisplayInfo(StoryId){
       // 1. 処理終了
       return;
     }
-
+    console.log("StoryItem.BgPath",StoryItem.BgPath)
     /* 3. 背景画像が指定されている場合 */
     if (StoryItem.BgPath && StoryItem.BgPath !== "") {
       // 1. 背景画像設定
