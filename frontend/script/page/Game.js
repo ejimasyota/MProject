@@ -214,62 +214,17 @@ async function GameDisplayInfo(StoryId){
     }
 
    /* --------------------------------------------
-    *  7. メッセージボックス表示FLGがTRUEの場合
-    * --------------------------------------------*/
-    if(StoryItem.Flg[0].MessageBoxFlg){
-      await MESSAGE_BOX_DIALOG.ShowMessage(
-        // 1. テキスト設定
-        StoryText,
-        // 2. キャラ名設定
-        CharaName,
-        // 3. 顔アイコンの表示
-        ""
-      );
-    }else{
-       /* --------------------------------------------
-        *  8. メッセージボックス表示FLGがFALSEの場合
-        * --------------------------------------------*/
-       // 1. メッセージボックスの非表示処理を実行
-       await MESSAGE_BOX_DIALOG.HideMessage();
-    }
-    /* --------------------------------------------
-     *  9. バックログ内容の作成
-     * --------------------------------------------*/
-     BACKLOG_INFO.push({
-        // 1. ストーリーテキスト
-        StoryText :  StoryText,
-        // 2. キャラ名
-        Narrator : CharaName,
-    })
-
-    /* --------------------------------------------
-     *  10. 選択肢表示を行わない場合
-     * --------------------------------------------*/
-    if(StoryItem.Select.length === 0 && StoryItem.Next){
-        // 1. 次のシーンIDを保持
-        NEXT_STORY_ID = StoryItem.Next;
-    }else{
-        /* --------------------------------------------
-        *  11. 選択肢表示を行う場合
-        * --------------------------------------------*/
-       // 1. 選択肢の表示
-       DisplaySelectButton(StoryItem.Select);
-    }
-
-   /* --------------------------------------------
-    *  12. 背景画像パスが指定されている場合
+    *  7. 背景画像パスが指定されている場合
     * --------------------------------------------*/
     /* 1. 定義 */
     // 1. ゲーム画面のコンテナの取得
     const GameContainer = document.querySelector(".GameContainer");
-    console.log("GameContainer",GameContainer)
 
     /* 2. ゲーム画面のコンテナの取得が行えない場合 */
     if (!GameContainer) {
       // 1. 処理終了
       return;
     }
-    console.log("StoryItem.BgPath",StoryItem.BgPath)
     /* 3. 背景画像が指定されている場合 */
     if (StoryItem.BgPath && StoryItem.BgPath !== "") {
       // 1. 背景画像設定
@@ -284,6 +239,49 @@ async function GameDisplayInfo(StoryId){
           "url('../asetts/img/bg/Default.jpg') no-repeat center center fixed";
       // 2. 要素全体を必ず覆うよう設定
       GameContainer.style.backgroundSize = "cover";
+    }
+
+   /* --------------------------------------------
+    *  8. メッセージボックス表示FLGがTRUEの場合
+    * --------------------------------------------*/
+    if(StoryItem.Flg[0].MessageBoxFlg){
+      await MESSAGE_BOX_DIALOG.ShowMessage(
+        // 1. テキスト設定
+        StoryText,
+        // 2. キャラ名設定
+        CharaName,
+        // 3. 顔アイコンの表示
+        ""
+      );
+    }else{
+       /* --------------------------------------------
+        *  9. メッセージボックス表示FLGがFALSEの場合
+        * --------------------------------------------*/
+       // 1. メッセージボックスの非表示処理を実行
+       await MESSAGE_BOX_DIALOG.HideMessage();
+    }
+    /* --------------------------------------------
+     *  10. バックログ内容の作成
+     * --------------------------------------------*/
+     BACKLOG_INFO.push({
+        // 1. ストーリーテキスト
+        StoryText :  StoryText,
+        // 2. キャラ名
+        Narrator : CharaName,
+    })
+
+    /* --------------------------------------------
+     *  11. 選択肢表示を行わない場合
+     * --------------------------------------------*/
+    if(StoryItem.Select.length === 0 && StoryItem.Next){
+        // 1. 次のシーンIDを保持
+        NEXT_STORY_ID = StoryItem.Next;
+    }else{
+        /* --------------------------------------------
+        *  12. 選択肢表示を行う場合
+        * --------------------------------------------*/
+       // 1. 選択肢の表示
+       DisplaySelectButton(StoryItem.Select);
     }
 }
 
