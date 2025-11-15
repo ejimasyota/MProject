@@ -72,7 +72,7 @@ try {
         $updateStmt = $pdo->prepare("
             UPDATE BackLogInfo
             SET narrator = :narrator,
-                storytext = :storytext,
+                storytext = :storytext
             WHERE logid = :logid
               AND playerid = :playerid
               AND saveslotid = :saveslotid
