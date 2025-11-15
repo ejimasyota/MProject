@@ -105,6 +105,7 @@ async function GetSaveDataInfo(){
             * --------------------------------------------*/
            
            if(Result.items && Result.items.SaveInfo){
+            console.log("Result",Result)
             /* 1. バックログの設定処理 */
             Result.items.BackLogInfo.forEach((BackLogItem)=>{
                 BACKLOG_INFO.push({
