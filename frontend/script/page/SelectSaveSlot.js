@@ -147,6 +147,8 @@ async function GetSaveSlot(PlayerId){
     console.log("Result",Result)
     console.log("Result.items",Result.items)
     console.log("Result.Items",Result.items)
+    console.log("Result.success",Result.success)
+    console.log("Array.isArray(Result.items)",Array.isArray(Result.items))
     if (Result && Result.success && Array.isArray(Result.items) && Result.items.length > 0) {
      /* ------------------------------
       * 1. 取得結果が存在する場合
