@@ -440,6 +440,8 @@ function ShowCharaImages(ImgPath, StoryItem) {
     const SpinFlg = StoryItem.Effect[0].Spin[0]?.[Position];
     // 3. ジャンプFLG
     const JumpFlg = StoryItem.Effect[0].Jump[0]?.[Position];
+    // 4. ウェーブFLG
+    const WaveFlg = StoryItem.Effect[0].Wave[0]?.[Position];
 
     /* 3. 画像パスが存在する場合 */
     if (ImagePath && typeof ImagePath === "string" && ImagePath.trim() !== "") {
@@ -456,6 +458,8 @@ function ShowCharaImages(ImgPath, StoryItem) {
         Existing.classList.remove("Spin");
         // 3. ジャンプ
         Existing.classList.remove("Jump");
+        // 4. ウェーブ
+        Existing.classList.remove("Wave");
 
         /* 要素の除去 */
         setTimeout(() => {
@@ -501,6 +505,12 @@ function ShowCharaImages(ImgPath, StoryItem) {
           // 3. ジャンプ
           if(JumpFlg){
             Img.classList.add("Jump");
+          }else{
+            Img.classList.add("ShowImage");
+          }
+          // 4. ウェーブ
+          if(JumpFlg){
+            Img.classList.add("Wave");
           }else{
             Img.classList.add("ShowImage");
           }
@@ -569,6 +579,8 @@ function HideCharaImages(Positions = null) {
     Element.classList.remove("Spin");
     // 3. ジャンプ除去
     Element.classList.remove("Jump");
+    // 4. ウェーブ除去
+    Element.classList.remove("Wave");
 
     /* 3. フェードアウト設定 */
     Element.classList.add("FadeOut");

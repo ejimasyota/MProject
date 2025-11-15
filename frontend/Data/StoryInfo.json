@@ -370,7 +370,7 @@
           {
             "Center": false,
             "Right": false,
-            "Left": false
+            "Left": true
           }
         ],
         "FadeIn": [
