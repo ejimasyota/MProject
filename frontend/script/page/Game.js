@@ -315,6 +315,7 @@ async function GameDisplayInfo(StoryId){
      /* --------------------------------------------
       *  9. キャラ画像のいずれかも存在しない場合
       * --------------------------------------------*/
+     console.log("dddd")
       HideCharaImages();
     }
 
