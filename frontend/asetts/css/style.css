@@ -638,7 +638,7 @@ button:disabled:active {
 .VolumeSliderLabel {
   margin-bottom: 4px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: bold;
   color: #333;
 }
 /* 3.音量スライダー */
