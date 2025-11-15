@@ -1,32 +1,20 @@
 /* =========================================================
- * QuestGame クラス（修正版）
- * - must implement GameRun(): Promise<boolean|null>
- * - ConfirmContainer / DialogBox を createElement で作成
- * - DOM 操作はローカルスコープで行う（id 衝突を避ける）
+ * QuestGame クラス（デバッグ用修正版・最小差分）
  * =========================================================*/
 class QuestGame {
   constructor(Options = {}) {
-    // オプション
     this.Options = Options;
-
-    // ステート
     this.PlayerMaxHp = 10;
     this.EnemyMaxHp = 10;
     this.PlayerHp = this.PlayerMaxHp;
     this.EnemyHp = this.EnemyMaxHp;
-
-    // リソース管理
     this.IntervalId = null;
     this.Timeouts = [];
     this.Handlers = [];
   }
 
-  /* CreateBackdropDialog: Backdrop / DialogBox を作成して返す
-   * - dataset.qid で一意化
-   */
   CreateBackdropDialog() {
     const qid = `q_${Date.now()}_${Math.floor(Math.random() * 10000)}`;
-
     const Backdrop = document.createElement("div");
     Backdrop.className = "ConfirmContainer";
     Backdrop.dataset.qid = qid;
@@ -59,7 +47,6 @@ class QuestGame {
     return { Backdrop, DialogBox };
   }
 
-  /* DrawEnemy: canvas にドット絵を描く（ctx null チェックあり） */
   DrawEnemy(Canvas, HealthRatio) {
     if (!Canvas || !Canvas.getContext) {
       console.error("[QuestGame] Canvas invalid", Canvas);
@@ -70,21 +57,17 @@ class QuestGame {
       console.error("[QuestGame] Failed to get 2d context");
       return;
     }
-
     const scale = 4;
     const w = Canvas.width;
     const h = Canvas.height;
     ctx.clearRect(0, 0, w, h);
     ctx.imageSmoothingEnabled = false;
-
     const pixel = (x, y, color) => {
       ctx.fillStyle = color;
       ctx.fillRect(x * scale, y * scale, scale, scale);
     };
-
     const hpColor =
       HealthRatio > 0.6 ? "#e74c3c" : HealthRatio > 0.3 ? "#f39c12" : "#c0392b";
-
     const layout = [
       "  XXX  ",
       " XXXXX ",
@@ -94,123 +77,64 @@ class QuestGame {
       " X   X ",
       "  X X  ",
     ];
-
     const offsetX = 1;
     const offsetY = 1;
     for (let y = 0; y < layout.length; y++) {
       for (let x = 0; x < layout[y].length; x++) {
         const ch = layout[y][x];
-        if (ch === "X") {
-          pixel(offsetX + x, offsetY + y, hpColor);
-        } else {
-          pixel(offsetX + x, offsetY + y, "#111");
-        }
+        if (ch === "X") pixel(offsetX + x, offsetY + y, hpColor);
+        else pixel(offsetX + x, offsetY + y, "#111");
       }
     }
   }
 
-  /* Cleanup: タイマーとイベントリスナのみ削除（DOM削除は呼び出し側で行う） */
   Cleanup() {
-    // interval
     if (this.IntervalId) {
-      try {
-        clearInterval(this.IntervalId);
-      } catch (e) {
-        console.warn("[QuestGame] clearInterval failed", e);
-      }
+      try { clearInterval(this.IntervalId); } catch (e) {}
       this.IntervalId = null;
     }
-    // timeouts
     this.Timeouts.forEach((t) => {
-      try {
-        clearTimeout(t);
-      } catch (e) {
-        // ignore
-      }
+      try { clearTimeout(t); } catch (e) {}
     });
     this.Timeouts = [];
-
-    // handlers (safe remove)
     this.Handlers.forEach((h) => {
-      try {
-        if (h.el && h.fn) h.el.removeEventListener(h.type, h.fn);
-      } catch (e) {
-        console.warn("[QuestGame] removeEventListener failed", e);
-      }
+      try { if (h.el && h.fn) h.el.removeEventListener(h.type, h.fn); } catch (e) {}
     });
     this.Handlers = [];
   }
 
-  /* GameRun: メイン実行。Promise<boolean|null> を返す。
-   * - true: 勝ち -> 呼び出し側で Win マッピングを使って遷移
-   * - false: 負け -> 呼び出し側で Lose マッピング
-   * - null: エラー / 未解釈（呼び出し側は null を扱う）
-   */
   async GameRun() {
     const self = this;
     return new Promise((Resolve) => {
-      // safety: Resolve を複数回呼ばないためのフラグ
       let resolved = false;
       const safeResolve = (v) => {
         if (!resolved) {
           resolved = true;
-          try {
-            Resolve(v);
-          } catch (e) {
-            console.error("[QuestGame] Resolve threw:", e);
-          }
+          try { Resolve(v); } catch (e) { console.error("[QuestGame] Resolve threw:", e); }
         }
       };
 
-      // 1) 画面作成（READY → START → ゲームUI）
-      let created;
-      try {
-        const { Backdrop, DialogBox } = this.CreateBackdropDialog();
-        created = { Backdrop, DialogBox };
-      } catch (e) {
-        console.error("[QuestGame] CreateBackdropDialog failed:", e);
-        safeResolve(null);
-        return;
-      }
-
-      const { Backdrop, DialogBox } = created;
-
-      // READY テキスト
-      const ReadyText = document.createElement("p");
-      ReadyText.textContent = "よーい…";
-      ReadyText.style.fontSize = "18px";
-      ReadyText.style.fontWeight = "700";
-      DialogBox.appendChild(ReadyText);
-
-      // READY -> START
-      const T1 = setTimeout(() => {
-        try {
-          ReadyText.textContent = "開始！";
-        } catch (e) {}
-      }, 700);
-      this.Timeouts.push(T1);
-
-      const T2 = setTimeout(() => {
-        try {
-          ReadyText.remove();
-        } catch (e) {}
-        BuildGameUI();
-      }, 1200);
-      this.Timeouts.push(T2);
-
-      // BuildGameUI を通常関数で定義（this を直接参照）
+      // --------- Pre-declare BuildGameUI to avoid hoisting/compat issues  <<<< CHANGED
       function BuildGameUI() {
+        console.log('[QuestGame] BuildGameUI entered'); // <<< CHANGED
         // a. Canvas
-        const Canvas = document.createElement("canvas");
-        Canvas.className = "QuestCanvas";
-        Canvas.width = 32;
-        Canvas.height = 28;
-        Canvas.style.width = "256px";
-        Canvas.style.height = "224px";
-        Canvas.style.border = "4px solid #333";
-        Canvas.style.background = "#000";
+        let Canvas;
+        try {
+          Canvas = document.createElement("canvas");
+          Canvas.className = "QuestCanvas";
+          Canvas.width = 32;
+          Canvas.height = 28;
+          Canvas.style.width = "256px";
+          Canvas.style.height = "224px";
+          Canvas.style.border = "4px solid #333";
+          Canvas.style.background = "#000";
+        } catch (e) {
+          console.error('[QuestGame] Canvas create failed', e);
+          safeResolve(null);
+          return;
+        }
 
-        // b. ステータス表示（ローカルスコープで参照）
+        // b. Stats
         const StatWrap = document.createElement("div");
         StatWrap.className = "StatBar";
         StatWrap.style.display = "flex";
@@ -227,7 +151,7 @@ class QuestGame {
         StatWrap.appendChild(PlayerStat);
         StatWrap.appendChild(EnemyStat);
 
-        // c. ボタン等
+        // c. Buttons / instruction
         const AttackButton = document.createElement("button");
         AttackButton.className = "AttackButton";
         AttackButton.textContent = "Attack";
@@ -242,107 +166,93 @@ class QuestGame {
         ResultText.className = "ResultText";
         ResultText.style.minHeight = "18px";
 
-        // d. DialogBox に追加
-        DialogBox.appendChild(Canvas);
-        DialogBox.appendChild(StatWrap);
-        DialogBox.appendChild(Instruction);
-        DialogBox.appendChild(AttackButton);
-        DialogBox.appendChild(ResultText);
+        // ensure DialogBox is visible  <<<< CHANGED
+        try { DialogBox.style.display = 'flex'; } catch (e) { console.warn('[QuestGame] DialogBox not found'); }
 
-        // e. 初期描画（DrawEnemy 内で ctx チェックする）
-        self.DrawEnemy(Canvas, self.EnemyHp / self.EnemyMaxHp);
+        // d. append elements
+        try {
+          DialogBox.appendChild(Canvas);
+          DialogBox.appendChild(StatWrap);
+          DialogBox.appendChild(Instruction);
+          DialogBox.appendChild(AttackButton);
+          DialogBox.appendChild(ResultText);
+        } catch (e) {
+          console.error('[QuestGame] Append to DialogBox failed', e);
+          safeResolve(null);
+          return;
+        }
 
-        // f. ルール
+        // e. initial draw
+        try {
+          self.DrawEnemy(Canvas, self.EnemyHp / self.EnemyMaxHp);
+        } catch (e) {
+          console.error('[QuestGame] DrawEnemy failed', e);
+        }
+
+        // f. rules
         const PlayerAttackPower = 3;
         const EnemyAttackPower = 2;
         const EnemyAttackInterval = 900;
 
-        // g. プレイヤー攻撃処理
+        // g. player attack
         const OnAttack = () => {
           try {
             self.EnemyHp = Math.max(0, self.EnemyHp - PlayerAttackPower);
             const EnemyHpText = DialogBox.querySelector(".EnemyHpText");
             if (EnemyHpText) EnemyHpText.textContent = `${self.EnemyHp}/${self.EnemyMaxHp}`;
             self.DrawEnemy(Canvas, self.EnemyHp / self.EnemyMaxHp);
-
             ResultText.textContent = "攻撃！";
-            const tmp = setTimeout(() => {
-              try {
-                ResultText.textContent = "";
-              } catch (e) {}
-            }, 300);
+            const tmp = setTimeout(()=>{ try{ ResultText.textContent = ""; }catch(e){} }, 300);
             self.Timeouts.push(tmp);
-
-            if (self.EnemyHp <= 0) {
-              EndGame(true);
-            }
+            if (self.EnemyHp <= 0) EndGame(true);
           } catch (e) {
-            console.error("[QuestGame] OnAttack error:", e);
+            console.error('[QuestGame] OnAttack error:', e);
             EndGame(false);
           }
         };
-
         AttackButton.addEventListener("click", OnAttack);
         self.Handlers.push({ el: AttackButton, type: "click", fn: OnAttack });
 
-        // h. 敵の自動反撃タイマー
-        self.IntervalId = setInterval(() => {
+        // h. enemy attack interval
+        self.IntervalId = setInterval(()=> {
           try {
             if (self.EnemyHp > 0) {
               self.PlayerHp = Math.max(0, self.PlayerHp - EnemyAttackPower);
               const PlayerHpText = DialogBox.querySelector(".PlayerHpText");
               if (PlayerHpText) PlayerHpText.textContent = `${self.PlayerHp}/${self.PlayerMaxHp}`;
-
               ResultText.textContent = "被弾！";
-              const tmp2 = setTimeout(() => {
-                try {
-                  ResultText.textContent = "";
-                } catch (e) {}
-              }, 300);
+              const tmp2 = setTimeout(()=>{ try{ ResultText.textContent = ""; }catch(e){} }, 300);
               self.Timeouts.push(tmp2);
-
               self.DrawEnemy(Canvas, self.EnemyHp / self.EnemyMaxHp);
-
-              if (self.PlayerHp <= 0) {
-                EndGame(false);
-              }
+              if (self.PlayerHp <= 0) EndGame(false);
             }
           } catch (e) {
-            console.error("[QuestGame] Enemy interval error:", e);
+            console.error('[QuestGame] Enemy interval error:', e);
             EndGame(false);
           }
         }, EnemyAttackInterval);
 
-        // EndGame: 通常 function として定義して this を安定させる
+        // EndGame (function declaration stable)
         function EndGame(WinFlag) {
           try {
-            // 1) タイマー/イベントのみクリア
+            // clear timers & handlers
             self.Cleanup();
 
-            // 2) 現在の Backdrop を安全に削除（存在チェック）
-            try {
-              if (Backdrop && Backdrop.parentNode) Backdrop.parentNode.removeChild(Backdrop);
-            } catch (e) {
-              // ignore
-            }
+            // remove game backdrop
+            try { if (Backdrop && Backdrop.parentNode) Backdrop.parentNode.removeChild(Backdrop); } catch (e) {}
 
-            // 3) 結果用ダイアログ作成
+            // create result dialog
             const { Backdrop: ResultBackdrop, DialogBox: ResultCard } = self.CreateBackdropDialog();
-
-            // 4) 結果テキスト
             const Message = document.createElement("p");
             Message.className = "ResultText";
             Message.textContent = WinFlag ? "勝ちました" : "負けました";
             Message.style.fontWeight = "700";
             ResultCard.appendChild(Message);
-
-            // 5) 補足テキスト
             const Detail = document.createElement("div");
             Detail.className = "SmallGrey";
             Detail.textContent = WinFlag ? "おめでとう！" : "また挑戦しよう...";
             ResultCard.appendChild(Detail);
 
-            // 6) 閉じるボタン（これで Promise を resolve）
             const CloseBtn = document.createElement("button");
             CloseBtn.textContent = "閉じる";
             CloseBtn.className = "ButtonInfo";
@@ -350,33 +260,66 @@ class QuestGame {
             CloseBtn.style.cursor = "pointer";
 
             const onClose = () => {
-              try {
-                if (ResultBackdrop && ResultBackdrop.parentNode) ResultBackdrop.parentNode.removeChild(ResultBackdrop);
-              } catch (e) {}
+              try { if (ResultBackdrop && ResultBackdrop.parentNode) ResultBackdrop.parentNode.removeChild(ResultBackdrop); } catch (e) {}
               safeResolve(WinFlag === true);
             };
 
             CloseBtn.addEventListener("click", onClose);
-            // handlers 登録しておき、Cleanup で外せるようにする（万が一）
             self.Handlers.push({ el: CloseBtn, type: "click", fn: onClose });
-
             ResultCard.appendChild(CloseBtn);
 
-            // 7) 自動クローズ（フォールバック）: 8秒後に自動で閉じる（ユーザー操作がない場合）
-            const autoClose = setTimeout(() => {
-              try {
-                if (ResultBackdrop && ResultBackdrop.parentNode) ResultBackdrop.parentNode.removeChild(ResultBackdrop);
-              } catch (e) {}
+            const autoClose = setTimeout(()=> {
+              try { if (ResultBackdrop && ResultBackdrop.parentNode) ResultBackdrop.parentNode.removeChild(ResultBackdrop); } catch (e) {}
               safeResolve(WinFlag === true);
             }, 8000);
             self.Timeouts.push(autoClose);
+
           } catch (e) {
-            console.error("[QuestGame] EndGame error:", e);
+            console.error('[QuestGame] EndGame error:', e);
             safeResolve(null);
           }
-        } // EndGame end
+        } // End EndGame
+      } // End BuildGameUI
 
-      } // BuildGameUI end
-    }); // Promise end
-  } // GameRun end
-} // class end
+      // --------- Create UI and schedule Start  ---------
+      let created;
+      try {
+        created = this.CreateBackdropDialog();
+      } catch (e) {
+        console.error("[QuestGame] CreateBackdropDialog threw:", e);
+        safeResolve(null);
+        return;
+      }
+      const { Backdrop, DialogBox } = created;
+
+      // READY text
+      const ReadyText = document.createElement("p");
+      ReadyText.textContent = "よーい…";
+      ReadyText.style.fontSize = "18px";
+      ReadyText.style.fontWeight = "700";
+      DialogBox.appendChild(ReadyText);
+
+      // T1 change text
+      const T1 = setTimeout(()=> {
+        try { ReadyText.textContent = "開始！"; } catch (e) {}
+      }, 700);
+      this.Timeouts.push(T1);
+
+      // T2 start game UI (ensure BuildGameUI exists before scheduling)  <<<< CHANGED
+      const T2 = setTimeout(()=> {
+        try {
+          ReadyText.remove();
+        } catch (e) {}
+        try {
+          console.log('[QuestGame] T2 triggered, calling BuildGameUI'); // <<< CHANGED
+          BuildGameUI();
+        } catch (e) {
+          console.error('[QuestGame] BuildGameUI call failed:', e); // <<< CHANGED
+          safeResolve(null);
+        }
+      }, 1200);
+      this.Timeouts.push(T2);
+
+    }); // Promise
+  } // GameRun
+} // class
