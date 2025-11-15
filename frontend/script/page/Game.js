@@ -436,6 +436,8 @@ function ShowCharaImages(ImgPath, StoryItem) {
     /* 2. アニメーションFLG定義 */
     // 1. フェードインFLG
     const FadeInFlg = StoryItem.Effect[0].FadeIn[0]?.[Position];
+    // 2. スピンFLG
+    const SpinFlg = StoryItem.Effect[0].Spin[0]?.[Position];
 
     /* 3. 画像パスが存在する場合 */
     if (ImagePath && typeof ImagePath === "string" && ImagePath.trim() !== "") {
@@ -446,8 +448,10 @@ function ShowCharaImages(ImgPath, StoryItem) {
       /* 同位置に存在する画像があれば削除 */
       if (Existing) {
         /* 各アニメーションの削除 */
-        // 1. フェードインFLG
+        // 1. フェードイン
         Existing.classList.remove("FadeIn");
+        // 2. スピン
+        Existing.classList.remove("Spin");
 
         /* 要素の除去 */
         setTimeout(() => {
@@ -481,6 +485,12 @@ function ShowCharaImages(ImgPath, StoryItem) {
           // 1. フェードイン
           if(FadeInFlg){
             Img.classList.add("FadeIn");
+          }else{
+            Img.classList.add("ShowImage");
+          }
+          // 2. スピン
+          if(FadeInFlg){
+            Img.classList.add("Spin");
           }else{
             Img.classList.add("ShowImage");
           }
@@ -542,9 +552,13 @@ function HideCharaImages(Positions = null) {
     if (Element.classList.contains("FadeOut")){
        return;
     }
-    // 2. クラス除去
+    /* 2. 各アニメーション削除 */
+    // 1. フェードアウト除去
     Element.classList.remove("FadeIn");
-    // 3. クラス設定
+    // 2. スピン除去
+    Element.classList.remove("Spin");
+
+    /* 3. フェードアウト設定 */
     Element.classList.add("FadeOut");
 
     /* 2. DOMからの削除処理 */

@@ -355,7 +355,7 @@
         "Spin": [
           {
             "Center": false,
-            "Right": false,
+            "Right": true,
             "Left": false
           }
         ],

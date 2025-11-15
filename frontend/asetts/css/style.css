@@ -381,6 +381,15 @@ button:disabled:active {
   opacity: 0;
   transform: translateY(10px) scale(0.98);
 }
+/* 7.スピン */
+.CharaImage.Spin {
+  animation: spinAnim 1s linear infinite;
+}
+
+@keyframes spinAnim {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 @media (max-width: 640px) {
   .CharaImage { max-width: 70%; }
   .CharaImage.Position-Left,
