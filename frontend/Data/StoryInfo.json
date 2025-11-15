@@ -23,8 +23,8 @@
     "CharaImgPath": [
       {
         "Center": "../asetts/img/chara/chara2/Chara2-1.png",
-        "Right": "../asetts/img/chara/chara2/Chara1-1.png",
-        "Left": "../asetts/img/chara/chara2/Chara3-1.png"
+        "Right": "../asetts/img/chara/chara1/Chara1-1.png",
+        "Left": "../asetts/img/chara/chara3/Chara3-1.png"
       }
     ],
     "BgmPath": "../asetts/music/bgm/BGM-1.mp3",
