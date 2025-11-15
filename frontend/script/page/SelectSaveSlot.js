@@ -232,9 +232,9 @@ function RenderSaveSlots(container, SaveItems) {
       // 1. プレイヤー名
       const PlayerName = SaveSlotItem.playername ?? "松之迫";
       // 2. 開始年月日
-      const StartDate = SaveSlotItem.registdate ?? SaveSlotItem.registDate ?? null;
+      const StartDate = SaveSlotItem.registdate ?? null;
       // 3. 終了年月日
-      const EndDate = SaveSlotItem.updatedate ?? SaveSlotItem.updateDate
+      const EndDate = SaveSlotItem.updatedate
         ? (() => { 
             const DateObject = new Date(SaveSlotItem.updatedate ?? SaveSlotItem.updateDate); 
             return `${DateObject.getFullYear()}年${(DateObject.getMonth()+1).toString().padStart(2,'0')}月${DateObject.getDate().toString().padStart(2,'0')}日 ${DateObject.getHours().toString().padStart(2,'0')}時${DateObject.getMinutes().toString().padStart(2,'0')}分` 
@@ -243,7 +243,7 @@ function RenderSaveSlots(container, SaveItems) {
 
 
       // 4. プレイ時間取得
-      const PlayTime = CalcPlayTime(StartDate, EndDate);
+      const PlayTime = CalcPlayTime(StartDate, SaveSlotItem.updatedate);
 
       /* 2. セーブスロットヘッダー作成 */
       // 1. DIV要素作成
