@@ -447,9 +447,7 @@ function ShowCharaImages(ImgPath, StoryItem) {
       if (Existing) {
         /* 各アニメーションの削除 */
         // 1. フェードインFLG
-        if(!FadeInFlg){
-          Existing.classList.remove("FadeIn");
-        }
+        Existing.classList.remove("FadeIn");
 
         /* 要素の除去 */
         setTimeout(() => {
