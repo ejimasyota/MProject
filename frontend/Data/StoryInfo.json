@@ -16,7 +16,7 @@
         "CutInFlg": false,
         "DisabledFlg": false,
         "EyeCatchFlg": false,
-        "GameFlg": false,
+        "GameFlg": true,
         "AutoSaveFlg": false
       }
     ],
