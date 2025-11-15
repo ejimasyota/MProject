@@ -266,6 +266,8 @@ function RenderSaveSlots(container, SaveItems) {
       DeleteButton.classList.add("ButtonInfo", "RedButton");
       // 3. ラベル設定
       DeleteButton.textContent = "削除";
+      // 4. サイズを縮小
+      DeleteButton.style.transform = "scale(0.8)";
       
       /* 5. 削除ボタンクリックイベント */
       DeleteButton.addEventListener("click", (Event) => {
