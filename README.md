@@ -172,7 +172,18 @@ ADD COLUMN saveslotid INTEGER NOT NULL;
 # SaveInfoテーブルのstoryidをNULL許容に変更  
 psql -U ejima -d Matu -p 5433  
   
-ALTER TABLE SaveInfo ALTER COLUMN storyid DROP NOT NULL;
+ALTER TABLE SaveInfo ALTER COLUMN storyid DROP NOT NULL;  
+  
+# PlayerInfoテーブルのsaveslotidを主キーに登録(あほすぎ)  
+psql -U ejima -d Matu -p 5433  
+  
+ALTER TABLE PlayerInfo
+DROP CONSTRAINT IF EXISTS PlayerInfo_pkey;  
+  
+ALTER TABLE PlayerInfo  
+ADD CONSTRAINT PlayerInfo_pkey  
+PRIMARY KEY (playerid, saveslotid);  
+
 
 # サイトを起動（IPはテスト端末のWSLのものなので本番では別のIPを利用する）
 http://172.20.14.20:8080/frontend/pages/Start.php
