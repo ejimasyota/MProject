@@ -445,14 +445,14 @@ function ShowCharaImages(ImgPath, StoryItem) {
 
       /* 同位置に存在する画像があれば削除 */
       if (Existing) {
+        /* 各アニメーションの削除 */
+        // 1. フェードインFLG
         if(!FadeInFlg){
-          // 1. クラスの除去
           Existing.classList.remove("FadeIn");
         }
 
-        // 2. クラス設定
-        Existing.classList.add("FadeOut");
-        // 3. 要素の除去
+
+        // 2. 要素の除去
         setTimeout(() => {
           try { Existing.remove(); } catch (e) {}
         }, 300);
