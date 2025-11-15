@@ -259,6 +259,23 @@ button:disabled:active {
 }
 
 /* --------------------------------------------
+ *  バックログ
+ * --------------------------------------------*/
+ /* 1.各バックログ行の枠 */
+.BacklogLine {
+  padding: 10px;
+  border-radius: 6px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+}
+/* 2.キャラ名部分 */
+.BacklogLine span.NarratorName {
+  font-weight: bold;
+  color: #c71585;
+  margin-right: 6px;
+}
+
+/* --------------------------------------------
  *  メッセージボックス
  * --------------------------------------------*/
 /* 1.メッセージボックスカード */

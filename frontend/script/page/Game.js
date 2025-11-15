@@ -251,16 +251,34 @@ function ShowBacklogDialog() {
   *  3. バックログ内容の作成
   * --------------------------------------------*/
   BACKLOG_INFO.forEach((Item) => {
+    /* 1. 事前処理 */
     // 1. DIV要素作成
     const StoryLine = document.createElement("div");
-    // 2. キャラ名が存在する場合
+    // 2. クラス設定
+    StoryLine.className = "BacklogLine";
+    
+    /* 2. キャラ名が存在する場合 */
     if (Item.Narrator) {
-      StoryLine.textContent = `${Item.Narrator} | ${Item.StoryText}`;
+        // 1. span要素作成
+        const CharaName = document.createElement("span");
+        // 2. クラス設定
+        CharaName.className = "NarratorName";
+        // 3. キャラ名設定
+        CharaName.textContent = Item.Narrator;
+        // 4. span要素作成
+        const TextSpan = document.createElement("span");
+        // 5. ストーリーテキスト設定
+        TextSpan.textContent = Item.StoryText;
+        // 6. キャラ名格納
+        StoryLine.appendChild(CharaName);
+        // 7. ストーリーテキスト格納
+        StoryLine.appendChild(TextSpan);
+      
     } else {
-      // 3. キャラ名が存在しない場合(効果音のみのテキストの想定)
+      /* 3. キャラ名が存在しない場合(効果音のみのテキストの想定) */
       StoryLine.textContent = Item.StoryText;
     }
-    // 4. バックログに格納
+    /* 4. バックログに格納 */
     BacklogDialog.appendChild(StoryLine);
   });
 
