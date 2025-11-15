@@ -521,6 +521,9 @@ function ShowCharaImages(ImgPath, StoryItem) {
           // 5. 背景ウェーブ
           if(BgWaveFlg){
             GameContainer.classList.add("BgWave");
+            setTimeout(() => {
+              GameContainer.classList.remove("BgWave");
+            }, 2000);
           }else{
             GameContainer.classList.remove("BgWave");
           }
