@@ -175,6 +175,7 @@ async function GameDisplayInfo(StoryId){
    /* --------------------------------------------
     *  4. メッセージボックス表示FLGがTRUEの場合
     * --------------------------------------------*/
+   console.log("StoryItem.Flg[0].MessageBoxFlg",StoryItem.Flg[0].MessageBoxFlg)
     if(StoryItem.Flg[0].MessageBoxFlg){
       await MESSAGE_BOX_DIALOG.ShowMessage(
         // 1. テキスト設定
