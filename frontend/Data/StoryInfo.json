@@ -29,7 +29,7 @@
       }
     ],
     "BgmPath": "",
-    "FaceImgPath": "/frontend/asetts/img/icon/chara1/Chara1-Icon-1.png",
+    "FaceImgPath": "../asetts/img/icon/chara1/Chara1-Icon-1.png",
     "Effect": [
       {
         "Spin": [
