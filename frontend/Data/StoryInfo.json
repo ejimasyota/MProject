@@ -6,8 +6,8 @@
     "StoryText": "おれ{PlayerName}だけど、今日もいい天気",
     "Next": null,
     "BgPath": "../asetts/img/bg/Bg-School-1.jpg",
-    "SePath": "",
-    "Voice": "",
+    "SePath": "../asetts/music/se/SE-1.mp3",
+    "Voice": "../asetts/music/voice/chara1/Chara1-voice-1.mp3",
     "Flg": [
       {
         "MessageBoxFlg": true,
