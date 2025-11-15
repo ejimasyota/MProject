@@ -15,7 +15,7 @@
     <!-- メニューコンテナ -->
     <div class="MenuContainer">
       <!-- 1. バックログ表示ボタン -->
-      <button class="MenuButton" data-tooltip="バックログを見る" aria-label="バックログ">
+      <button class="MenuButton" data-tooltip="バックログを見る" aria-label="バックログ" onClick="ShowBacklogDialog()">
         <svg xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24" width="100" height="100" fill="currentColor">
           <rect x="4" y="5" width="14" height="15" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"/>

@@ -114,7 +114,9 @@ async function GetSaveDataInfo(){
                 })
 
             })
-            // 1. ストーリーIDを渡す
+            /* 2. プレイヤー名設定 */
+            PLAYER_NAME = Result.Items[0].playername;
+            /* 3. ストーリーIDを渡す */
             GameDisplayInfo(Result.Items[0].storyid);
            }else{
                 /* --------------------------------------------
@@ -192,13 +194,12 @@ async function GameDisplayInfo(StoryId){
 
     // 2. {PlayerName} が含まれている場合はプレイヤー名で置換処理を実行
     if (typeof CharaName === "string" && CharaName.includes("{PlayerName}")) {
-        CharaName = CharaName.replaceAll("{PlayerName}", PLAYER_NAME);
+        CharaName = CharaName.replaceAll("{PlayerName}", PLAYER_NAME) ?? "";
     }
 
    /* --------------------------------------------
     *  5. メッセージボックス表示FLGがTRUEの場合
     * --------------------------------------------*/
-   console.log("StoryItem.Flg[0].MessageBoxFlg",StoryItem.Flg[0].MessageBoxFlg)
     if(StoryItem.Flg[0].MessageBoxFlg){
       await MESSAGE_BOX_DIALOG.ShowMessage(
         // 1. テキスト設定
@@ -215,7 +216,88 @@ async function GameDisplayInfo(StoryId){
        // 1. メッセージボックスの非表示処理を実行
        await MESSAGE_BOX_DIALOG.HideMessage();
     }
+    /* --------------------------------------------
+     *  6. バックログ内容の作成
+     * --------------------------------------------*/
+     BACKLOG_INFO.push({
+        // 1. ストーリーテキスト
+        StoryText :  StoryText,
+        // 2. キャラ名
+        Narrator : CharaName,
+    })
 }
+
+/* =========================================================
+ * バックログダイアログ表示処理
+ * =========================================================*/
+function ShowBacklogDialog() {
+ /* --------------------------------------------
+  *  1. バックログコンテナを作成
+  * --------------------------------------------*/
+  // 1. DIV要素の作成
+  const BacklogContainer = document.createElement("div");
+  // 2. クラス設定
+  BacklogContainer.className = "ConfirmContainer";
+
+ /* --------------------------------------------
+  *  2. ダイアログのカード作成
+  * --------------------------------------------*/
+  // 1. DIV要素の作成
+  const BacklogDialog = document.createElement("div");
+  // 2. クラス設定
+  BacklogDialog.className = "DialogBox";
+
+ /* --------------------------------------------
+  *  3. バックログ内容の作成
+  * --------------------------------------------*/
+  BACKLOG_INFO.forEach((Item) => {
+    // 1. DIV要素作成
+    const StoryLine = document.createElement("div");
+    // 2. キャラ名が存在する場合
+    if (Item.Narrator) {
+      StoryLine.textContent = `${Item.Narrator} | ${Item.StoryText}`;
+    } else {
+      // 3. キャラ名が存在しない場合(効果音のみのテキストの想定)
+      StoryLine.textContent = Item.StoryText;
+    }
+    // 4. バックログに格納
+    BacklogDialog.appendChild(StoryLine);
+  });
+
+ /* --------------------------------------------
+  *  4. 閉じるボタンの作成
+  * --------------------------------------------*/
+  // 1. ボタン要素の作成
+  const CloseButton = document.createElement("button");
+  // 2. クラス設定
+  CloseButton.classList.add("ButtonInfo", "PinkButton");
+  // 3. ラベル設定
+  CloseButton.textContent = "閉じる";
+
+ /* --------------------------------------------
+  *  5. 閉じるボタンのイベント定義
+  * --------------------------------------------*/
+  CloseButton.addEventListener("click", () => {
+    // 1. ダイアログを削除
+    if (BacklogContainer.parentNode) {
+      BacklogContainer.parentNode.removeChild(BacklogContainer);
+    }
+  });
+
+ /* --------------------------------------------
+  *  6. 閉じるボタンをバックログに格納
+  * --------------------------------------------*/
+  BacklogDialog.appendChild(CloseButton);
+
+ /* --------------------------------------------
+  *  7. DOM構築
+  * --------------------------------------------*/
+  // 1. バックログコンテナにバックログ格納
+  BacklogContainer.appendChild(BacklogDialog);
+  // 2. ボディにバックログコンテナを格納
+  document.body.appendChild(BacklogContainer);
+}
+
 
 /* =========================================================
  * ホームへ戻る処理
