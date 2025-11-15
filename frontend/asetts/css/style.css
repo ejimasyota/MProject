@@ -393,7 +393,13 @@ button:disabled:active {
 .CharaImage.Position-Left.Spin {
   transform-origin: left bottom;
   animation: spinLeftAnim 0.5s ease-in-out infinite alternate;
-}@keyframes spinLeftAnim {
+}
+@keyframes spinRightAnim {
+  0%   { transform: translateY(-50%) scale(0.98) rotate(0deg); }
+  50%  { transform: translateY(-50%) scale(0.98) rotate(-15deg); } 
+  100% { transform: translateY(-50%) scale(0.98) rotate(5deg); }
+}
+@keyframes spinLeftAnim {
   0%   { transform: translateY(-50%) scale(0.98) rotate(0deg); }
   50%  { transform: translateY(-50%) scale(0.98) rotate(15deg); } 
   100% { transform: translateY(-50%) scale(0.98) rotate(-5deg); }
