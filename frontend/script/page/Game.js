@@ -16,6 +16,8 @@ const PLAYER_ID = localStorage.getItem("M_PlayerId");
 const SAVE_SLOT_ID = sessionStorage.getItem("SaveSlotId");
 // 6. プレイヤー名
 let PLAYER_NAME = "";
+// 7. 現在参照しているストーリーID
+let STORY_ID = null;
 
 /* --------------------------------------------
  *  2. パス管理変数
@@ -168,15 +170,20 @@ async function GameDisplayInfo(StoryId){
     }
 
    /* --------------------------------------------
-    *  2. ストーリーIDに紐づく要素を取得
+    *  2. 現在のストーリーIDを保持
+    * --------------------------------------------*/
+   STORY_ID = StoryId;
+
+   /* --------------------------------------------
+    *  3. ストーリーIDに紐づく要素を取得
     * --------------------------------------------*/
     const StoryItem = STORY_INFO.find(Item => {
         // 1. Item内と引数のStoryIdの値が完全一致するものを検索
-        return Number(Item.StoryId) === Number(StoryId);
+        return Number(Item.StoryId) === Number(STORY_ID);
     });
 
     /* --------------------------------------------
-    *  3. テキスト内のプレイヤー名置換処理
+    *  4. テキスト内のプレイヤー名置換処理
     * --------------------------------------------*/
     // 1. ストーリーテキストを取得
     let StoryText = StoryItem.StoryText;
@@ -187,7 +194,7 @@ async function GameDisplayInfo(StoryId){
     }
 
     /* --------------------------------------------
-    *  4. キャラ名のプレイヤー名置換処理
+    *  5. キャラ名のプレイヤー名置換処理
     * --------------------------------------------*/
     // 1. キャラ名を取得
     let CharaName = StoryItem.Narrator;
@@ -198,7 +205,7 @@ async function GameDisplayInfo(StoryId){
     }
 
    /* --------------------------------------------
-    *  5. メッセージボックス表示FLGがTRUEの場合
+    *  6. メッセージボックス表示FLGがTRUEの場合
     * --------------------------------------------*/
     if(StoryItem.Flg[0].MessageBoxFlg){
       await MESSAGE_BOX_DIALOG.ShowMessage(
@@ -211,13 +218,13 @@ async function GameDisplayInfo(StoryId){
       );
     }else{
        /* --------------------------------------------
-        *  5. メッセージボックス表示FLGがFALSEの場合
+        *  7. メッセージボックス表示FLGがFALSEの場合
         * --------------------------------------------*/
        // 1. メッセージボックスの非表示処理を実行
        await MESSAGE_BOX_DIALOG.HideMessage();
     }
     /* --------------------------------------------
-     *  6. バックログ内容の作成
+     *  8. バックログ内容の作成
      * --------------------------------------------*/
      BACKLOG_INFO.push({
         // 1. ストーリーテキスト
@@ -316,6 +323,82 @@ function ShowBacklogDialog() {
   document.body.appendChild(BacklogContainer);
 }
 
+/* =========================================================
+ * セーブボタン押下時処理
+ * =========================================================*/
+async function SaveInfo(){
+  try {
+    /* ------------------------------
+     * 1. スピナー表示
+     * ------------------------------*/
+    ShowSpinner("セーブしています。ブラウザを閉じないでください。");
+
+    /* ------------------------------
+     * 2. APIに対してリクエストを送信
+     * ------------------------------*/
+    const Response = await fetch(
+      "../../backend/API/Update/UpdateSaveDataController.php",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        /* リクエストの内容を設定 */
+        body: JSON.stringify({
+          // 1. プレイヤーID
+          PlayerId: PLAYER_ID,
+          // 2. ストーリーID
+          StoryId : STORY_ID,
+          // 3. セーブスロットID
+          SlotId: SAVE_SLOT_ID,
+          // 4. バックログ配列
+          BackLog : BACKLOG_INFO
+        }),
+      }
+    );
+
+    /* ------------------------------
+     * 3. 処理結果の取得
+     * ------------------------------*/
+    const Result = await Response.json();
+    
+    /* ==========================================================
+     * 通信成功時
+     * ========================================================== */
+    if (Result.success) {
+        // 1.メッセージダイアログを表示
+        await MESSAGE_DIALOG.ShowDialog(Result.message);
+        // 2.処理終了
+        return;
+    } else {
+      /* ==========================================================
+       * 通信失敗時
+       * ========================================================== */
+      // 1.メッセージダイアログを表示
+      await MESSAGE_DIALOG.ShowDialog(Result.message);
+      // 2.処理終了
+      return;
+    }
+    
+  /* ==========================================================
+   * 例外処理
+   * ========================================================== */
+  } catch (error) {
+    // 1.エラーログ
+    console.error("通信エラー :", error);
+    // 2.ダイアログ表示
+    await MESSAGE_DIALOG.ShowDialog("セーブに失敗しました。");
+    // 3.処理終了
+    return
+  }
+  /* ==========================================================
+   * 終了時処理
+   * ========================================================== */
+  finally{
+    // 1.スピナー削除
+    HiddenSpinner();
+  }
+}
 
 /* =========================================================
  * ホームへ戻る処理

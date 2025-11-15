@@ -27,7 +27,7 @@
       </button>
 
       <!-- 3. セーブボタン -->
-      <button class="MenuButton" data-tooltip="セーブする" aria-label="セーブ">
+      <button class="MenuButton" data-tooltip="セーブする" aria-label="セーブ" onClick="SaveInfo()">
         <svg xmlns="http://www.w3.org/2000/svg" 
             viewBox="0 0 24 24" width="100" height="100" fill="currentColor">
           <path d="M4 3h12l4 4v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>
