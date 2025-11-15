@@ -8,6 +8,7 @@
  * ----------------------------------------------------------
  * 更新履歴：
  * 2025-11-14 作成
+ * 2025-11-15 PlayerInfoの条件追加
  * ========================================================== */
 
 /* ==========================================================
@@ -41,11 +42,13 @@ try {
     $stmt1 = $pdo->prepare("SELECT 
                                 playername
                             FROM PlayerInfo
-                            WHERE playerid = :playerid
+                            WHERE playerid   = :playerid
+                            AND   saveSlotid = :saveSlotid
                             LIMIT 1");
 
     // 2. パラメータ設定
     $stmt1->bindValue(":playerid", $PlayerId, PDO::PARAM_STR);
+    $stmt1->bindValue(":saveSlotid", $SaveSlotId, PDO::PARAM_STR);
 
     // 3. 実行
     $stmt1->execute();
