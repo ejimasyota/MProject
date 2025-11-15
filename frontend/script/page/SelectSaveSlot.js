@@ -143,6 +143,10 @@ async function GetSaveSlot(PlayerId){
     /* ==========================================================
      * 通信成功時
      * ========================================================== */
+    console.log("Result.items.length",Result.items.length)
+    console.log("Result",Result)
+    console.log("Result.items",Result.items)
+    console.log("Result.Items",Result.items)
     if (Result && Result.success && Array.isArray(Result.items) && Result.items.length > 0) {
      /* ------------------------------
       * 1. 取得結果が存在する場合
