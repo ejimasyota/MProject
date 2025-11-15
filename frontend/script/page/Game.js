@@ -310,7 +310,7 @@ async function GameDisplayInfo(StoryId){
           typeof ImagePath[pos] === "string" && ImagePath[pos].trim() !== ""
         )
       ) {
-        ShowCharaImages(ImagePath, StoryItem);
+        ShowCharaImages(ImagePath);
     } else {
       /* --------------------------------------------
         *  9. キャラ画像のいずれかも存在しない場合
@@ -442,9 +442,9 @@ function ShowCharaImages(ImgPath) {
       /* 同位置に存在する画像があれば削除 */
       if (Existing) {
         // 1. クラスの除去
-        Existing.classList.remove("Show");
+        Existing.classList.remove("FadeIn");
         // 2. クラス設定
-        Existing.classList.add("Hide");
+        Existing.classList.add("FadeOut");
         // 3. 要素の除去
         setTimeout(() => {
           try { Existing.remove(); } catch (e) {}
@@ -470,9 +470,9 @@ function ShowCharaImages(ImgPath) {
         // 1. フレームでの設定
         requestAnimationFrame(() => {
           // 2. クラス除去
-          Img.classList.remove("Hide");
+          Img.classList.remove("FadeOut");
           // 3. クラス設定
-          Img.classList.add("Show");
+          Img.classList.add("FadeIn");
         });
       });
 
@@ -528,13 +528,13 @@ function HideCharaImages(Positions = null) {
   TargetNodeList.forEach((Element) => {
     /* 1. 事前処理 */
     // 1. 既に非表示処理中の要素はスキップ
-    if (Element.classList.contains("Hide")){
+    if (Element.classList.contains("FadeOut")){
        return;
     }
     // 2. クラス除去
-    Element.classList.remove("Show");
+    Element.classList.remove("FadeIn");
     // 3. クラス設定
-    Element.classList.add("Hide");
+    Element.classList.add("FadeOut");
 
     /* 2. DOMからの削除処理 */
     setTimeout(() => {

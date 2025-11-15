@@ -346,7 +346,7 @@ button:disabled:active {
   user-select: none;
 }
 /* 3.表示状態 */
-.CharaImage.Show {
+.CharaImage.FadeIn {
   opacity: 1;
   transform: translateY(0) scale(1);
 }
@@ -372,7 +372,7 @@ button:disabled:active {
   transform: translateY(-50%); 
   max-width: 38%;
 }
-.CharaImage.Hide {
+.CharaImage.FadeOut {
   opacity: 0;
   transform: translateY(10px) scale(0.98);
 }
