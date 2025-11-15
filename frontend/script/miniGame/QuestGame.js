@@ -1,6 +1,4 @@
-/* =========================================================
- * QuestGame クラス（デバッグ用修正版・最小差分）
- * =========================================================*/
+/* QuestGame.js - 完全版（グローバル登録あり） */
 class QuestGame {
   constructor(Options = {}) {
     this.Options = Options;
@@ -104,6 +102,7 @@ class QuestGame {
   }
 
   async GameRun() {
+    // Returns Promise<boolean|null>
     const self = this;
     return new Promise((Resolve) => {
       let resolved = false;
@@ -114,9 +113,8 @@ class QuestGame {
         }
       };
 
-      // --------- Pre-declare BuildGameUI to avoid hoisting/compat issues  <<<< CHANGED
-      function BuildGameUI() {
-        console.log('[QuestGame] BuildGameUI entered'); // <<< CHANGED
+      // Pre-declare BuildGameUI
+      function BuildGameUI(Backdrop, DialogBox) {
         // a. Canvas
         let Canvas;
         try {
@@ -166,10 +164,10 @@ class QuestGame {
         ResultText.className = "ResultText";
         ResultText.style.minHeight = "18px";
 
-        // ensure DialogBox is visible  <<<< CHANGED
-        try { DialogBox.style.display = 'flex'; } catch (e) { console.warn('[QuestGame] DialogBox not found'); }
+        // ensure DialogBox visible
+        try { DialogBox.style.display = 'flex'; } catch (e) {}
 
-        // d. append elements
+        // d. append
         try {
           DialogBox.appendChild(Canvas);
           DialogBox.appendChild(StatWrap);
@@ -183,11 +181,7 @@ class QuestGame {
         }
 
         // e. initial draw
-        try {
-          self.DrawEnemy(Canvas, self.EnemyHp / self.EnemyMaxHp);
-        } catch (e) {
-          console.error('[QuestGame] DrawEnemy failed', e);
-        }
+        try { self.DrawEnemy(Canvas, self.EnemyHp / self.EnemyMaxHp); } catch (e) { console.error(e); }
 
         // f. rules
         const PlayerAttackPower = 3;
@@ -213,7 +207,7 @@ class QuestGame {
         AttackButton.addEventListener("click", OnAttack);
         self.Handlers.push({ el: AttackButton, type: "click", fn: OnAttack });
 
-        // h. enemy attack interval
+        // h. enemy auto-attack
         self.IntervalId = setInterval(()=> {
           try {
             if (self.EnemyHp > 0) {
@@ -232,7 +226,7 @@ class QuestGame {
           }
         }, EnemyAttackInterval);
 
-        // EndGame (function declaration stable)
+        // EndGame
         function EndGame(WinFlag) {
           try {
             // clear timers & handlers
@@ -241,13 +235,14 @@ class QuestGame {
             // remove game backdrop
             try { if (Backdrop && Backdrop.parentNode) Backdrop.parentNode.removeChild(Backdrop); } catch (e) {}
 
-            // create result dialog
+            // result dialog
             const { Backdrop: ResultBackdrop, DialogBox: ResultCard } = self.CreateBackdropDialog();
             const Message = document.createElement("p");
             Message.className = "ResultText";
             Message.textContent = WinFlag ? "勝ちました" : "負けました";
             Message.style.fontWeight = "700";
             ResultCard.appendChild(Message);
+
             const Detail = document.createElement("div");
             Detail.className = "SmallGrey";
             Detail.textContent = WinFlag ? "おめでとう！" : "また挑戦しよう...";
@@ -268,59 +263,42 @@ class QuestGame {
             self.Handlers.push({ el: CloseBtn, type: "click", fn: onClose });
             ResultCard.appendChild(CloseBtn);
 
+            // fallback auto close
             const autoClose = setTimeout(()=> {
               try { if (ResultBackdrop && ResultBackdrop.parentNode) ResultBackdrop.parentNode.removeChild(ResultBackdrop); } catch (e) {}
               safeResolve(WinFlag === true);
             }, 8000);
             self.Timeouts.push(autoClose);
-
           } catch (e) {
             console.error('[QuestGame] EndGame error:', e);
             safeResolve(null);
           }
         } // End EndGame
-      } // End BuildGameUI
+      } // BuildGameUI
 
-      // --------- Create UI and schedule Start  ---------
+      // Create initial UI and schedule start
       let created;
-      try {
-        created = this.CreateBackdropDialog();
-      } catch (e) {
-        console.error("[QuestGame] CreateBackdropDialog threw:", e);
-        safeResolve(null);
-        return;
-      }
+      try { created = this.CreateBackdropDialog(); } catch (e) { console.error("[QuestGame] CreateBackdropDialog threw:", e); safeResolve(null); return; }
       const { Backdrop, DialogBox } = created;
 
-      // READY text
       const ReadyText = document.createElement("p");
       ReadyText.textContent = "よーい…";
       ReadyText.style.fontSize = "18px";
       ReadyText.style.fontWeight = "700";
       DialogBox.appendChild(ReadyText);
 
-      // T1 change text
-      const T1 = setTimeout(()=> {
-        try { ReadyText.textContent = "開始！"; } catch (e) {}
-      }, 700);
+      const T1 = setTimeout(()=> { try { ReadyText.textContent = "開始！"; } catch (e) {} }, 700);
       this.Timeouts.push(T1);
 
-      // T2 start game UI (ensure BuildGameUI exists before scheduling)  <<<< CHANGED
       const T2 = setTimeout(()=> {
-        try {
-          ReadyText.remove();
-        } catch (e) {}
-        try {
-          console.log('[QuestGame] T2 triggered, calling BuildGameUI'); // <<< CHANGED
-          BuildGameUI();
-        } catch (e) {
-          console.error('[QuestGame] BuildGameUI call failed:', e); // <<< CHANGED
-          safeResolve(null);
-        }
+        try { ReadyText.remove(); } catch (e) {}
+        try { BuildGameUI(Backdrop, DialogBox); } catch (e) { console.error('[QuestGame] BuildGameUI call failed:', e); safeResolve(null); }
       }, 1200);
       this.Timeouts.push(T2);
 
     }); // Promise
   } // GameRun
-} // class
+} // class end
+
+// グローバル登録
 window.QuestGame = QuestGame;

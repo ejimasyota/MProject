@@ -389,7 +389,10 @@ async function GameDisplayInfo(StoryId){
     *  17. ミニゲーム実行FLG
     * --------------------------------------------*/
     if (StoryItem.Flg[0].GameFlg) {
-      RunMiniGame(STORY_ID, StoryItem.GameResult[0]);
+      // 1. ストーリーIDの戻り値を保持
+      NEXT_STORY_ID = await RunMiniGame(STORY_ID, StoryItem.GameResult[0]);
+      // 2. 画面表示を設定
+      GameDisplayInfo(NEXT_STORY_ID);
     }
 }
 
