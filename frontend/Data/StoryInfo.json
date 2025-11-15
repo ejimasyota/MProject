@@ -845,7 +845,7 @@
         "Left": "../asetts/img/chara/chara3/Chara3-1.png"
       }
     ],
-    "BgmPath": "../asetts/music/bgm/BGM-Game-Start.mp3",
+    "BgmPath": "",
     "FaceImgPath": "../asetts/img/icon/chara1/Chara1-Icon-1.png",
     "Effect": [
       {
