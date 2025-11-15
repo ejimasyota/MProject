@@ -4,9 +4,169 @@
     "Narrator": "{PlayerName}",
     "StoryTitle": "始まり",
     "StoryText": "おれ{PlayerName}だけど、今日もいい天気",
-    "Next": null,
+    "Next": 2,
+    "BgPath": "",
+    "SePath": "",
+    "Voice": "",
+    "Flg": [
+      {
+        "MessageBoxFlg": true,
+        "EndFlg": "",
+        "CutInFlg": false,
+        "DisabledFlg": false,
+        "EyeCatchFlg": false,
+        "GameFlg": false,
+        "AutoSaveFlg": false,
+        "NarratorFlg" : false
+      }
+    ],
+    "MoviePath": "",
+    "CharaImgPath": [
+      {
+        "Center": "",
+        "Right": "",
+        "Left": ""
+      }
+    ],
+    "BgmPath": "",
+    "FaceImgPath": "../asetts/img/icon/chara1/Chara1-Icon-1.png",
+    "Effect": [
+      {
+        "Spin": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "Jump": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "Wave": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "FadeIn": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "FadeOut": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "BgWave": false
+      }
+    ],
+    "Select": [],
+    "$$$$$$$$": "",
+    "||||||||": "",
+    "★★★★": "",
+    "@@@@@@@@": "",
+    "&&&&&&&&": "",
+    "^^^^^^^^": "",
+    "%%%%%%%%": ""
+  },
+  {
+    "StoryId": 2,
+    "Narrator": "???",
+    "StoryTitle": "始まり",
+    "StoryText": "おーい",
+    "Next": 3,
     "BgPath": "../asetts/img/bg/Bg-School-1.jpg",
-    "SePath": "../asetts/music/se/SE-1.mp3",
+    "SePath": "",
+    "Voice": "",
+    "Flg": [
+      {
+        "MessageBoxFlg": true,
+        "EndFlg": "",
+        "CutInFlg": false,
+        "DisabledFlg": false,
+        "EyeCatchFlg": false,
+        "GameFlg": false,
+        "AutoSaveFlg": false,
+        "NarratorFlg" : false
+      }
+    ],
+    "MoviePath": "",
+    "CharaImgPath": [
+      {
+        "Center": "",
+        "Right": "",
+        "Left": ""
+      }
+    ],
+    "BgmPath": "",
+    "FaceImgPath": "",
+    "Effect": [
+      {
+        "Spin": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "Jump": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "Wave": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "FadeIn": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "FadeOut": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "BgWave": false
+      }
+    ],
+    "Select": [],
+    "$$$$$$$$": "",
+    "||||||||": "",
+    "★★★★": "",
+    "@@@@@@@@": "",
+    "&&&&&&&&": "",
+    "^^^^^^^^": "",
+    "%%%%%%%%": ""
+  },
+  {
+    "StoryId": 4,
+    "Narrator": "{PlayerName}",
+    "StoryTitle": "始まり",
+    "StoryText": "あ!",
+    "Next": 5,
+    "BgPath": "../asetts/img/bg/Bg-School-1.jpg",
+    "SePath": "",
     "Voice": "../asetts/music/voice/chara1/Chara1-voice-1.mp3",
     "Flg": [
       {
@@ -16,7 +176,88 @@
         "DisabledFlg": false,
         "EyeCatchFlg": false,
         "GameFlg": false,
-        "AutoSaveFlg": false
+        "AutoSaveFlg": false,
+        "NarratorFlg" : false
+      }
+    ],
+    "MoviePath": "",
+    "CharaImgPath": [
+      {
+        "Center": "",
+        "Right": "",
+        "Left": ""
+      }
+    ],
+    "BgmPath": "",
+    "FaceImgPath": "../asetts/img/icon/chara1/Chara1-Icon-1.png",
+    "Effect": [
+      {
+        "Spin": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "Jump": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "Wave": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "FadeIn": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "FadeOut": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "BgWave": false
+      }
+    ],
+    "Select": [],
+    "$$$$$$$$": "",
+    "||||||||": "",
+    "★★★★": "",
+    "@@@@@@@@": "",
+    "&&&&&&&&": "",
+    "^^^^^^^^": "",
+    "%%%%%%%%": ""
+  },
+  {
+    "StoryId": 5,
+    "Narrator": "A男",
+    "StoryTitle": "始まり",
+    "StoryText": "おはよう!{PlayerName}君！",
+    "Next": 6,
+    "BgPath": "../asetts/img/bg/Bg-School-1.jpg",
+    "SePath": "",
+    "Voice": "",
+    "Flg": [
+      {
+        "MessageBoxFlg": true,
+        "EndFlg": "",
+        "CutInFlg": false,
+        "DisabledFlg": false,
+        "EyeCatchFlg": false,
+        "GameFlg": false,
+        "AutoSaveFlg": false,
+        "NarratorFlg" : false
       }
     ],
     "MoviePath": "",
@@ -27,7 +268,87 @@
         "Left": "../asetts/img/chara/chara3/Chara3-1.png"
       }
     ],
-    "BgmPath": "../asetts/music/bgm/BGM-1.mp3",
+    "BgmPath": "",
+    "FaceImgPath": "../asetts/img/icon/chara3/Chara3-Icon-1.png",
+    "Effect": [
+      {
+        "Spin": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "Jump": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "Wave": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "FadeIn": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "FadeOut": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "BgWave": false
+      }
+    ],
+    "Select": [],
+    "$$$$$$$$": "",
+    "||||||||": "",
+    "★★★★": "",
+    "@@@@@@@@": "",
+    "&&&&&&&&": "",
+    "^^^^^^^^": "",
+    "%%%%%%%%": ""
+  },
+  {
+    "StoryId": 6,
+    "Narrator": "",
+    "StoryTitle": "始まり",
+    "StoryText": "どうする？",
+    "Next": null,
+    "BgPath": "../asetts/img/bg/Bg-School-1.jpg",
+    "SePath": "",
+    "Voice": "",
+    "Flg": [
+      {
+        "MessageBoxFlg": true,
+        "EndFlg": "",
+        "CutInFlg": false,
+        "DisabledFlg": false,
+        "EyeCatchFlg": false,
+        "GameFlg": false,
+        "AutoSaveFlg": false,
+        "NarratorFlg" : true
+      }
+    ],
+    "MoviePath": "",
+    "CharaImgPath": [
+      {
+        "Center": "../asetts/img/chara/chara2/Chara2-1.png",
+        "Right": "../asetts/img/chara/chara1/Chara1-1.png",
+        "Left": "../asetts/img/chara/chara3/Chara3-1.png"
+      }
+    ],
+    "BgmPath": "",
     "FaceImgPath": "",
     "Effect": [
       {
@@ -71,14 +392,174 @@
     ],
     "Select": [
       {
-        "StoryText": "散歩に出かける",
-        "Next": 2
+        "StoryText": "挨拶する",
+        "Next": 7
       },
       {
-        "StoryText": "部屋で本を読む",
-        "Next": 3
+        "StoryText": "決して挨拶はしない",
+        "Next": 8
       }
     ],
+    "$$$$$$$$": "",
+    "||||||||": "",
+    "★★★★": "",
+    "@@@@@@@@": "",
+    "&&&&&&&&": "",
+    "^^^^^^^^": "",
+    "%%%%%%%%": ""
+  },
+  {
+    "StoryId": 7,
+    "Narrator": "{PlayerName}",
+    "StoryTitle": "始まり",
+    "StoryText": "おはよう",
+    "Next": 9,
+    "BgPath": "../asetts/img/bg/Bg-School-1.jpg",
+    "SePath": "",
+    "Voice": "",
+    "Flg": [
+      {
+        "MessageBoxFlg": true,
+        "EndFlg": "",
+        "CutInFlg": false,
+        "DisabledFlg": false,
+        "EyeCatchFlg": false,
+        "GameFlg": false,
+        "AutoSaveFlg": false,
+        "NarratorFlg" : false
+      }
+    ],
+    "MoviePath": "",
+    "CharaImgPath": [
+      {
+        "Center": "../asetts/img/chara/chara2/Chara2-1.png",
+        "Right": "../asetts/img/chara/chara1/Chara1-1.png",
+        "Left": "../asetts/img/chara/chara3/Chara3-1.png"
+      }
+    ],
+    "BgmPath": "",
+    "FaceImgPath": "../asetts/img/icon/chara1/Chara1-Icon-1.png",
+    "Effect": [
+      {
+        "Spin": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "Jump": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "Wave": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "FadeIn": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "FadeOut": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "BgWave": false
+      }
+    ],
+    "Select": [],
+    "$$$$$$$$": "",
+    "||||||||": "",
+    "★★★★": "",
+    "@@@@@@@@": "",
+    "&&&&&&&&": "",
+    "^^^^^^^^": "",
+    "%%%%%%%%": ""
+  },
+  {
+    "StoryId": 8,
+    "Narrator": "{PlayerName}",
+    "StoryTitle": "始まり",
+    "StoryText": "・・・",
+    "Next": 10,
+    "BgPath": "../asetts/img/bg/Bg-School-1.jpg",
+    "SePath": "",
+    "Voice": "",
+    "Flg": [
+      {
+        "MessageBoxFlg": true,
+        "EndFlg": "",
+        "CutInFlg": false,
+        "DisabledFlg": false,
+        "EyeCatchFlg": false,
+        "GameFlg": false,
+        "AutoSaveFlg": false,
+        "NarratorFlg" : false
+      }
+    ],
+    "MoviePath": "",
+    "CharaImgPath": [
+      {
+        "Center": "../asetts/img/chara/chara2/Chara2-1.png",
+        "Right": "../asetts/img/chara/chara1/Chara1-1.png",
+        "Left": "../asetts/img/chara/chara3/Chara3-1.png"
+      }
+    ],
+    "BgmPath": "",
+    "FaceImgPath": "../asetts/img/icon/chara1/Chara1-Icon-1.png",
+    "Effect": [
+      {
+        "Spin": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "Jump": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "Wave": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "FadeIn": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "FadeOut": [
+          {
+            "Center": false,
+            "Right": false,
+            "Left": false
+          }
+        ],
+        "BgWave": false
+      }
+    ],
+    "Select": [],
     "$$$$$$$$": "",
     "||||||||": "",
     "★★★★": "",

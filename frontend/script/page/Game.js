@@ -51,7 +51,49 @@ document.addEventListener("DOMContentLoaded", function() {
     StoryInfoGetJson();
     // 2. セーブデータの取得処理呼び出し
     GetSaveDataInfo();
+    // 3. 画面クリックイベント設定
 });
+
+/* =========================================================
+ * 画面クリックイベント
+ * =========================================================*/
+function DisplayClickEvent(){
+  /* --------------------------------------------
+   *  1. 事前処理
+   * --------------------------------------------*/
+  // 1. ゲームコンテナ取得
+  const GameContainer = document.querySelector(".GameContainer");
+
+  /* --------------------------------------------
+   *  2. バリデーションチェック
+   * --------------------------------------------*/
+  /* 1. ゲームコンテナが存在しない場合 */
+  if (!GameContainer){
+    // 1. 処理終了 
+    return;
+  }
+
+  /* --------------------------------------------
+   *  3. クリックイベント定義
+   * --------------------------------------------*/
+  GameContainer.addEventListener("click", () => {
+    /* 1. 事前処理 */
+    // 1. 選択肢のコンテナ取得
+    const SelectContainer = document.getElementById("SelectContainer");
+    // 2. 選択肢表示中は処理終了(そもそもバックドロップがあるのでクリックできないが念のため)
+    if (SelectContainer && SelectContainer.childElementCount > 0) {
+      return;
+    }
+
+    /* 2. 次のストーリーIDがある場合 */
+    if (typeof NEXT_STORY_ID !== "undefined" && NEXT_STORY_ID) {
+      // 1. 画面表示を設定
+      GameDisplayInfo(NEXT_STORY_ID);
+      // 2. 保持している次のシーンIDを初期化
+      NEXT_STORY_ID = null;
+    }
+  });
+}
 
 /* =========================================================
  * ストーリーJSONの読み込み・配列化
@@ -283,12 +325,15 @@ async function GameDisplayInfo(StoryId){
     /* --------------------------------------------
      *  10. バックログ内容の作成
      * --------------------------------------------*/
-     BACKLOG_INFO.push({
-        // 1. ストーリーテキスト
-        StoryText :  StoryText,
-        // 2. キャラ名
-        Narrator : CharaName,
-    })
+    // 1. 選択肢表示時のストーリーテキストとキャラ名は除外する
+    if(!StoryItem.Flg[0].NarratorFlg){
+      BACKLOG_INFO.push({
+          // 2. ストーリーテキストをセット
+          StoryText :  StoryText,
+          // 3. キャラ名
+          Narrator : CharaName,
+      })
+    }
 
     /* --------------------------------------------
      *  12. 選択肢表示を行わない場合
@@ -487,8 +532,6 @@ function HideCharaImages(Positions = null) {
     }, 300); 
   });
 }
-
-
 
 /* =========================================================
  * BGM再生処理
