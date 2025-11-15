@@ -100,6 +100,7 @@ async function GetSaveDataInfo(){
         *  4. 通信成功時
         * --------------------------------------------*/
         if (Result && Result.success) {
+            console.log("Result",Result)
            /* --------------------------------------------
             *  5. 取得内容が存在する場合
             * --------------------------------------------*/
@@ -366,17 +367,21 @@ async function SaveInfo(){
      * 通信成功時
      * ========================================================== */
     if (Result.success) {
-        // 1.メッセージダイアログを表示
-        await MESSAGE_DIALOG.ShowDialog(Result.message);
-        // 2.処理終了
-        return;
+      // 1.明示的にスピナー削除
+      HiddenSpinner();
+      // 2.メッセージダイアログを表示
+      await MESSAGE_DIALOG.ShowDialog(Result.message);
+      // 3.処理終了
+      return;
     } else {
       /* ==========================================================
        * 通信失敗時
        * ========================================================== */
-      // 1.メッセージダイアログを表示
+      // 1.明示的にスピナー削除
+      HiddenSpinner();
+      // 2.メッセージダイアログを表示
       await MESSAGE_DIALOG.ShowDialog(Result.message);
-      // 2.処理終了
+      // 3.処理終了
       return;
     }
     
@@ -386,17 +391,12 @@ async function SaveInfo(){
   } catch (error) {
     // 1.エラーログ
     console.error("通信エラー :", error);
-    // 2.ダイアログ表示
-    await MESSAGE_DIALOG.ShowDialog("セーブに失敗しました。");
-    // 3.処理終了
-    return
-  }
-  /* ==========================================================
-   * 終了時処理
-   * ========================================================== */
-  finally{
-    // 1.スピナー削除
+    // 2.明示的にスピナー削除
     HiddenSpinner();
+    // 3.ダイアログ表示
+    await MESSAGE_DIALOG.ShowDialog("セーブに失敗しました。");
+    // 4.処理終了
+    return
   }
 }
 
