@@ -345,7 +345,7 @@ button:disabled:active {
   will-change: opacity, transform;
   user-select: none;
 }
-/* 3.表示状態 */
+/* 3.フェードインアニメーション */
 .CharaImage.FadeIn {
   opacity: 1;
   transform: translateY(0) scale(1);
@@ -372,6 +372,11 @@ button:disabled:active {
   transform: translateY(-50%); 
   max-width: 38%;
 }
+/* 5.アニメーションなしの画像表示 */
+.CharaImage.ShowImage {
+  opacity: 1;
+}
+/* 6.フェードアウト */
 .CharaImage.FadeOut {
   opacity: 0;
   transform: translateY(10px) scale(0.98);

@@ -478,9 +478,11 @@ function ShowCharaImages(ImgPath, StoryItem) {
           Img.classList.remove("FadeOut");
 
           /* 各アニメーション定義 */
-          // 1. フェードインFLGがTRUEの場合
+          // 1. フェードイン
           if(FadeInFlg){
             Img.classList.add("FadeIn");
+          }else{
+            Img.classList.add("ShowImage");
           }
         });
       });
