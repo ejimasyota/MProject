@@ -375,9 +375,9 @@
         ],
         "FadeIn": [
           {
-            "Center": true,
-            "Right": true,
-            "Left": true
+            "Center": false,
+            "Right": false,
+            "Left": false
           }
         ],
         "FadeOut": [

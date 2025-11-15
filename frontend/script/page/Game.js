@@ -448,86 +448,50 @@ function ShowCharaImages(ImgPath, StoryItem) {
       console.log("Existing",Existing)
       /* 既存画像が存在する場合 */
       if (Existing) {
-        /* 事前定義 */
-        // 1. フェードイン用クラスを除去
-        Existing.classList.remove("FadeIn");
-
-        /* フェードアウトFLGに応じた処理 */
         if (FadeOutFlg[Position]) {
-          /* 事前定義 */
-          // 1. フェードアウトクラスを設定
-          Existing.classList.add("FadeOut");
+          // ラッパーでフェードアウト
+          const Wrapper = document.createElement("div");
+          Wrapper.style.position = "absolute";
+          Wrapper.appendChild(Existing.cloneNode(true));
+          CharaLayer.appendChild(Wrapper);
 
-          /* アニメーション終了後の削除処理 */
-          const onEnd = () => {
-            // 1. 画像要素の削除
-            try { Existing.remove(); } catch(e){}
-            // 2. イベント解除
-            Existing.removeEventListener("transitionend", onEnd);
-            // 3. レイヤー内が空の場合はレイヤー自体を削除
-            if (CharaLayer && CharaLayer.children.length === 0) {
-              try { CharaLayer.remove(); } catch(e){}
-            }
-          };
-          // 4. transition終了を監視
-          Existing.addEventListener("transitionend", onEnd);
+          // 元の画像は即削除
+          Existing.remove();
 
-          /* フォールバック削除 */
-          setTimeout(() => {
-            // 1. 対象要素がまだ存在する場合
-            if (document.contains(Existing)) onEnd();
-          }, 1000);
+          const FadeImg = Wrapper.firstChild;
+          FadeImg.classList.add("FadeOut");
+          FadeImg.addEventListener("transitionend", () => Wrapper.remove());
+          setTimeout(() => { if (document.contains(Wrapper)) Wrapper.remove(); }, 1000);
         } else {
-          /* フェードアウト不要なら即削除 */
-          // 1. 画像要素を削除
-          try { Existing.remove(); } catch(e){}
-          // 2. レイヤー内が空の場合はレイヤーも削除
-          if (CharaLayer && CharaLayer.children.length === 0) {
-            try { CharaLayer.remove(); } catch(e){}
-          }
+          Existing.remove();
         }
       }
 
-      /* 画像の作成処理 */
-      // 1. IMG要素作成
-      const Img = document.createElement("img");
-      // 2. ALT属性設定
-      Img.alt = Position + " Character";
-      // 3. クラス設定
-      Img.classList.add("CharaImage", `Position-${Position}`);
-      // 4. パスを設定
-      Img.src = ImagePath;
-      // 5. 画像の読み込み準備
-      Img.decoding = "async";
-      // 6. 画像読込
-      Img.loading = "lazy";
+      // 新しい画像は追加
+      if (ImagePath && ImagePath.trim()) {
+        const Img = document.createElement("img");
+        Img.alt = Position + " Character";
+        Img.classList.add("CharaImage", `Position-${Position}`);
+        Img.src = ImagePath;
+        Img.decoding = "async";
+        Img.loading = "lazy";
 
-      /* アニメーション設定 */
-      Img.addEventListener("load", () => {
-        /* フレームでの設定 */
-        requestAnimationFrame(() => {
-          /* 事前処理 */
-          // 1. フェードアウトを外す
-          Img.classList.remove("FadeOut");
-
-          // 2. フェードアウトFLGがFALSEの場合はクラスを除去
-          if(!FadeOutFlg[Position]){
+        const applyFadeIn = () => {
+          requestAnimationFrame(() => {
             Img.classList.remove("FadeOut");
-          }
-          
-          /* アニメーション設定 */
-          // 1. フェードイン
-          if (FadeInFlg[Position]) {
-            Img.classList.add("FadeIn");
-          }
-        });
-      });
+            if (FadeInFlg[Position]) Img.classList.add("FadeIn");
+          });
+        };
 
-      /* 例外発生時に画像を削除 */
-      Img.addEventListener('error', () => { try { Img.remove(); } catch(e){} });
+        if (Img.complete && Img.naturalWidth !== 0) {
+          applyFadeIn();
+        } else {
+          Img.addEventListener("load", applyFadeIn);
+        }
 
-      /* 画像の追加 */
-      CharaLayer.appendChild(Img);
+        Img.addEventListener("error", () => Img.remove());
+        CharaLayer.appendChild(Img);
+      }
     }
   });
 }
