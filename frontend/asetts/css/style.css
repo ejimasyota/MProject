@@ -351,8 +351,7 @@ button:disabled:active {
   left: 50%;
   top: 50%;
   transform-origin: center bottom;
-  transform: translate(-50%, -2%) scale(0.98);
-  transform: translateY(-50%); 
+  transform: translate(-50%, -50%) scale(0.98);
   max-width: 50%;
 }
 .CharaImage.Position-Left {
