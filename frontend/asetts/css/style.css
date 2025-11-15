@@ -416,12 +416,14 @@ button:disabled:active {
 }
 /* 10.背景ウェーブ */
 .GameContainer.BgWave {
-  animation: bgWaveAnim 2s ease-in-out infinite alternate;
+  animation: bgWaveShock 0.4s ease-in-out infinite alternate;
 }
-@keyframes bgWaveAnim {
+@keyframes bgWaveShock {
   0%   { transform: translateX(0); }
-  50%  { transform: translateX(5px); }
-  100% { transform: translateX(-5px); }
+  25%  { transform: translateX(15px); }
+  50%  { transform: translateX(-15px); }
+  75%  { transform: translateX(10px); }
+  100% { transform: translateX(-10px); }
 }
 @keyframes waveCenterAnim {
   0%   { transform: translate(-50%, -50%) scale(0.98); }
