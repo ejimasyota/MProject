@@ -310,7 +310,7 @@ async function GameDisplayInfo(StoryId){
           typeof ImagePath[pos] === "string" && ImagePath[pos].trim() !== ""
         )
       ) {
-        ShowCharaImages(ImagePath);
+        ShowCharaImages(ImagePath, StoryItem);
     } else {
       /* --------------------------------------------
         *  9. キャラ画像のいずれかも存在しない場合
@@ -389,7 +389,7 @@ async function GameDisplayInfo(StoryId){
 /* =========================================================
  * キャラクター画像表示処理
  * =========================================================*/
-function ShowCharaImages(ImgPath) {
+function ShowCharaImages(ImgPath, StoryItem) {
  /* --------------------------------------------
   *  1. 事前処理
   * --------------------------------------------*/
@@ -433,7 +433,12 @@ function ShowCharaImages(ImgPath) {
     // 1. 位置ごとの画像パスを取得
     const ImagePath = ImgPath[Position] ?? "";
 
-    /* 2. 画像パスが存在する場合 */
+    /* 2. アニメーションFLG定義 */
+    // 1. フェードインFLG
+    const FadeInFlg = StoryItem.Effect[0].FadeIn[0]?.[Position];
+    console.log("FadeInFlg",FadeInFlg)
+
+    /* 3. 画像パスが存在する場合 */
     if (ImagePath && typeof ImagePath === "string" && ImagePath.trim() !== "") {
       /* 事前処理 */
       // 1. 同位置のimg要素を取得
