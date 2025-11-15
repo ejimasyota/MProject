@@ -141,7 +141,7 @@ async function GetSaveDataInfo(){
 /* =========================================================
  * ストーリーIDに基づいて画面を設定する処理
  * =========================================================*/
-function GameDisplayInfo(StoryId){
+async function GameDisplayInfo(StoryId){
    /* --------------------------------------------
     *  1. バリデーションチェック
     * --------------------------------------------*/
@@ -160,8 +160,37 @@ function GameDisplayInfo(StoryId){
         // 1. Item内と引数のStoryIdの値が完全一致するものを検索
         return Number(Item.StoryId) === Number(StoryId);
     });
-    console.log("StoryItem",StoryItem)
 
+    /* --------------------------------------------
+    *  3. プレイヤー名置換処理
+    * --------------------------------------------*/
+    // 1. ストーリーテキストを取得
+    let StoryText = StoryItem.StoryText;
+
+    // 2. {PlayerName} が含まれている場合はプレイヤー名で置換処理を実行
+    if (typeof StoryText === "string" && StoryText.includes("{PlayerName}")) {
+        StoryText = StoryText.replaceAll("{PlayerName}", PLAYER_NAME);
+    }
+
+   /* --------------------------------------------
+    *  4. メッセージボックス表示FLGがTRUEの場合
+    * --------------------------------------------*/
+    if(StoryItem.Flg[0].MessageBoxFlg){
+      await MESSAGE_BOX_DIALOG.ShowMessage(
+        // 1. テキスト設定
+        StoryText,
+        // 2. キャラ名設定
+        StoryItem.Narrator,
+        // 3. 顔アイコンの表示
+        ""
+      );
+    }else{
+       /* --------------------------------------------
+        *  5. メッセージボックス表示FLGがFALSEの場合
+        * --------------------------------------------*/
+       // 1. メッセージボックスの非表示処理を実行
+       await MESSAGE_BOX_DIALOG.HideMessage();
+    }
 }
 
 /* =========================================================
