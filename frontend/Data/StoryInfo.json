@@ -5,7 +5,7 @@
     "StoryTitle": "始まり",
     "StoryText": "おれ{PlayerName}だけど、今日もいい天気",
     "Next": null,
-    "BgPath": "../assets/img/bg/bg.png",
+    "BgPath": "../asetts/img/bg/Default.jpg",
     "SePath": "",
     "Voice": "",
     "Flg": [

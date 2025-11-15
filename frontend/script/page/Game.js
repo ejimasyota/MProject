@@ -257,6 +257,35 @@ async function GameDisplayInfo(StoryId){
        // 2. 処理終了
        return;
     }
+
+   /* --------------------------------------------
+    *  12. 背景画像パスが指定されている場合
+    * --------------------------------------------*/
+    /* 1. 定義 */
+    // 1. ゲーム画面のコンテナの取得
+    const GameContainer = document.querySelector(".GameContainer");
+
+    /* 2. ゲーム画面のコンテナの取得が行えない場合 */
+    if (!GameContainer) {
+      // 1. 処理終了
+      return;
+    }
+
+    /* 3. 背景画像が指定されている場合 */
+    if (StoryItem.BgPath && StoryItem.BgPath !== "") {
+      // 1. 背景画像設定
+      GameContainer.style.background =
+          `url('${StoryItem.BgPath}') no-repeat center center fixed`;
+      // 2. 要素全体を必ず覆うよう設定
+      GameContainer.style.backgroundSize = "cover";
+    }else{
+      /* 4. 背景画像が指定されていない場合 */
+      // 1. デフォルト背景画像設定
+      GameContainer.style.background =
+          "url('../asetts/img/bg/Default.jpg') no-repeat center center fixed";
+      // 2. 要素全体を必ず覆うよう設定
+      GameContainer.style.backgroundSize = "cover";
+    }
 }
 
 

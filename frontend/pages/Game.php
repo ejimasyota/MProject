@@ -11,7 +11,7 @@
 <body>
   <!-- ゲームコンテナ -->
   <div class="GameContainer" role="application" aria-label="ゲーム画面"
-     style="background: url('../asetts/img/bg/Bg1.jpg') no-repeat center center fixed; background-size: cover;">
+     style="background: url('../asetts/img/bg/Default.jpg') no-repeat center center fixed; background-size: cover;">
     <!-- メニューコンテナ -->
     <div class="MenuContainer">
       <!-- 1. バックログ表示ボタン -->
