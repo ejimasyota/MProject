@@ -254,8 +254,6 @@ async function GameDisplayInfo(StoryId){
         * --------------------------------------------*/
        // 1. 選択肢の表示
        DisplaySelectButton(StoryItem.Select);
-       // 2. 処理終了
-       return;
     }
 
    /* --------------------------------------------
