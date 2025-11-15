@@ -660,16 +660,17 @@ button:disabled:active {
 }
 /* 2.メニューリストコンテナ */
 .MenuContainer {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    display: flex;
-    gap: 14px;
-    background-color: #ffc4d7ff;
-    padding: 10px 16px;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.35);
-    backdrop-filter: blur(4px);
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 14px;
+  background-color: #ffc4d7ff;
+  padding: 10px 16px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  backdrop-filter: blur(4px);
+  z-index : 5000;
 }
 /* 3.メニューボタン */
 .MenuButton {
