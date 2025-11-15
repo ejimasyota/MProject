@@ -174,12 +174,12 @@ button:disabled:active {
   gap: 8px;
   padding: 16px;
   border-radius: 8px;
-  background-color: #fff;
+  background-color: #ff8fb1;
   box-shadow: 0 0 5px rgba(0,0,0,0.15);
   position: relative;
 }
 .SaveSlot:hover {
-  background-color: #e3e3e3;
+  background-color: #ff6f9f;
   transform: translateY(-2px);
 }
 .SaveSlot:active {
