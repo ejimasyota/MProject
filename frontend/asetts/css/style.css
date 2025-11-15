@@ -300,6 +300,7 @@ button:disabled:active {
     font-weight: bold;
     border: none;         
     transition: background-color 0.2s ease;
+    z-index: 9999;  
 }
 .SelectButton:hover {
     background-color: #ff6f9f;
@@ -313,7 +314,7 @@ button:disabled:active {
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.5); 
     backdrop-filter: blur(3px);     
-    z-index: 9999;    
+    z-index: 9998;    
 }
 
 /* --------------------------------------------
