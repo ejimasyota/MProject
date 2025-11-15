@@ -341,7 +341,7 @@ async function GameDisplayInfo(StoryId){
      *  10. バックログ内容の作成
      * --------------------------------------------*/
     // 1. 選択肢表示時のストーリーテキストとキャラ名は除外する
-    if(!StoryItem.Flg[0].NarratorFlg){
+    if(!StoryItem.Flg[0].NarratorFlg && !StoryItem.Flg[0].MessageBoxFlg){
       BACKLOG_INFO.push({
           // 2. ストーリーテキストをセット
           StoryText :  StoryText,
@@ -383,6 +383,13 @@ async function GameDisplayInfo(StoryId){
     * --------------------------------------------*/
     if (StoryItem.BgmPath && StoryItem.BgmPath !== "") {
       PlayBgm(StoryItem.BgmPath);
+    }
+
+    /* --------------------------------------------
+    *  17. ミニゲーム実行FLG
+    * --------------------------------------------*/
+    if (StoryItem.Flg[0].GameFlg) {
+      RunMiniGame(STORY_ID, StoryItem.GameResult[0]);
     }
 }
 

@@ -62,9 +62,13 @@
   <script src="../script/dialog/InputPlayerNameDialog.js"></script>
   <!-- 4. メッセージボックスダイアログ -->
   <script src="../script/dialog/MessageBoxDialog.js"></script>
-  <!-- 5. 共通関数 -->
+  <!-- 5. ミニゲーム1 : クエスト -->
+  <script src="../script/miniGame/QuestGame.js"></script>
+  <!-- 6. ミニゲーム中継 -->
+  <script src="../script/miniGame/MiniGameInfo.js"></script>
+  <!-- 7. 共通関数 -->
   <script src="../script/utility/util.js"></script>
-  <!-- 6. 当該画面のJS -->
+  <!-- 8. 当該画面のJS -->
   <script src="../script/page/Game.js"></script>
 </body>
 </html>
