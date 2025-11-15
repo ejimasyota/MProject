@@ -414,7 +414,6 @@ button:disabled:active {
 .CharaImage.Position-Right.Wave {
   animation: waveRightAnim 0.5s ease-in-out infinite alternate;
 }
-
 @keyframes waveCenterAnim {
   0%   { transform: translate(-50%, -50%) scale(0.98); }
   50%  { transform: translate(calc(-50% + 10px), -50%) scale(0.98); }

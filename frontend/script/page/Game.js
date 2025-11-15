@@ -509,7 +509,7 @@ function ShowCharaImages(ImgPath, StoryItem) {
             Img.classList.add("ShowImage");
           }
           // 4. ウェーブ
-          if(JumpFlg){
+          if(WaveFlg){
             Img.classList.add("Wave");
           }else{
             Img.classList.add("ShowImage");
