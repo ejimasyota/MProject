@@ -157,6 +157,7 @@ function GameDisplayInfo(StoryId){
     *  2. ストーリーIDに紐づく要素を取得
     * --------------------------------------------*/
     const StoryItem = STORY_INFO.find(Item => {
+        console.log("Item",Item)
         // 1. storyidとStoryIdの値が完全一致するものを検索
         return Number(Item.storyid) === Number(StoryId);
     });
