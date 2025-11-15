@@ -52,6 +52,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // 2. セーブデータの取得処理呼び出し
     GetSaveDataInfo();
     // 3. 画面クリックイベント設定
+    DisplayClickEvent();
 });
 
 /* =========================================================
@@ -781,7 +782,7 @@ function DisplaySelectButton(SelectArray) {
                 };
                 // 3. バックドロップを削除
                 if (SelectBackdrop) {
-                   SelectContainer.remove();
+                   SelectBackdrop.remove();
                 }
             }
         });
