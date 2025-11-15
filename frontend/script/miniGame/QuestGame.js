@@ -323,3 +323,4 @@ class QuestGame {
     }); // Promise
   } // GameRun
 } // class
+window.QuestGame = QuestGame;
