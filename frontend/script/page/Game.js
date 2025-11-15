@@ -389,132 +389,148 @@ async function GameDisplayInfo(StoryId){
 /* =========================================================
  * キャラクター画像表示処理
  * =========================================================*/
-/* =========================================================
- * キャラクター画像表示処理
- * =========================================================*/
 function ShowCharaImages(ImgPath, StoryItem) {
-  /* --------------------------------------------
-   *  1. ゲームコンテナ取得
-   * --------------------------------------------*/
-  // 1. ゲームコンテナを取得
+ /* --------------------------------------------
+  *  1. 事前処理
+  * --------------------------------------------*/
+  // 1. ゲームコンテナ取得
   const GameContainer = document.querySelector(".GameContainer");
-  // 2. ゲームコンテナが存在しない場合は処理終了
-  if (!GameContainer) return;
-
-  /* --------------------------------------------
-   *  2. キャラクターレイヤー取得/作成
-   * --------------------------------------------*/
-  // 1. キャラクターレイヤーを取得
+  // 2. キャラレイヤー取得
   let CharaLayer = document.getElementById("CharaLayer");
-  // 2. レイヤーが存在しない場合は作成
+  // 3. 表示位置
+  const Positions = ["Center", "Left", "Right"];
+
+ /* --------------------------------------------
+  *  2. バリデーションチェック
+  * --------------------------------------------*/
+  /* 1. ゲームコンテナが存在しない場合 */
+  if (!GameContainer){
+    // 1. 処理終了
+    return;
+  }
+  /* 2. キャラレイヤーが存在しない場合 */
   if (!CharaLayer) {
+    // 1. DIV要素作成
     CharaLayer = document.createElement("div");
+    // 2. ID設定
     CharaLayer.id = "CharaLayer";
+    // 3. クラス設定
     CharaLayer.className = "CharaLayer";
+    // 4. ゲームコンテナの直下に追加
     GameContainer.appendChild(CharaLayer);
   }
+  console.log("ImgPath",ImgPath)
+  /* 3. 画像パスオブジェクトが存在しない場合 */
+  if (!ImgPath){
+    // 1. 処理終了
+    return;
+  }
 
-  /* --------------------------------------------
-   *  3. 表示位置とアニメーションFLG定義
-   * --------------------------------------------*/
-  const Positions = ["Center", "Left", "Right"];
-  // 1. フェードインFLG
-  const FadeInFlg  = StoryItem?.Effect?.[0]?.FadeIn?.[0]  ?? {};
-  // 2. フェードアウトFLG
-  const FadeOutFlg = StoryItem?.Effect?.[0]?.FadeOut?.[0] ?? {};
-
-  /* --------------------------------------------
-   *  4. 位置ごとの画像表示処理
-   * --------------------------------------------*/
+ /* --------------------------------------------
+  *  3. 位置ごとの表示処理
+  * --------------------------------------------*/
   Positions.forEach(Position => {
+    /* 1. 定義 */
     // 1. 位置ごとの画像パスを取得
-    const ImagePath = ImgPath?.[Position] ?? "";
+    const ImagePath = ImgPath[Position] ?? "";
+    console.log("ImagePath",ImagePath)
+    /* 2. 各アニメーションFLG定義(画像表示アニメーションは今後も追加していく想定) */
+    // 1. フェードインFLG
+    const FadeInFlg = StoryItem?.Effect?.[0]?.FadeIn?.[0] ?? {};
+    // 2. フェードアウトFLG
+    const FadeOutFlg = StoryItem?.Effect?.[0]?.FadeOut?.[0] ?? {};
 
-    /* --------------------------------------------
-     *  4-1. 既存画像の削除処理
-     * --------------------------------------------*/
-    // 1. 同位置の既存img要素を取得
-    const Existing = CharaLayer.querySelector(`img.CharaImage.Position-${Position}`);
+    /* 3. 画像パスが存在する場合 */
+    if (ImagePath && typeof ImagePath === "string" && ImagePath.trim() !== "") {
+      /* 事前処理 */
+      // 1. 同位置のimg要素を取得
+      const Existing = CharaLayer.querySelector(`img.CharaImage.Position-${Position}`);
+      console.log("Existing",Existing)
+      /* 既存画像が存在する場合 */
+      if (Existing) {
+        /* 事前定義 */
+        // 1. フェードイン用クラスを除去
+        Existing.classList.remove("FadeIn");
 
-    // 2. 既存画像がある場合
-    if (Existing) {
-      // 2-1. フェードインクラスを除去
-      Existing.classList.remove("FadeIn");
+        /* フェードアウトFLGに応じた処理 */
+        if (FadeOutFlg[Position]) {
+          /* 事前定義 */
+          // 1. フェードアウトクラスを設定
+          Existing.classList.add("FadeOut");
 
-      // 2-2. フェードアウトFLGに応じて削除処理
-      if (FadeOutFlg[Position]) {
-        // フェードアウトクラスを追加
-        Existing.classList.add("FadeOut");
+          /* アニメーション終了後の削除処理 */
+          const onEnd = () => {
+            // 1. 画像要素の削除
+            try { Existing.remove(); } catch(e){}
+            // 2. イベント解除
+            Existing.removeEventListener("transitionend", onEnd);
+            // 3. レイヤー内が空の場合はレイヤー自体を削除
+            if (CharaLayer && CharaLayer.children.length === 0) {
+              try { CharaLayer.remove(); } catch(e){}
+            }
+          };
+          // 4. transition終了を監視
+          Existing.addEventListener("transitionend", onEnd);
 
-        // transitionendで削除
-        const onEnd = () => {
-          if (Existing?.parentElement) Existing.remove();
-          Existing.removeEventListener("transitionend", onEnd);
-        };
-        Existing.addEventListener("transitionend", onEnd);
-
-        // フォールバック削除（念のため）
-        setTimeout(onEnd, 1000);
-      } else {
-        // フェードアウト不要なら即削除
-        Existing.remove();
+          /* フォールバック削除 */
+          setTimeout(() => {
+            // 1. 対象要素がまだ存在する場合
+            if (document.contains(Existing)) onEnd();
+          }, 1000);
+        } else {
+          /* フェードアウト不要なら即削除 */
+          // 1. 画像要素を削除
+          try { Existing.remove(); } catch(e){}
+          // 2. レイヤー内が空の場合はレイヤーも削除
+          if (CharaLayer && CharaLayer.children.length === 0) {
+            try { CharaLayer.remove(); } catch(e){}
+          }
+        }
       }
-    }
 
-    /* --------------------------------------------
-     *  4-2. 新規画像の作成
-     * --------------------------------------------*/
-    if (ImagePath && ImagePath.trim()) {
+      /* 画像の作成処理 */
       // 1. IMG要素作成
       const Img = document.createElement("img");
       // 2. ALT属性設定
       Img.alt = Position + " Character";
       // 3. クラス設定
       Img.classList.add("CharaImage", `Position-${Position}`);
-      // 4. 画像パス設定
+      // 4. パスを設定
       Img.src = ImagePath;
-      // 5. 非同期読み込み設定
+      // 5. 画像の読み込み準備
       Img.decoding = "async";
+      // 6. 画像読込
       Img.loading = "lazy";
 
-      /* --------------------------------------------
-       *  4-3. フェードインアニメーション設定
-       * --------------------------------------------*/
-      const applyFadeIn = () => {
+      /* アニメーション設定 */
+      Img.addEventListener("load", () => {
+        /* フレームでの設定 */
         requestAnimationFrame(() => {
-          // フェードアウトクラスを削除
+          /* 事前処理 */
+          // 1. フェードアウトを外す
           Img.classList.remove("FadeOut");
-          // フェードインFLGに応じてクラス追加
+
+          // 2. フェードアウトFLGがFALSEの場合はクラスを除去
+          if(!FadeOutFlg[Position]){
+            Img.classList.remove("FadeOut");
+          }
+          
+          /* アニメーション設定 */
+          // 1. フェードイン
           if (FadeInFlg[Position]) {
             Img.classList.add("FadeIn");
           }
         });
-      };
+      });
 
-      // キャッシュ済みの場合は即適用
-      if (Img.complete && Img.naturalWidth !== 0) {
-        applyFadeIn();
-      } else {
-        Img.addEventListener("load", applyFadeIn);
-      }
+      /* 例外発生時に画像を削除 */
+      Img.addEventListener('error', () => { try { Img.remove(); } catch(e){} });
 
-      // 読み込み失敗時は削除
-      Img.addEventListener("error", () => Img.remove());
-
-      // 6. レイヤーに追加
+      /* 画像の追加 */
       CharaLayer.appendChild(Img);
     }
-    // ←パスが空の場合は新規追加せず既存削除のみ
   });
-
-  /* --------------------------------------------
-   *  5. レイヤーが空なら削除
-   * --------------------------------------------*/
-  if (CharaLayer.children.length === 0) {
-    CharaLayer.remove();
-  }
 }
-
 
 /* =========================================================
  * キャラクター画像非表示処理
