@@ -303,15 +303,19 @@ async function GameDisplayInfo(StoryId){
     /* --------------------------------------------
     *  8. キャラ画像のいずれかが存在する場合
     * --------------------------------------------*/
-    if(StoryItem.CharaImgPath[0] && (StoryItem.CharaImgPath[0].Center !== "" || StoryItem.CharaImgPath[0].Right !== "" || StoryItem.CharaImgPath[0].Left !== "")){
-      // 1. キャラ画像表示関数を設定
-      ShowCharaImages(StoryItem.CharaImgPath[0],StoryItem);
-    }else{
+   const ImagePath = StoryItem?.CharaImgPath?.[0];
+   if (
+      ImagePath &&
+      ["Center", "Left", "Right"].some(pos =>
+        typeof ImagePath[pos] === "string" && ImagePath[pos].trim() !== ""
+      )
+    ) {
+      ShowCharaImages(ImagePath, StoryItem);
+    } else {
      /* --------------------------------------------
       *  9. キャラ画像のいずれかも存在しない場合
       * --------------------------------------------*/
-      // 1. 非表示関数を呼び出し
-      HideCharaImages()
+      HideCharaImages();
     }
 
    /* --------------------------------------------
