@@ -269,6 +269,9 @@ button:disabled:active {
   border: 1px solid #ccc;
   min-width: 500px;
   max-width: 500px;
+  max-height: 150px;   
+  overflow-y: auto;  
+  word-wrap: break-word; 
 }
 /* 2.キャラ名部分 */
 .BacklogLine span.NarratorName {
