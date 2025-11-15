@@ -233,6 +233,77 @@ async function GameDisplayInfo(StoryId){
         // 2. キャラ名
         Narrator : CharaName,
     })
+
+    /* --------------------------------------------
+     *  9. 選択肢表示を行わない場合
+     * --------------------------------------------*/
+    if(StoryItem.Select.length === 0 && StoryItem.Next){
+        // 1. 次のシーンIDを保持
+        NEXT_STORY_ID = StoryItem.Next;
+    }else{
+        /* --------------------------------------------
+        *  10. 選択肢表示を行う場合
+        * --------------------------------------------*/
+       // 1. 選択肢の表示
+       DisplaySelectButton(StoryItem.Select);
+       // 2. 処理終了
+       return;
+    }
+}
+
+
+/* =========================================================
+ * 選択肢ボタン表示処理
+ * =========================================================*/
+function DisplaySelectButton(SelectArray) {
+   /* --------------------------------------------
+    *  1. 事前定義
+    * --------------------------------------------*/
+    // 1. 選択肢コンテナを呼び出し
+    let SelectContainer = document.getElementById("SelectContainer");
+
+   /* --------------------------------------------
+    *  2. コンテナが存在しない場合
+    * --------------------------------------------*/
+    if (!SelectContainer) {
+        // 1. DIV要素作成
+        SelectContainer = document.createElement("div");
+        // 2. ID設定
+        SelectContainer.id = "SelectContainer";
+        // 3. クラス設定
+        SelectContainer.classList.add("SelectContainer"); 
+        // 4. ボディに格納
+        document.body.appendChild(SelectContainer);
+    }
+
+   /* --------------------------------------------
+    *  3. 既存の選択肢を初期化
+    * --------------------------------------------*/
+    SelectContainer.innerHTML = "";
+
+   /* --------------------------------------------
+    *  4. 選択肢の作成
+    * --------------------------------------------*/
+    SelectArray.forEach((SelectItem) => {
+        /* 1. 定義 */
+        // 1. ボタン要素作成
+        const SelectButton = document.createElement("button");
+        // 2. ラベル設定
+        SelectButton.textContent = SelectItem.StoryText;
+        // 3. クラス設定
+        SelectButton.classList.add("SelectButton"); 
+        
+        /* 2. 選択肢選択時処理 */
+        SelectButton.addEventListener("click", () => {
+            // 1. 選択肢押下時に次のストーリーIDを渡して画面表示を更新
+            GameDisplayInfo(SelectItem.Next);
+            // 2. 選択肢ボタンを非表示にする
+            SelectContainer.innerHTML = "";
+        });
+
+        /* 3. コンテナに選択肢を格納 */
+        SelectContainer.appendChild(SelectButton);
+    });
 }
 
 /* =========================================================

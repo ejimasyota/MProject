@@ -4,8 +4,7 @@
     "Narrator": "{PlayerName}",
     "StoryTitle": "始まり",
     "StoryText": "おれ{PlayerName}だけど、今日もいい天気",
-    "Next": 2,
-    "Back": 0,
+    "Next": null,
     "BgPath": "../assets/img/bg/bg.png",
     "SePath": "",
     "Voice": "",
@@ -73,13 +72,11 @@
     "Select": [
       {
         "StoryText": "散歩に出かける",
-        "Next": 2,
-        "Back": 1
+        "Next": 2
       },
       {
         "StoryText": "部屋で本を読む",
-        "Next": 3,
-        "Back": 1
+        "Next": 3
       }
     ],
     "$$$$$$$$": "",
