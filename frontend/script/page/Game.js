@@ -100,10 +100,11 @@ async function GetSaveDataInfo(){
         *  4. 通信成功時
         * --------------------------------------------*/
         if (Result && Result.success) {
-            console.log("Result",Result)
+            console.log("Result",Result.items.length)
            /* --------------------------------------------
             *  5. 取得内容が存在する場合
             * --------------------------------------------*/
+           
            if(Result.items && Result.items.SaveInfo && Result.items.length > 0){
             /* 1. バックログの設定処理 */
             Result.items.BackLogInfo.forEach((BackLogItem)=>{
