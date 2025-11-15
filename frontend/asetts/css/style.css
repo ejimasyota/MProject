@@ -414,6 +414,15 @@ button:disabled:active {
 .CharaImage.Position-Right.Wave {
   animation: waveRightAnim 0.5s ease-in-out infinite alternate;
 }
+/* 10.背景ウェーブ */
+.GameContainer.BgWave {
+  animation: bgWaveAnim 2s ease-in-out infinite alternate;
+}
+@keyframes bgWaveAnim {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(5px); }
+  100% { transform: translateX(-5px); }
+}
 @keyframes waveCenterAnim {
   0%   { transform: translate(-50%, -50%) scale(0.98); }
   50%  { transform: translate(calc(-50% + 10px), -50%) scale(0.98); }

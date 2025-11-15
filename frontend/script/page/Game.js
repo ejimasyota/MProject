@@ -442,6 +442,8 @@ function ShowCharaImages(ImgPath, StoryItem) {
     const JumpFlg = StoryItem.Effect[0].Jump[0]?.[Position];
     // 4. ウェーブFLG
     const WaveFlg = StoryItem.Effect[0].Wave[0]?.[Position];
+    // 5. 背景ウェーブFLG
+    const BgWaveFlg = StoryItem.Effect[0].BgWave[0]?.[Position];
 
     /* 3. 画像パスが存在する場合 */
     if (ImagePath && typeof ImagePath === "string" && ImagePath.trim() !== "") {
@@ -460,7 +462,9 @@ function ShowCharaImages(ImgPath, StoryItem) {
         Existing.classList.remove("Jump");
         // 4. ウェーブ
         Existing.classList.remove("Wave");
-
+        // 5. 背景ウェーブ
+        Existing.classList.remove("BgWave");
+        
         /* 要素の除去 */
         setTimeout(() => {
           try { Existing.remove(); } catch (e) {}
@@ -513,6 +517,12 @@ function ShowCharaImages(ImgPath, StoryItem) {
             Img.classList.add("Wave");
           }else{
             Img.classList.add("ShowImage");
+          }
+          // 5. 背景ウェーブ
+          if(BgWaveFlg){
+            Img.classList.add("BgWave");
+          }else{
+            Img.classList.remove("BgWave");
           }
         });
       });
