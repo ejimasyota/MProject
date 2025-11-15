@@ -523,7 +523,7 @@ function ShowCharaImages(ImgPath, StoryItem) {
             GameContainer.classList.add("BgWave");
             setTimeout(() => {
               GameContainer.classList.remove("BgWave");
-            }, 2000);
+            }, 1000);
           }else{
             GameContainer.classList.remove("BgWave");
           }
