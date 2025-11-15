@@ -102,7 +102,8 @@ async function GetSaveDataInfo(){
             *  5. 取得内容が存在する場合
             * --------------------------------------------*/
            if(Result.Items && Result.Items.length > 0){
-
+            // 1. ストーリーIDを渡す
+            GameDisplayInfo(Result.Items.storyid);
            }else{
                 /* --------------------------------------------
                 *  6. 取得内容が存在しない場合
@@ -118,6 +119,8 @@ async function GetSaveDataInfo(){
                                 PLAYER_NAME = sessionStorage.getItem("PlayerName");
                                 // 5. セッションからプレイヤー名を削除(セッション内容の管理が複雑になるのは嫌なので)
                                 sessionStorage.removeItem("PlayerName");
+                                // 6. ストーリーIDを固定で[1]を渡す
+                                GameDisplayInfo(1);
                             }
                         })
                     }
@@ -135,6 +138,31 @@ async function GetSaveDataInfo(){
     }
 }
 
+/* =========================================================
+ * ストーリーIDに基づいて画面を設定する処理
+ * =========================================================*/
+function GameDisplayInfo(StoryId){
+   /* --------------------------------------------
+    *  1. バリデーションチェック
+    * --------------------------------------------*/
+    // 1. ストーリーIDが存在しない場合
+    if(!StoryId){
+        // 1. デバッグログ
+        console.error("ストーリーID取得失敗");
+        // 2. 処理終了
+        return;
+    }
+
+   /* --------------------------------------------
+    *  2. ストーリーIDに紐づく要素を取得
+    * --------------------------------------------*/
+    const StoryItem = STORY_INFO.find(Item => {
+        // 1. storyidとStoryIdの値が完全一致するものを検索
+        return Number(Item.storyid) === Number(StoryId);
+    });
+    console.log("StoryItem",StoryItem)
+
+}
 
 /* =========================================================
  * ホームへ戻る処理
