@@ -137,7 +137,6 @@ async function GetSaveDataInfo(){
                 PlayerId: PLAYER_ID
             }),
         });
-        console.log("Response",Response)
 
        /* --------------------------------------------
         *  3. レスポンス処理
@@ -150,9 +149,20 @@ async function GetSaveDataInfo(){
         * --------------------------------------------*/
         if (Result && Result.success) {
            /* --------------------------------------------
-            *  5. 取得内容が存在する場合
+            *  5. 取得内容が存在を判定
             * --------------------------------------------*/
-           if(Result.items && Result.items.SaveInfo.length > 0){
+            // 1. セーブデータを保持するSaveInfoを取得
+            const SaveInfo = Result.items && Result.items.SaveInfo ? Result.items.SaveInfo : null;
+
+            // 2. SaveInfoの有無を判定
+            const SaveInfoCheckFlg = SaveInfo
+              ? (Array.isArray(SaveInfo) ? SaveInfo.length > 0 : Object.keys(SaveInfo).length > 0)
+              : false;
+
+           /* --------------------------------------------
+            *  6. 取得内容が存在する場合
+            * --------------------------------------------*/
+           if(SaveInfoCheckFlg){
             /* 1. バックログの設定処理 */
             Result.items.BackLogInfo.forEach((BackLogItem)=>{
                 BACKLOG_INFO.push({
@@ -171,7 +181,7 @@ async function GetSaveDataInfo(){
             GameDisplayInfo(Result.items.SaveInfo.storyid);
            }else{
                 /* --------------------------------------------
-                *  6. 取得内容が存在しない場合
+                *  7. 取得内容が存在しない場合
                 * --------------------------------------------*/
                 // 1. メッセージダイアログを表示
                 MESSAGE_DIALOG.ShowDialog("セーブデータが存在しないため最初から開始します。").then((Result) => {
