@@ -27,7 +27,7 @@
         "Left": ""
       }
     ],
-    "BgmPath": "",
+    "BgmPath": "../asetts/music/bgm/BGM-1.mp3",
     "FaceImgPath": "",
     "Effect": [
       {

@@ -22,6 +22,8 @@ let STORY_ID = null;
 let VOICE_VOLUME = 1.0;
 // 9. SEのボリューム
 let SE_VOLUME = 1.0;
+// 10.BGMのボリューム
+let BGM_VOLUME = 1.0;
 
 /* --------------------------------------------
  *  2. パス管理変数
@@ -301,7 +303,73 @@ async function GameDisplayInfo(StoryId){
     if (StoryItem.SePath && StoryItem.SePath !== "") {
       LoadSe(StoryItem.SePath);
     }
+
+    /* --------------------------------------------
+    *  15. BGM再生処理
+    * --------------------------------------------*/
+    if (StoryItem.BgmPath && StoryItem.BgmPath !== "") {
+      PlayBgm(StoryItem.BgmPath);
+    }
 }
+
+/* =========================================================
+ * BGM再生処理
+ * =========================================================*/
+function PlayBgm(LoadPath) {
+    /* --------------------------------------------
+     *  1. 既にBGMが再生中の場合は停止・破棄
+     * --------------------------------------------*/
+    if (window.BgmAudio) {
+        // 1. 再生中の BGM を停止
+        try { window.BgmAudio.pause(); } catch (e) {}
+
+        // 2. 音源パスをクリア（解放処理）
+        try { window.BgmAudio.src = ""; } catch (e) {}
+
+        // 3. オブジェクトの破棄
+        window.BgmAudio = null;
+    }
+
+    /* --------------------------------------------
+     *  2. BGM 用Audio オブジェクト作成
+     * --------------------------------------------*/
+    // 1. 新しいAudioオブジェクトを生成
+    window.BgmAudio = new Audio();
+
+    // 2. 音声データを事前読み込み
+    window.BgmAudio.preload = "auto";
+
+    // 3. 読み込むBGMのパスを設定
+    window.BgmAudio.src = LoadPath;
+
+    // 4. 音量を設定
+    window.BgmAudio.volume = BGM_VOLUME;
+
+    // 5. BGM は自動でループ再生
+    window.BgmAudio.loop = true;
+
+    /* --------------------------------------------
+     *  3. 各種イベント処理
+     * --------------------------------------------*/
+    // 1. BGMファイルが読み込めない・再生不可の場合
+    window.BgmAudio.addEventListener("error", (ev) => {
+        console.warn("BGM 再生エラー:", ev);
+    });
+
+    // 2. ループ再生のためendedは基本使わないが、念のための停止時の後処理
+    window.BgmAudio.addEventListener("ended", () => {
+        try { window.BgmAudio.src = ""; } catch (e) {}
+        window.BgmAudio = null;
+    });
+
+    /* --------------------------------------------
+     *  4. 再生開始
+     * --------------------------------------------*/
+    window.BgmAudio.play().catch(err => {
+        console.warn("BGM 自動再生に失敗:", err);
+    });
+}
+
 
 
 /* =========================================================
