@@ -234,7 +234,11 @@ function RenderSaveSlots(container, SaveItems) {
       // 2. 開始年月日
       const StartDate = SaveSlotItem.registdate ?? SaveSlotItem.registDate ?? null;
       // 3. 終了年月日
-      const EndDate = SaveSlotItem.updatedate ?? SaveSlotItem.updateDate ?? null;
+      const EndDate = (() => {
+        const Date = SaveSlotItem.updatedate ?? SaveSlotItem.updateDate ?? null;
+        return Date ? `${Date.getFullYear()}/${(Date.getMonth()+1).toString().padStart(2,'0')}/${Date.getDate().toString().padStart(2,'0')} ${Date.getHours().toString().padStart(2,'0')}:${Date.getMinutes().toString().padStart(2,'0')}` : null;
+      })();
+
       // 4. プレイ時間取得
       const PlayTime = CalcPlayTime(StartDate, EndDate);
 
