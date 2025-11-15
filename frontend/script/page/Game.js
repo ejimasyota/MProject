@@ -453,7 +453,7 @@ function ShowCharaImages(ImgPath, StoryItem) {
       // 2. ALT属性設定
       Img.alt = Position + " Character";
       // 3. クラス設定
-      Img.classList.add("CharaImage", `Position-${Position}`);
+      Img.classList.add("CharaImage", `Position-${Position}`, "FadeOut");
       // 4. パスを設定
       Img.src = ImagePath;
       // 5. 画像の読み込み準備
@@ -466,12 +466,16 @@ function ShowCharaImages(ImgPath, StoryItem) {
         /* 各定義(画像表示アニメーションは今後も追加していく想定) */
         // 1. フェードインFLG
         const FadeInFlg = StoryItem?.Effect?.[0]?.FadeIn?.[0] ?? {};
+        // 2. フェードアウトFLG
+        const FadeOutFlg = StoryItem?.Effect?.[0]?.FadeOut?.[0] ?? {};
 
         /* フレームでの設定 */
         requestAnimationFrame(() => {
           /* 事前処理 */
-          // 1. クラス除去
-          Img.classList.remove("Hide");
+          // 1. フェードアウトFLGがFALSEの場合はクラスを除去
+          if(!FadeOutFlg[Position]){
+            Img.classList.remove("FadeOut");
+          }
           
           /* アニメーション設定 */
           // 1. フェードイン
@@ -536,13 +540,13 @@ function HideCharaImages(Positions = null) {
   TargetNodeList.forEach((Element) => {
     /* 1. 事前処理 */
     // 1. 既に非表示処理中の要素はスキップ
-    if (Element.classList.contains("Hide")){
+    if (Element.classList.contains("FadeOut")){
        return;
     }
-    // 2. クラス除去
-    Element.classList.remove("Show");
+    // 2. フェードインクラス除去
+    Element.classList.remove("FadeIn");
     // 3. クラス設定
-    Element.classList.add("Hide");
+    Element.classList.add("FadeOut");
 
     /* 2. DOMからの削除処理 */
     setTimeout(() => {

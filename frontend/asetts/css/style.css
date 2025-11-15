@@ -372,7 +372,7 @@ button:disabled:active {
   transform: translateY(-50%); 
   max-width: 38%;
 }
-.CharaImage.Hide {
+.CharaImage.FadeOut {
   opacity: 0;
   transform: translateY(10px) scale(0.98);
 }
