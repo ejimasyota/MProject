@@ -7,6 +7,7 @@
  * ----------------------------------------------------------
  * 更新履歴：
  * 2025-11-12 作成
+ * 2025-11-15 クエリのLEFT-JOINの条件を追加
  * ========================================================== */
 
 /* ==========================================================
@@ -35,16 +36,17 @@ try {
      * SQL定義
      * ------------------------------ */
     $stmt = $pdo->prepare("SELECT 
-                                t1.playername, 
-                                t2.saveslotid,  
-                                t2.storyid,  
-                                t2.registdate,               
-                                t2.updatedate    
-                           FROM PlayerInfo t1
-                           LEFT JOIN SaveInfo t2
-                             ON  t1.playerid = t2.playerid
-                           WHERE t1.playerid = :playerid
-                           ORDER BY t2.saveslotid ASC
+                            t1.playername, 
+                            t1.saveslotid,
+                            t2.storyid,
+                            t1.registdate,
+                            t2.updatedate
+                        FROM PlayerInfo t1
+                        LEFT JOIN SaveInfo t2
+                        ON t1.playerid = t2.playerid
+                        AND t1.saveslotid = t2.saveslotid
+                        WHERE t1.playerid = :playerid
+                        ORDER BY t1.saveslotid ASC;
                          ");
 
     /* ------------------------------
