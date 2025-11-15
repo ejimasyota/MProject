@@ -625,6 +625,29 @@ button:disabled:active {
 }
 
 /* --------------------------------------------
+ *  音量設定
+ * --------------------------------------------*/
+ /* 1.音量スライダーコンテナ */
+.VolumeSliderContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 12px;
+}
+/* 2.音量スライダーラベル */
+.VolumeSliderLabel {
+  margin-bottom: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+/* 3.音量スライダー */
+.VolumeSliderInput {
+  width: 100%;
+}
+
+
+/* --------------------------------------------
  *  ゲーム画面
  * --------------------------------------------*/
 /* 1.ゲーム画面コンテナ */

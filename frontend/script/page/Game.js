@@ -1046,6 +1046,147 @@ async function SaveInfo(Event){
 }
 
 /* =========================================================
+ * 設定ボタン押下時処理
+ * =========================================================*/
+function SettingInfo(Event) {
+ /* ------------------------------
+  * 1. 事前処理
+  * ------------------------------*/
+  // 1. 画面クリックイベントを停止
+  Event.stopPropagation();
+
+ /* ------------------------------
+  * 2. バックドロップ作成
+  * ------------------------------*/
+  // 1. DIV要素作成
+  const Backdrop = document.createElement("div");
+  // 2. クラス設定
+  Backdrop.className = "ConfirmContainer";
+
+ /* ------------------------------
+  * 3. ダイアログ作成
+  * ------------------------------*/
+  // 1. DIV要素作成
+  const SettingDialog = document.createElement("div");
+  // 2. クラス設定
+  SettingDialog.className = "DialogBox";
+
+ /* ------------------------------
+  * 4. 音量スライダー作成
+  * ------------------------------*/
+  function CreateSlider(LabelText, InitialValue, OnChange) {
+    /* 1. コンテナ作成 */
+    // 1. DIV要素作成
+    const Container = document.createElement("div");
+    // 2. クラス設定
+    Container.classList.add("VolumeSliderContainer");
+
+    /* 2. ラベル作成 */
+    // 1. LABEL要素作成
+    const Label = document.createElement("label");
+    // 2. ラベル設定
+    Label.textContent = LabelText;
+    // 3. クラス設定
+    Label.classList.add("VolumeSliderLabel");
+
+    /* 3. スライダー作成 */
+    // 1. INPUT要素作成
+    const Slider = document.createElement("input");
+    // 2. タイプ設定
+    Slider.type = "range";
+    // 3. 最小値設定
+    Slider.min = 0;
+    // 4. 最大値設定
+    Slider.max = 1;
+    // 5. 調整単位設定
+    Slider.step = 0.01;
+    // 6. 初期値設定
+    Slider.value = InitialValue;
+    // 7. クラス設定
+    Slider.classList.add("VolumeSliderInput");
+
+    /* 4. スライダー変更時イベント定義 */
+    Slider.addEventListener("input", () => {
+      // 1. 値が変更されたタイミングで設定値を反映
+      OnChange(parseFloat(Slider.value));
+    });
+
+    /* 5. DOM構築 */
+    // 1. コンテナにラベル格納
+    Container.appendChild(Label);
+    // 2. コンテナにスライダー格納
+    Container.appendChild(Slider);
+
+    /* 6. コンテナを戻り値に返す */
+    return Container;
+  }
+
+ /* ------------------------------
+  * 5. SEスライダー作成
+  * ------------------------------*/
+  // 1. スライダー作成関数を呼び出し
+  const SeSlider = CreateSlider("SE", SE_VOLUME, (val) => {
+    SE_VOLUME = val;
+    document.querySelectorAll(".SEAudio").forEach(SeAudio => SeAudio.volume = SE_VOLUME);
+  });
+  // 2. SEスライダーをダイアログに格納
+  SettingDialog.appendChild(SeSlider);
+
+ /* ------------------------------
+  * 6. ボイススライダー作成
+  * ------------------------------*/
+  // 1. スライダー作成関数を呼び出し
+  const VoiceSlider = CreateSlider("VOICE", VOICE_VOLUME, (val) => {
+    VOICE_VOLUME = val;
+    document.querySelectorAll(".VoiceAudio").forEach(SeAudio => SeAudio.volume= VOICE_VOLUME);
+  });
+  // 2. ボイススライダーをダイアログに格納
+  SettingDialog.appendChild(VoiceSlider);
+
+ /* ------------------------------
+  * 7. BGMスライダー作成
+  * ------------------------------*/
+  // 1. スライダー作成関数を呼び出し
+  const BgmSlider = CreateSlider("BGM", BGM_VOLUME, (val) => {
+    BGM_VOLUME = val;
+    document.querySelectorAll(".BGMAudio").forEach(SeAudio => SeAudio.volume = BGM_VOLUME);
+  });
+  // 2. BGMスライダーをダイアログに格納
+  SettingDialog.appendChild(BgmSlider);
+
+ /* ------------------------------
+  * 8. 閉じるボタン作成
+  * ------------------------------*/
+  // 1. ボタン作成
+  const CloseButton = document.createElement("button");
+  // 2. ラベル設定
+  CloseButton.textContent = "閉じる";
+  // 3. マージン設定
+  CloseButton.style.marginTop = "10px";
+  // 4. クラス設定
+  CloseButton.classList.add("ButtonInfo","PinkButton")
+
+ /* ------------------------------
+  * 9. 閉じるボタン押下時イベント
+  * ------------------------------*/
+  CloseButton.addEventListener("click", () => {
+    // 1. バックドロップ削除
+    Backdrop.remove();
+  });
+
+ /* ------------------------------
+  * 10. DOM構築
+  * ------------------------------*/
+  // 1. 閉じるボタンをダイアログに格納
+  SettingDialog.appendChild(CloseButton);
+  // 2. ダイアログをバックドロップに格納
+  Backdrop.appendChild(SettingDialog);
+  // 3. バックドロップをボディに格納
+  document.body.appendChild(Backdrop);
+}
+
+
+/* =========================================================
  * ホームへ戻る処理
  * =========================================================*/
 function HomeRedirect(Event) {
