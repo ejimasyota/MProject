@@ -183,104 +183,139 @@ async function GetSaveSlot(PlayerId){
  */
 function RenderSaveSlots(container, SaveItems) {
   /* ==========================================================
-   * セーブスロット表示処理
-   * 固定で3つまでのセーブスロットとする
+   * 事前処理
    * ========================================================== */
-  for (let i = 1; i <= 3; i++) {
+  // 1. コンテナが存在しない場合は処理終了
+  if (!container){
+    return;
+  }
+  // 2. コンテナ初期化
+  container.innerHTML = "";
+
+  // 3. SaveItemsが配列でなければ空配列化
+  const SaveItemsArray = Array.isArray(SaveItems) ? SaveItems : [];
+
+  // 4. 表示する総スロット数
+  const TotalSaveSlot = 3;
+
+  /* ==========================================================
+   * セーブスロット表示処理
+   * ========================================================== */
+  for (let i = 1; i <= TotalSaveSlot; i++) {
     /* --------------------------------------------
      * 1. セーブスロット作成
-   　* --------------------------------------------*/
-    /* 1. 定義 */
-    // 1.DIV要素作成 
-    const Slot = document.createElement("div");
-    // 2.クラス設定
-    Slot.classList.add("SaveSlot");
-    // 3.スロットIDを設定(どうせ連番なのでインデントを設定)
-    Slot.dataset.slotId = i;
-    console.log("SaveItems",SaveItems)
-    /* 2. セーブデータが存在する場合 */
-    if (SaveItems[i]) {
-      console.log("SaveItems",SaveItems[i])
-      /* 各情報取得 */
-      // 1.プレイヤー名取得
-      const PlayerName = SaveItems[i].playername;
-      // 2.ストーリーID取得
-      const StoryId = SaveItems[i].storyid;
-      // 3.開始年月日取得
-      const StartDate = SaveItems[i].registdate;
-      // 4.終了年月日取得
-      const EndDate = SaveItems[i].updatedate;
-      // 5.プレイ時間取得
-      const PlayTime = calcPlayTime(StartDate, EndDate);
+     * --------------------------------------------*/
+    // 1. DIV要素作成 
+    const SaveSlot = document.createElement("div");
+    // 2. クラス設定
+    SaveSlot.classList.add("SaveSlot");
+    // 3. スロットIDを設定（文字列で保持）
+    SaveSlot.dataset.slotId = String(i);
 
-      /* セーブスロットヘッダー作成 */
-      // 1.DIV要素作成
+    /* --------------------------------------------
+     * 2. セーブデータの検索
+     * --------------------------------------------*/
+    const SaveSlotItem = SaveItemsArray.find(SaveInfo => {
+      // 1. セーブ情報が存在しない場合はFALSEを返す
+      if (!SaveInfo){
+        return false;
+      }
+      // 2. 該当スロットIDの1件だけ取得
+      return SaveInfo.saveslotid != null && Number(SaveInfo.saveslotid) === i;
+    });
+
+    /* --------------------------------------------
+     * 3. セーブデータが存在する場合の描画
+     * --------------------------------------------*/
+    if (SaveSlotItem) {
+      /* 1. 定義 */
+      // 1. プレイヤー名
+      const PlayerName = SaveSlotItem.playername ?? "松之迫";
+      // 2. 開始年月日
+      const StartDate = SaveSlotItem.registdate ?? SaveSlotItem.registDate ?? null;
+      // 3. 終了年月日
+      const EndDate = SaveSlotItem.updatedate ?? SaveSlotItem.updateDate ?? null;
+      // 4. プレイ時間取得
+      const PlayTime = CalcPlayTime(StartDate, EndDate);
+
+      /* 2. セーブスロットヘッダー作成 */
+      // 1. DIV要素作成
       const SaveSlotHeader = document.createElement("div");
-      // 2.クラス設定
+      // 2. クラス設定
       SaveSlotHeader.classList.add("SaveSlotHeader");
 
-      /* プレイヤー名作成 */
-      // 1.DIV要素作成
+      /* 3. プレイヤー名作成 */
+      // 1. DIV要素作成
       const PlayerNameArea = document.createElement("div");
-      // 2.クラス設定
+      // 2. クラス設定
       PlayerNameArea.classList.add("SaveSlotTitle");
-      // 3.プレイヤー名設定
-      PlayerNameArea.textContent = PlayerName || "まつのさこ";
+      // 3. プレイヤー名設定（デフォルトを用意）
+      PlayerNameArea.textContent = PlayerName;
 
-      /* 削除ボタン作成 */
-      // 1.ボタン作成
+      /* 4. 削除ボタン作成 */
+      // 1. ボタン作成
       const DeleteButton = document.createElement("button");
-      // 2.クラス作成
+      // 2. クラス設定
       DeleteButton.classList.add("ButtonInfo", "RedButton");
-      // 3.ラベル作成
+      // 3. ラベル設定
       DeleteButton.textContent = "削除";
-      // 4.クリックイベント定義
-      DeleteButton.addEventListener("click", () => DeleteButtonEvent(i));
+      
+      /* 5. 削除ボタンクリックイベント */
+      DeleteButton.addEventListener("click", (Event) => {
+        // 1. スロットクリックを阻止
+        Event.stopPropagation(); 
+        // 2. セーブデータ削除処理実行
+        DeleteButtonEvent(i, SaveSlotItem);
+      });
 
-      /* ヘッダーへの格納 */
-      // 1.プレイヤー名設定
+      /* 6. ヘッダーへの格納 */
+      // 1. プレイヤー名格納
       SaveSlotHeader.appendChild(PlayerNameArea);
-      // 2.削除ボタン設定
+      // 2. 削除ボタン格納
       SaveSlotHeader.appendChild(DeleteButton);
 
-      /* 章情報作成 */
-      const StoryInfo = CreateInfoElement(`章 : ${StoryId || "-"}`);
-
-      /* プレイ終了日作成 */
-      const EndInfo = CreateInfoElement(`プレイ終了日 : ${EndDate || "-"}`);
-
-      /* プレイ時間作成 */
+      /* 7. 終了日・プレイ時間作成 */
+      // 1. 終了時間格納
+      const EndInfo  = CreateInfoElement(`プレイ終了日 : ${EndDate ?? "-"}`);
+      // 2. プレイ時間格納
       const TimeInfo = CreateInfoElement(`プレイ時間 : ${PlayTime}`);
 
       /* 各情報の格納 */
-      // 1.スロットにヘッダー格納
-      Slot.appendChild(SaveSlotHeader);
-      // 2.スロットに章情報を格納
-      Slot.appendChild(StoryInfo);
-      // 3.スロットにプレイ終了日格納
-      Slot.appendChild(EndInfo);
-      // 4.スロットにプレイ時間を格納
-      Slot.appendChild(TimeInfo);
+      // 1. セーブスロットにヘッダー格納
+      SaveSlot.appendChild(SaveSlotHeader);
+      // 2. 終了時間格納
+      SaveSlot.appendChild(EndInfo);
+      // 3. プレイ時間格納
+      SaveSlot.appendChild(TimeInfo);
+
     } else {
-      /* 3. セーブデータが存在しない場合 */
-      // 1.DIV要素作成
+      /* --------------------------------------------
+       * 4. セーブデータが存在しない場合（空スロット表示）
+       * --------------------------------------------*/
+      // 1. DIV要素作成
       const Empty = document.createElement("div");
-      // 2.クラス設定
+      // 2. クラス設定
       Empty.classList.add("SaveSlotEmpty");
-      // 3.ラベル設定
+      // 3. ラベル設定
       Empty.textContent = `セーブスロット ${i}`;
-      // 4.スロットに空スロット内容を格納(とどのつまり空のスロット内容の作成・格納処理)
-      Slot.appendChild(Empty);
+      // 4. セーブスロットに格納
+      SaveSlot.appendChild(Empty);
     }
-    /* 4. セーブスロットの選択時処理 */
-    Slot.addEventListener(("click"),function(){
-        // 1.セッションにセーブスロットIDを保持
-        sessionStorage.setItem("SaveSlotId",this.dataset.slotId);
-        // 2.ゲーム画面へ遷移
-        window.location.href = "../pages/Game.php";
-    })
-    /* 5. コンテナにスロットを格納 */
-    container.appendChild(Slot);
+
+    /* --------------------------------------------
+     * 5. セーブスロットの選択時処理
+     * --------------------------------------------*/
+    SaveSlot.addEventListener("click", function () {
+      // 1. セッションにセーブスロットIDを保持
+      sessionStorage.setItem("SaveSlotId", this.dataset.slotId);
+      // 2. ゲーム画面へ遷移
+      window.location.href = "../pages/Game.php";
+    });
+
+    /* --------------------------------------------
+     * 6. コンテナにスロットを格納
+     * --------------------------------------------*/
+    container.appendChild(SaveSlot);
   }
 }
 
@@ -350,7 +385,7 @@ function CreateInfoElement(PlayInfo) {
 /**
  * プレイ時間計算処理
  */
-function calcPlayTime(Start, End) {
+function CalcPlayTime(Start, End) {
  /* ==========================================================
   * バリデーションチェック
   * ========================================================== */
