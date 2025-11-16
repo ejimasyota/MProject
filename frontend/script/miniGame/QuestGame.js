@@ -679,49 +679,109 @@ class QuestGame {
           try {
             // タイマーやハンドラをすべて解除
             Self.Cleanup();
-            // ゲーム用のバックドロップを確実に削除
+
+            // ゲーム用のバックドロップを確実に削除（もし残っていれば）
             try { if (Backdrop && Backdrop.parentNode) Backdrop.parentNode.removeChild(Backdrop); } catch (E) {}
+
             // 結果表示用のバックドロップとダイアログを作成
             const { Backdrop: ResultBackdrop, DialogBox: ResultCard } = Self.CreateBackdropDialog();
+
             // 結果メッセージ要素を作成
             const Message = document.createElement("p");
             Message.className = "ResultText";
             Message.textContent = WinFlag ? "勝ちました" : "負けました";
             Message.style.fontWeight = "700";
             ResultCard.appendChild(Message);
+
             // 詳細メッセージ要素を作成
             const Detail = document.createElement("div");
             Detail.className = "SmallGrey";
             Detail.textContent = WinFlag ? "おめでとう！" : "また挑戦しよう...";
             ResultCard.appendChild(Detail);
+
             // 閉じるボタンを作成
             const CloseBtn = document.createElement("button");
             CloseBtn.textContent = "閉じる";
             CloseBtn.className = "ButtonInfo";
             CloseBtn.style.marginTop = "12px";
             CloseBtn.style.cursor = "pointer";
-            // 閉じる時の処理: バックドロップ削除とPromise解決
-            const OnClose = () => {
-              try { if (ResultBackdrop && ResultBackdrop.parentNode) ResultBackdrop.parentNode.removeChild(ResultBackdrop); } catch (E) {}
-              SafeResolve(WinFlag === true);
+
+            // 共通：指定要素を安全に削除するユーティリティ（無名）
+            const safeRemove = (el) => {
+              try { if (el && el.parentNode) el.parentNode.removeChild(el); } catch (E) {}
             };
+
+            // 閉じる時の処理: バックドロップ削除とPromise解決、さらにミニゲームの残骸も削除
+            const OnClose = () => {
+              try {
+                // 1) 結果ダイアログ本体を削除
+                safeRemove(ResultBackdrop);
+
+                // 2) 既知の変数名で存在しうるミニゲーム用要素を削除（安全に）
+                try { safeRemove(Backdrop); } catch (E) {}           // グローバル/外側で使っている場合
+                try { safeRemove(DialogBox); } catch (E) {}          // ミニゲームのダイアログ変数が残っている場合
+                try { safeRemove(MiniBackdrop); } catch (E) {}       // もし MiniBackdrop という名前を使っていれば
+                try { safeRemove(MiniDialog); } catch (E) {}         // もし MiniDialog という名前を使っていれば
+
+                // 3) DOM 上の候補クラス／属性を探して削除（ResultBackdrop と同一要素は既に消している）
+                // ※ 不要なものを消さないよう ResultBackdrop を除外して探す
+                const root = document.body;
+
+                // a) よく使われるクラス名で掃除
+                ["MiniGameBackdrop", "GameBackdrop", "Backdrop", "ModalBackdrop"].forEach(cls => {
+                  root.querySelectorAll("." + cls).forEach(el => {
+                    if (el !== ResultBackdrop) safeRemove(el);
+                  });
+                });
+
+                // b) ミニゲームのダイアログ候補（クラス名や data 属性）
+                [".MiniGameDialog", ".GameDialog", ".DialogBox", "[data-minigame='true']"].forEach(sel => {
+                  root.querySelectorAll(sel).forEach(el => {
+                    if (!ResultBackdrop || !ResultBackdrop.contains(el)) safeRemove(el);
+                  });
+                });
+
+                // c) もし ResultBackdrop の親に古いダイアログ群がまとまっていれば親ノードを掃除
+                try {
+                  const parent = ResultBackdrop && ResultBackdrop.parentNode;
+                  if (parent) {
+                    // parent 内で空になった不要ノード（例: 空のバックドロップラッパー）があれば削除しておく
+                    if (parent.children.length === 0) safeRemove(parent);
+                  }
+                } catch (E) {}
+
+              } catch (E) {
+                // ここでの例外はログだけ残す
+                console.error("[QuestGame] EndGame OnClose cleanup error:", E);
+              } finally {
+                // 最後に Promise 相当の処理を解決（WinFlag が true のとき勝ち）
+                try { SafeResolve(WinFlag === true); } catch (E) {}
+              }
+            };
+
             // 閉じるボタンにイベントを登録しハンドラ記録へ追加
             CloseBtn.addEventListener("click", OnClose);
             Self.Handlers.push({ el: CloseBtn, type: "click", fn: OnClose });
             ResultCard.appendChild(CloseBtn);
-            // 自動で閉じるフォールバックタイマー（8秒）
+
+            // 自動で閉じるフォールバックタイマー（8秒） — 自動で閉じたときも同様の掃除を行う
             const AutoClose = setTimeout(() => {
-              try { if (ResultBackdrop && ResultBackdrop.parentNode) ResultBackdrop.parentNode.removeChild(ResultBackdrop); } catch (E) {}
-              SafeResolve(WinFlag === true);
+              try {
+                // 自動クローズ時も OnClose を呼ぶ（同じ掃除処理を使う）
+                OnClose();
+              } catch (E) {
+                try { safeRemove(ResultBackdrop); } catch (E) {}
+                try { SafeResolve(WinFlag === true); } catch (E) {}
+              }
             }, 8000);
             Self.Timeouts.push(AutoClose);
+
           } catch (E) {
             console.error("[QuestGame] EndGame error:", E);
             SafeResolve(null);
           }
-        } 
-      }
-
+        }
+        }
       // 初期UIを作成してゲーム開始をスケジュールする
       let Created;
       try { Created = this.CreateBackdropDialog(); } catch (E) { console.error("[QuestGame] CreateBackdropDialog threw:", E); SafeResolve(null); return; }
