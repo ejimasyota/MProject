@@ -432,12 +432,80 @@ class QuestGame {
         // ステータステキストを更新するユーティリティ
         const UpdateHpDisplays = () => {
           try {
+            // テキスト要素
             const EnemyHpText = DialogBox.querySelector(".EnemyHpText");
-            if (EnemyHpText) EnemyHpText.textContent = `${Self.EnemyHp}/${Self.EnemyMaxHp}`;
             const PlayerHpText = DialogBox.querySelector(".PlayerHpText");
-            if (PlayerHpText) PlayerHpText.textContent = `${Self.PlayerHp}/${Self.PlayerMaxHp}`;
-            Self.DrawEnemy(Canvas, Self.EnemyHp / Self.EnemyMaxHp);
-          } catch (E) {}
+
+            // 対応するHPバーの .HpFill 要素を StatusBox を辿って探す（安全に）
+            const enemyHpFill = EnemyHpText?.closest(".StatusBox")?.querySelector(".HpFill");
+            const playerHpFill = PlayerHpText?.closest(".StatusBox")?.querySelector(".HpFill");
+
+            // HPバーの外枠（aria属性を更新するため）
+            const enemyHpBar = EnemyHpText?.closest(".StatusBox")?.querySelector(".HpBar");
+            const playerHpBar = PlayerHpText?.closest(".StatusBox")?.querySelector(".HpBar");
+
+            // 安全な数値（最大値が0なら1にしてゼロ除算を避ける）
+            const eMax = (typeof Self.EnemyMaxHp === "number" && Self.EnemyMaxHp > 0) ? Self.EnemyMaxHp : 1;
+            const pMax = (typeof Self.PlayerMaxHp === "number" && Self.PlayerMaxHp > 0) ? Self.PlayerMaxHp : 1;
+
+            // クリップして整数化（手順を明確にするため桁ごとに計算）
+            const eCurr = Math.max(0, Math.min(Self.EnemyHp || 0, eMax));
+            const pCurr = Math.max(0, Math.min(Self.PlayerHp || 0, pMax));
+
+            const ePercent = Math.round((eCurr / eMax) * 100);
+            const pPercent = Math.round((pCurr / pMax) * 100);
+
+            // テキスト更新
+            if (EnemyHpText) {
+              EnemyHpText.textContent = `${eCurr}/${eMax}`;
+              EnemyHpText.setAttribute("data-current", String(eCurr));
+              EnemyHpText.setAttribute("data-max", String(eMax));
+            }
+            if (PlayerHpText) {
+              PlayerHpText.textContent = `${pCurr}/${pMax}`;
+              PlayerHpText.setAttribute("data-current", String(pCurr));
+              PlayerHpText.setAttribute("data-max", String(pMax));
+            }
+
+            // aria とバー幅更新（あれば）
+            if (enemyHpBar) {
+              enemyHpBar.setAttribute("role", "progressbar");
+              enemyHpBar.setAttribute("aria-valuemin", "0");
+              enemyHpBar.setAttribute("aria-valuemax", String(eMax));
+              enemyHpBar.setAttribute("aria-valuenow", String(eCurr));
+            }
+            if (playerHpBar) {
+              playerHpBar.setAttribute("role", "progressbar");
+              playerHpBar.setAttribute("aria-valuemin", "0");
+              playerHpBar.setAttribute("aria-valuemax", String(pMax));
+              playerHpBar.setAttribute("aria-valuenow", String(pCurr));
+            }
+
+            if (enemyHpFill) {
+              enemyHpFill.style.width = `${Math.max(0, Math.min(100, ePercent))}%`;
+              // 色をHP%で変える（任意）
+              if (ePercent <= 25) enemyHpFill.style.background = "linear-gradient(90deg, #ff6b6b, #ff3b3b)"; // 赤
+              else if (ePercent <= 60) enemyHpFill.style.background = "linear-gradient(90deg, #ffd76b, #ffb84b)"; // 黄
+              else enemyHpFill.style.background = "linear-gradient(90deg, #6bd26b, #2da22d)"; // 緑
+            }
+
+            if (playerHpFill) {
+              playerHpFill.style.width = `${Math.max(0, Math.min(100, pPercent))}%`;
+              if (pPercent <= 25) playerHpFill.style.background = "linear-gradient(90deg, #ff6b6b, #ff3b3b)";
+              else if (pPercent <= 60) playerHpFill.style.background = "linear-gradient(90deg, #ffd76b, #ffb84b)";
+              else playerHpFill.style.background = "linear-gradient(90deg, #6bd26b, #2da22d)";
+            }
+
+            // 描画更新（もし DrawEnemy が HP% を受け取るなら安全に渡す）
+            if (typeof Self.DrawEnemy === "function") {
+              const safeRatio = eMax === 0 ? 0 : (eCurr / eMax);
+              Self.DrawEnemy(Canvas, safeRatio);
+            }
+
+          } catch (E) {
+            // エラーは無言で握りつぶすよりログに出すほうがデバッグしやすい
+            console.error("UpdateHpDisplays error:", E);
+          }
         };
 
         // プレイヤーが攻撃する処理
