@@ -393,6 +393,8 @@ async function GameDisplayInfo(StoryId){
       NEXT_STORY_ID = await RunMiniGame(STORY_ID, StoryItem.GameResult[0]);
       // 2. 画面表示を設定
       GameDisplayInfo(NEXT_STORY_ID);
+      // 3. 参照をクリア
+      NEXT_STORY_ID = null;
     }
 }
 
