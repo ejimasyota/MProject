@@ -63,80 +63,80 @@ class QuestGame {
     return { Backdrop, DialogBox };
   }
 
-// 敵スプライトをキャンバスへ描画する
-DrawEnemy(Canvas, HealthRatio) {
-  // Canvasの妥当性チェック
-  if (!Canvas || !Canvas.getContext) {
-    console.error("[QuestGame] Canvas invalid", Canvas);
-    return;
-  }
-  // 2Dコンテキストを取得
-  const Ctx = Canvas.getContext("2d");
-  if (!Ctx) {
-    console.error("[QuestGame] Failed to get 2d context");
-    return;
-  }
-  // 描画スケールを設定
-  const Scale = 4;
-  // キャンバス幅と高さを取得
-  const W = Canvas.width;
-  const H = Canvas.height;
-  // クリア
-  Ctx.clearRect(0, 0, W, H);
-  // ピクセルを滑らかにしない
-  Ctx.imageSmoothingEnabled = false;
 
-  // HPによって色を変える
-  const HpColor =
-    HealthRatio > 0.6 ? "#e74c3c" : HealthRatio > 0.3 ? "#f39c12" : "#c0392b";
-
-  // 敵画像の読み込み（既知の確実なパスを使用）
-  const Img = new Image();
-  Img.src = "/frontend/asetts/img/game/quest/Quest-Img-1.png";
-
-  Img.onload = () => {
-    try {
-      Ctx.clearRect(0, 0, W, H);
-      // 画像をキャンバスに描画（アスペクト比が違う場合は引き延ばされます）
-      Ctx.drawImage(Img, 0, 0, W, H);
-      // HPによる色付け（乗算風に上から塗る）
-      Ctx.globalCompositeOperation = "source-atop";
-      Ctx.fillStyle = HpColor;
-      Ctx.fillRect(0, 0, W, H);
-      // ブレンドモードを戻す
-      Ctx.globalCompositeOperation = "source-over";
-    } catch (e) {
-      console.error("[QuestGame] DrawEnemy draw error:", e);
+  DrawEnemy(Canvas, HealthRatio) {
+    // Canvasの妥当性チェック
+    if (!Canvas || !Canvas.getContext) {
+      console.error("[QuestGame] Canvas invalid", Canvas);
+      return;
     }
-  };
+    // 2Dコンテキストを取得
+    const Ctx = Canvas.getContext("2d");
+    if (!Ctx) {
+      console.error("[QuestGame] Failed to get 2d context");
+      return;
+    }
+    // 描画スケールを設定
+    const Scale = 4;
+    // キャンバス幅と高さを取得
+    const W = Canvas.width;
+    const H = Canvas.height;
+    // クリア
+    Ctx.clearRect(0, 0, W, H);
+    // ピクセルを滑らかにしない
+    Ctx.imageSmoothingEnabled = false;
 
-  // 読み込み失敗時はシンプルなドット絵でフォールバック
-  Img.onerror = (e) => {
-    console.error("[QuestGame] Enemy image failed to load", e);
-    const Layout = [
-      "  XXX  ",
-      " XXXXX ",
-      "XXXXXXX",
-      "X XX XX",
-      "XXXXXXX",
-      " X   X ",
-      "  X X  ",
-    ];
-    const Pixel = (x, y, Color) => {
-      Ctx.fillStyle = Color;
-      Ctx.fillRect(x * Scale, y * Scale, Scale, Scale);
-    };
-    const OffsetX = 1;
-    const OffsetY = 1;
-    for (let Y = 0; Y < Layout.length; Y++) {
-      for (let X = 0; X < Layout[Y].length; X++) {
-        const Ch = Layout[Y][X];
-        if (Ch === "X") Pixel(OffsetX + X, OffsetY + Y, HpColor);
-        else Pixel(OffsetX + X, OffsetY + Y, "#111");
+    // HPによって色を変える
+    const HpColor =
+      HealthRatio > 0.6 ? "#e74c3c" : HealthRatio > 0.3 ? "#f39c12" : "#c0392b";
+
+    // 敵画像の読み込み（既知の確実なパスを使用）
+    const Img = new Image();
+    Img.src = "/frontend/asetts/img/game/quest/Quest-Img-1.png";
+
+    Img.onload = () => {
+      try {
+        Ctx.clearRect(0, 0, W, H);
+        // 画像をキャンバスに描画（アスペクト比が違う場合は引き延ばされます）
+        Ctx.drawImage(Img, 0, 0, W, H);
+        // HPによる色付け（乗算風に上から塗る）
+        Ctx.globalCompositeOperation = "source-atop";
+        Ctx.fillStyle = HpColor;
+        Ctx.fillRect(0, 0, W, H);
+        // ブレンドモードを戻す
+        Ctx.globalCompositeOperation = "source-over";
+      } catch (e) {
+        console.error("[QuestGame] DrawEnemy draw error:", e);
       }
-    }
-  };
-}
+    };
+
+    // 読み込み失敗時はシンプルなドット絵でフォールバック
+    Img.onerror = (e) => {
+      console.error("[QuestGame] Enemy image failed to load", e);
+      const Layout = [
+        "  XXX  ",
+        " XXXXX ",
+        "XXXXXXX",
+        "X XX XX",
+        "XXXXXXX",
+        " X   X ",
+        "  X X  ",
+      ];
+      const Pixel = (x, y, Color) => {
+        Ctx.fillStyle = Color;
+        Ctx.fillRect(x * Scale, y * Scale, Scale, Scale);
+      };
+      const OffsetX = 1;
+      const OffsetY = 1;
+      for (let Y = 0; Y < Layout.length; Y++) {
+        for (let X = 0; X < Layout[Y].length; X++) {
+          const Ch = Layout[Y][X];
+          if (Ch === "X") Pixel(OffsetX + X, OffsetY + Y, HpColor);
+          else Pixel(OffsetX + X, OffsetY + Y, "#111");
+        }
+      }
+    };
+  }
 
 
   // タイマーとイベントハンドラをすべて解除する
@@ -221,31 +221,23 @@ DrawEnemy(Canvas, HealthRatio) {
 
         // 攻撃ボタンを作成
         const AttackButton = document.createElement("button");
-        AttackButton.className = "AttackButton";
-        AttackButton.textContent = "Attack";
-        AttackButton.style.padding = "8px 12px";
-        AttackButton.style.cursor = "pointer";
+        AttackButton.classList.add("ButtonInfo","RedButton");
+        AttackButton.textContent = "攻撃";
 
         // 敵デバフボタンを作成
         const DebuffButton = document.createElement("button");
-        DebuffButton.className = "DebuffButton";
-        DebuffButton.textContent = "Debuff";
-        DebuffButton.style.padding = "8px 12px";
-        DebuffButton.style.cursor = "pointer";
+        DebuffButton.classList.add("ButtonInfo","RedButton");
+        DebuffButton.textContent = "デバフ";
 
         // 自身バフボタンを作成
         const BuffButton = document.createElement("button");
-        BuffButton.className = "BuffButton";
-        BuffButton.textContent = "Buff";
-        BuffButton.style.padding = "8px 12px";
-        BuffButton.style.cursor = "pointer";
+        BuffButton.classList.add("ButtonInfo","RedButton");
+        BuffButton.textContent = "バフ";
 
         // ガードボタンを作成
         const GuardButton = document.createElement("button");
-        GuardButton.className = "GuardButton";
-        GuardButton.textContent = "Guard";
-        GuardButton.style.padding = "8px 12px";
-        GuardButton.style.cursor = "pointer";
+        GuardButton.classList.add("ButtonInfo","RedButton");
+        GuardButton.textContent = "ガード";
 
         // インストラクション要素を作成
         const Instruction = document.createElement("div");
