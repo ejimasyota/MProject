@@ -711,47 +711,46 @@ class QuestGame {
               try { if (el && el.parentNode) el.parentNode.removeChild(el); } catch (E) {}
             };
 
-            // 閉じる時の処理: バックドロップ削除とPromise解決、さらにミニゲームの残骸も削除
+            // 明確に ConfirmContainer を探して削除するユーティリティ
+            const removeConfirmContainer = () => {
+              try {
+                // 1) まず変数として存在するケース（スコープ内／外で定義されている可能性）
+                try { if (typeof ConfirmContainer !== "undefined" && ConfirmContainer) safeRemove(ConfirmContainer); } catch (E) {}
+
+                // 2) 次にクラス名・ID・data 属性で DOM を検索（優先順）
+                const byClass = document.querySelector(".ConfirmContainer");
+                if (byClass) { safeRemove(byClass); return true; }
+
+                const byId = document.getElementById("ConfirmContainer");
+                if (byId) { safeRemove(byId); return true; }
+
+                const byData = document.querySelector("[data-confirm='true']");
+                if (byData) { safeRemove(byData); return true; }
+
+                // 3) 万が一見つからなければ、既知のミニゲーム変数名を試す（最後の手段）
+                try { if (typeof MiniBackdrop !== "undefined" && MiniBackdrop) safeRemove(MiniBackdrop); } catch (E) {}
+                try { if (typeof MiniDialog !== "undefined" && MiniDialog) safeRemove(MiniDialog); } catch (E) {}
+
+                return false;
+              } catch (E) {
+                console.error("[QuestGame] removeConfirmContainer error:", E);
+                return false;
+              }
+            };
+
+            // 閉じる時の処理: 結果ダイアログ削除＋ConfirmContainer削除＋Promise解決
             const OnClose = () => {
               try {
-                // 1) 結果ダイアログ本体を削除
+                // 結果ダイアログ本体を削除
                 safeRemove(ResultBackdrop);
 
-                // 2) 既知の変数名で存在しうるミニゲーム用要素を削除（安全に）
-                try { safeRemove(Backdrop); } catch (E) {}           // グローバル/外側で使っている場合
-                try { safeRemove(DialogBox); } catch (E) {}          // ミニゲームのダイアログ変数が残っている場合
-                try { safeRemove(MiniBackdrop); } catch (E) {}       // もし MiniBackdrop という名前を使っていれば
-                try { safeRemove(MiniDialog); } catch (E) {}         // もし MiniDialog という名前を使っていれば
+                // 明示的に ConfirmContainer を削除（最優先）
+                removeConfirmContainer();
 
-                // 3) DOM 上の候補クラス／属性を探して削除（ResultBackdrop と同一要素は既に消している）
-                // ※ 不要なものを消さないよう ResultBackdrop を除外して探す
-                const root = document.body;
-
-                // a) よく使われるクラス名で掃除
-                ["MiniGameBackdrop", "GameBackdrop", "Backdrop", "ModalBackdrop"].forEach(cls => {
-                  root.querySelectorAll("." + cls).forEach(el => {
-                    if (el !== ResultBackdrop) safeRemove(el);
-                  });
-                });
-
-                // b) ミニゲームのダイアログ候補（クラス名や data 属性）
-                [".MiniGameDialog", ".GameDialog", ".DialogBox", "[data-minigame='true']"].forEach(sel => {
-                  root.querySelectorAll(sel).forEach(el => {
-                    if (!ResultBackdrop || !ResultBackdrop.contains(el)) safeRemove(el);
-                  });
-                });
-
-                // c) もし ResultBackdrop の親に古いダイアログ群がまとまっていれば親ノードを掃除
-                try {
-                  const parent = ResultBackdrop && ResultBackdrop.parentNode;
-                  if (parent) {
-                    // parent 内で空になった不要ノード（例: 空のバックドロップラッパー）があれば削除しておく
-                    if (parent.children.length === 0) safeRemove(parent);
-                  }
-                } catch (E) {}
+                // 互換性のため、DialogBox 変数が残っていれば削除（ただし無差別に全 Dialog を消さない）
+                try { if (typeof DialogBox !== "undefined" && DialogBox) safeRemove(DialogBox); } catch (E) {}
 
               } catch (E) {
-                // ここでの例外はログだけ残す
                 console.error("[QuestGame] EndGame OnClose cleanup error:", E);
               } finally {
                 // 最後に Promise 相当の処理を解決（WinFlag が true のとき勝ち）
@@ -767,7 +766,6 @@ class QuestGame {
             // 自動で閉じるフォールバックタイマー（8秒） — 自動で閉じたときも同様の掃除を行う
             const AutoClose = setTimeout(() => {
               try {
-                // 自動クローズ時も OnClose を呼ぶ（同じ掃除処理を使う）
                 OnClose();
               } catch (E) {
                 try { safeRemove(ResultBackdrop); } catch (E) {}
@@ -781,6 +779,7 @@ class QuestGame {
             SafeResolve(null);
           }
         }
+
         }
       // 初期UIを作成してゲーム開始をスケジュールする
       let Created;
