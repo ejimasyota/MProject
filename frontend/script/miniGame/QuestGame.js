@@ -97,125 +97,240 @@ class QuestGame {
     // 4. ピクセルを滑らかにしない
     ConText.imageSmoothingEnabled = true;
 
-    // HPによって色を変える
+    /* 5. HPによる背景の変更処理 */
     const HpColor =
       HealthRatio > 0.6 ? "#e74c3c" : HealthRatio > 0.3 ? "#f39c12" : "#c0392b";
 
-    // HEX -> RGBA 変換ユーティリティ（アルファ指定）
-    const HexToRgba = (hex, alpha) => {
-      let h = (hex || "").replace("#", "");
-      if (h.length === 3) {
-        h = h.split("").map((c) => c + c).join("");
+    /* 6. HEXからRGBAへの変換処理 */
+    const HexToRgba = (HEX, ALPHA) => {
+      /* 定義 */
+      // 1. 変換されたHEXを保持する
+      let NormalizedHex  = (HEX || "").replace("#", "");
+
+      /* 変換処理 */
+      if (NormalizedHex.length === 3) {
+        NormalizedHex = NormalizedHex.split("").map((Color) => Color + Color).join("");
       }
-      const r = parseInt(h.slice(0, 2), 16) || 0;
-      const g = parseInt(h.slice(2, 4), 16) || 0;
-      const b = parseInt(h.slice(4, 6), 16) || 0;
-      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+
+      /* 色の設定処理 */
+      // 1. 赤色を設定
+      const Red = parseInt(NormalizedHex.slice(0, 2), 16) || 0;
+      // 2. 緑色を設定
+      const Green = parseInt(NormalizedHex.slice(2, 4), 16) || 0;
+      // 3. 青色を設定
+      const Blue = parseInt(NormalizedHex.slice(4, 6), 16) || 0;
+
+      /* 戻り値の設定 */
+      return `rgba(${Red}, ${Green}, ${Blue}, ${ALPHA})`;
     };
 
-    // 乗せる色（半透明）
+    /* 6. オーバーレイの設定 */
     const OverlayColor = HexToRgba(HpColor, 0.5);
 
-    // 敵画像の読み込み（既知の確実なパスを使用）
+    /* 7. 敵画像の読み込み */
+    // 1. IMGインスタンスを生成
     const Img = new Image();
+    // 2. パスのソース設定
     Img.src = "/frontend/asetts/img/game/quest/Quest-Img-1.png";
 
+    /* 8. 敵画像の読み込み */
     Img.onload = () => {
       try {
+        // 1. コンテキストをクリア
         ConText.clearRect(0, 0, Width, Height);
-        // 画像をキャンバスに描画（アスペクト比が違う場合は引き延ばされます）
+        // 2. 画像をキャンバスに描画
         ConText.drawImage(Img, 0, 0, Width, Height);
-        // HPによる色付け（半透明のオーバーレイを乗せる）
+        // 3. HPによる色付け
         ConText.globalCompositeOperation = "source-atop";
+        // 4. オーバーレイ設定
         ConText.fillStyle = OverlayColor;
+        // 5. キャンバスサイズ設定
         ConText.fillRect(0, 0, Width, Height);
-        // ブレンドモードを戻す
+        // 6. ブレンドモードを戻す
         ConText.globalCompositeOperation = "source-over";
       } catch (e) {
-        console.error("[QuestGame] DrawEnemy draw error:", e);
+        console.error("クエスト - 敵画像の読込失敗 : ", e);
       }
     };
 
-    // 読み込み失敗時は何もしない（ドット絵フォールバックを削除）
+    /* 9. 敵画像の読み込み失敗時 */
     Img.onerror = (e) => {
-      console.error("[QuestGame] Enemy image failed to load", e);
-      // フォールバック描画は不要とのことなので何も描かない
+      console.error("クエスト - 敵画像の読込失敗 : ", e);
     };
   }
 
-  // タイマーとイベントハンドラをすべて解除する
+ /* --------------------------------------------
+  *  4. タイマーとイベントハンドラの解除
+  * --------------------------------------------*/
   Cleanup() {
-    // インターバルが残っている場合クリア
+    /* 1. インターバルが残っている場合クリア */
     if (this.IntervalId) {
+      // 1. インターバルをクリア
       try { clearInterval(this.IntervalId); } catch (e) {}
+      // 2. インターバルIDを初期化
       this.IntervalId = null;
     }
-    // 登録したタイマーをすべてクリア
+
+    /* 2. 登録したタイマーをすべてクリア */
+    // 1. タイマーをクリア
     this.Timeouts.forEach((T) => {
       try { clearTimeout(T); } catch (e) {}
     });
+    // 2. タイマー配列をクリア
     this.Timeouts = [];
-    // 登録したイベントハンドラをすべて解除
+    
+    /* 3. 登録したイベントハンドラをすべて解除 */
+    // 1. イベントハンドラを解除
     this.Handlers.forEach((Handler) => {
       try { if (Handler.el && Handler.fn) Handler.el.removeEventListener(Handler.type, Handler.fn); } catch (e) {}
     });
+    // 2. イベントハンドラ配列をクリア
     this.Handlers = [];
   }
 
-  // ゲーム実行メソッド（Promise<boolean|null> を返す）
+ /* --------------------------------------------
+  *  5. ゲーム実行
+  * --------------------------------------------*/
   async GameRun() {
-    // Self参照を取得
+    /* 1. 事前定義 */
+    // 1. 元のthisの値を保持
     const Self = this;
-    // Promiseを返す
+  
     return new Promise((Resolve) => {
-      // 解決フラグ
+      /* 2. Promiseのエラーハンドリング */
+      /* 定義 */
+      // 1. Promise解決フラグ
       let Resolved = false;
-      // 安全にResolveするヘルパー
-      const SafeResolve = (V) => {
+      
+      /* 安全にResolveを返す処理 */
+      const SafeResolve = (Value) => {
+        /* Resolveに失敗した場合 */
         if (!Resolved) {
+          // 1. 解決FLGをTRUEに設定
           Resolved = true;
-          try { Resolve(V); } catch (E) { console.error("[QuestGame] Resolve threw:", E); }
+          // 2. Promiseを解決
+          try { Resolve(Value); } catch (error) { console.error("クエスト - Promise解決失敗", error); }
         }
       };
 
-      // UI構築関数を定義（Backdrop, DialogBoxを受け取る）
+      /* 3. UI構築 */
       function BuildGameUI(Backdrop, DialogBox) {
-        // キャンバスを作成
+        /* ----- ★ キャンバス作成 ★ ----- */
+        /* 定義 */
+        // 1. キャンバスを保持する
         let Canvas;
+
+        /* キャンバスの作成処理 */
         try {
+          // 1. CANVASを作成
           Canvas = document.createElement("canvas");
+          // 2. クラスを設定
           Canvas.className = "QuestCanvas";
+          // 3. キャンバスの幅を設定
           Canvas.width = 32;
+          // 4. キャンバスの高さを設定
           Canvas.height = 28;
-          Canvas.style.width = "256px";
-          Canvas.style.height = "224px";
-          Canvas.style.border = "4px solid #333";
-          Canvas.style.background = "#000";
-        } catch (E) {
-          console.error("[QuestGame] Canvas create failed", E);
+        } catch (error) {
+          /* 例外処理 */
+          // 1. デバッグログ
+          console.error("クエスト - キャンバス作成失敗", error);
+          // 2. Promiseをnullで解決
           SafeResolve(null);
+          // 3. 処理終了
           return;
         }
 
         // ステータス表示ラップを作成
         const StatWrap = document.createElement("div");
-        StatWrap.className = "StatBar";
+        StatWrap.className = "StatBar"; // クラスでスタイル管理
+        // （可能なら下のインラインは削除して CSS に移してください）
         StatWrap.style.display = "flex";
         StatWrap.style.gap = "12px";
         StatWrap.style.width = "100%";
         StatWrap.style.justifyContent = "space-between";
 
-        // プレイヤーステータス要素を作成
+        // --- プレイヤーステータス要素 ---------------------------
         const PlayerStat = document.createElement("div");
-        PlayerStat.innerHTML = `<span class="StatText">Player</span> <span class="SmallGrey">HP:</span> <span class="PlayerHpText">${Self.PlayerHp}/${Self.PlayerMaxHp}</span>`;
+        PlayerStat.classList.add("StatusBox");
 
-        // 敵ステータス要素を作成
+        const pName = document.createElement("span");
+        pName.classList.add("StatText");
+        pName.textContent = "Player";
+
+        const pLabel = document.createElement("span");
+        pLabel.classList.add("SmallGrey");
+        pLabel.textContent = " HP: ";
+
+        const pHp = document.createElement("span");
+        pHp.classList.add("PlayerHpText");
+        pHp.textContent = `${Self.PlayerHp} / ${Self.PlayerMaxHp}`;
+        // data属性を付けておくと更新が楽
+        pHp.setAttribute("data-current", String(Self.PlayerHp));
+        pHp.setAttribute("data-max", String(Self.PlayerMaxHp));
+        pHp.setAttribute("aria-live", "polite");
+
+
+        // ビジュアルHPバー（テキストの下に置く）
+        const pHpBar = document.createElement("div");
+        pHpBar.classList.add("HpBar");
+        pHpBar.setAttribute("role", "progressbar");
+        pHpBar.setAttribute("aria-valuemin", "0");
+        pHpBar.setAttribute("aria-valuemax", String(Self.PlayerMaxHp));
+        pHpBar.setAttribute("aria-valuenow", String(Self.PlayerHp));
+
+        const pHpFill = document.createElement("div");
+        pHpFill.classList.add("HpFill");
+        // 幅を初期化
+        const pPercent = Math.max(0, Math.min(100, Math.round(Self.PlayerHp / Self.PlayerMaxHp * 100)));
+        pHpFill.style.width = pPercent + "%";
+        pHpBar.appendChild(pHpFill);
+
+        PlayerStat.appendChild(pName);
+        PlayerStat.appendChild(pLabel);
+        PlayerStat.appendChild(pHp);
+        PlayerStat.appendChild(pHpBar); // HPバーを追加
+
+        // --- 敵ステータス要素 ---------------------------
         const EnemyStat = document.createElement("div");
-        EnemyStat.innerHTML = `<span class="StatText">Enemy</span> <span class="SmallGrey">HP:</span> <span class="EnemyHpText">${Self.EnemyHp}/${Self.EnemyMaxHp}</span>`;
+        EnemyStat.classList.add("StatusBox");
+
+        const eName = document.createElement("span");
+        eName.classList.add("StatText");
+        eName.textContent = "Enemy";
+
+        const eLabel = document.createElement("span");
+        eLabel.classList.add("SmallGrey");
+        eLabel.textContent = " HP: ";
+
+        const eHp = document.createElement("span");
+        eHp.classList.add("EnemyHpText");
+        eHp.textContent = `${Self.EnemyHp} / ${Self.EnemyMaxHp}`;
+        eHp.setAttribute("data-current", String(Self.EnemyHp));
+        eHp.setAttribute("data-max", String(Self.EnemyMaxHp));
+        eHp.setAttribute("aria-live", "polite");
+
+        const eHpBar = document.createElement("div");
+        eHpBar.classList.add("HpBar");
+        eHpBar.setAttribute("role", "progressbar");
+        eHpBar.setAttribute("aria-valuemin", "0");
+        eHpBar.setAttribute("aria-valuemax", String(Self.EnemyMaxHp));
+        eHpBar.setAttribute("aria-valuenow", String(Self.EnemyHp));
+
+        const eHpFill = document.createElement("div");
+        eHpFill.classList.add("HpFill");
+        const ePercent = Math.max(0, Math.min(100, Math.round(Self.EnemyHp / Self.EnemyMaxHp * 100)));
+        eHpFill.style.width = ePercent + "%";
+        eHpBar.appendChild(eHpFill);
+
+        EnemyStat.appendChild(eName);
+        EnemyStat.appendChild(eLabel);
+        EnemyStat.appendChild(eHp);
+        EnemyStat.appendChild(eHpBar);
 
         // ステータスをラップに追加
         StatWrap.appendChild(PlayerStat);
         StatWrap.appendChild(EnemyStat);
+
 
         // コマンドボタン群を作成（Attack, Debuff, Buff, Guard）
         const ButtonsWrap = document.createElement("div");

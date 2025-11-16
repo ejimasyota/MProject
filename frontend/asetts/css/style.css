@@ -773,3 +773,61 @@ button:disabled:active {
 }
 /* 4.スピナーアニメーション */
 @keyframes spin{to{transform:rotate(360deg)}}
+
+/* --------------------------------------------
+ *  ミニゲーム - クエスト
+ * --------------------------------------------*/
+ /* 1.キャンバス */
+.QuestCanvas {
+  width: 256px;   
+  height: 224px;      
+  border: 4px solid #333;
+  background-color: #000;
+  image-rendering: pixelated; 
+  display: block;      
+  margin: 0 auto;  
+}
+/* 2.ステータスバー全体 */
+.StatBar {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+/* 3.ステータスコンテナ */
+.StatusBox {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+  margin-bottom: 4px;
+  min-width: 160px;
+}
+/* 3.ステータステキスト */
+.StatText {
+  font-weight: bold;
+}
+.SmallGrey {
+  color: #888;
+}
+.PlayerHpText,
+.EnemyHpText {
+  font-weight: bold;
+}
+/* 4.HPバー外枠 */
+.HpBar {
+  width: 100%;
+  height: 10px;
+  background: #ddd;
+  border-radius: 999px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.08);
+}
+/* 5.HPバーの内部 */
+.HpFill {
+  height: 100%;
+  width: 50%;
+  background: linear-gradient(90deg, #6bd26b, #2da22d);
+  transition: width 300ms ease;
+}
