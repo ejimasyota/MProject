@@ -92,7 +92,7 @@ class QuestGame {
 
     // 敵画像の読み込み
     const Img = new Image();
-    Img.src = "../asetts/img/game/quest/Quest-Img-1.png"; // ← ここに任意のパスを設定
+    Img.src = "../../asetts/img/game/quest/Quest-Img-1.png"; // ← ここに任意のパスを設定
 
     Img.onload = () => {
       // 敵画像を描画
