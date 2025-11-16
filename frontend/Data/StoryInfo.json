@@ -988,7 +988,7 @@
     "StoryText": "よっしゃ！ 勝ったぞ！みんな驚いてる。",
     "Next": 14,
     "BgPath": "../asetts/img/bg/Bg-School-1.jpg",
-    "SePath": "../asetts/sfx/se_cheer.mp3",
+    "SePath": "",
     "Voice": "",
     "Flg": [
       {
@@ -1005,12 +1005,12 @@
     "MoviePath": "",
     "CharaImgPath": [
       {
-        "Center": "../asetts/img/chara/chara1/Chara1-happy.png",
-        "Right": "../asetts/img/chara/chara2/Chara2-surprised.png",
-        "Left": "../asetts/img/chara/chara3/Chara3-clap.png"
+        "Center": "../asetts/img/chara/chara1/Chara1-1.png",
+        "Right": "../asetts/img/chara/chara2/Chara2-1.png",
+        "Left": "../asetts/img/chara/chara3/Chara3-1.png"
       }
     ],
-    "BgmPath": "../asetts/music/bgm/BGM-Victory.mp3",
+    "BgmPath": "",
     "FaceImgPath": "../asetts/img/icon/chara1/Chara1-Icon-1.png",
     "Effect": [
       {
