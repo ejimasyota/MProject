@@ -240,128 +240,189 @@ class QuestGame {
           return;
         }
 
-        // ステータス表示ラップを作成
-        const StatWrap = document.createElement("div");
-        StatWrap.className = "StatBar"; // クラスでスタイル管理
-        // （可能なら下のインラインは削除して CSS に移してください）
-        StatWrap.style.display = "flex";
-        StatWrap.style.gap = "12px";
-        StatWrap.style.width = "100%";
-        StatWrap.style.justifyContent = "space-between";
+        /* ----- ★ プレイヤーステータスラッパー作成 ★ ----- */
+        /* ステータス表示ラップを作成 */
+        // 1. DIV要素作成
+        const StatWrapeer = document.createElement("div");
+        // 2. クラス設定
+        StatWrapeer.className = "StatBar"; 
 
-        // --- プレイヤーステータス要素 ---------------------------
-        const PlayerStat = document.createElement("div");
-        PlayerStat.classList.add("StatusBox");
+        /* ----- ★ プレイヤーステータス作成 ★ ----- */
+        // 1. DIV要素作成
+        const PlayerStatus = document.createElement("div");
+        // 2. クラス設定
+        PlayerStatus.classList.add("StatusBox");
 
-        const pName = document.createElement("span");
-        pName.classList.add("StatText");
-        pName.textContent = `${sessionStorage.getItem("PlayerName")}`;
+        /* ----- ★ プレイヤー名作成 ★ ----- */
+        // 1. SPAN要素作成
+        const PlayerName = document.createElement("span");
+        // 2. クラス設定
+        PlayerName.classList.add("StatText");
+        // 3. ラベル設定
+        PlayerName.textContent = `${sessionStorage.getItem("PlayerName")}`;
 
-        const pLabel = document.createElement("span");
-        pLabel.classList.add("SmallGrey");
-        pLabel.textContent = " HP: ";
+        /* ----- ★ プレイヤーラベル作成 ★ ----- */
+        // 1. SPAN要素作成
+        const PlayerLabel = document.createElement("span");
+        // 2. クラス設定
+        PlayerLabel.classList.add("SmallGrey");
+        // 3. ラベル設定
+        PlayerLabel.textContent = " HP: ";
 
-        const pHp = document.createElement("span");
-        pHp.classList.add("PlayerHpText");
-        pHp.textContent = `${Self.PlayerHp} / ${Self.PlayerMaxHp}`;
-        // data属性を付けておくと更新が楽
-        pHp.setAttribute("data-current", String(Self.PlayerHp));
-        pHp.setAttribute("data-max", String(Self.PlayerMaxHp));
-        pHp.setAttribute("aria-live", "polite");
+        /* ----- ★ プレイヤーHP作成 ★ ----- */
+        // 1. SPAN要素作成
+        const PlayerHp = document.createElement("span");
+        // 2. クラス設定
+        PlayerHp.classList.add("PlayerHpText");
+        // 3. ラベル設定
+        PlayerHp.textContent = `${Self.PlayerHp} / ${Self.PlayerMaxHp}`;
+
+        /* ----- ★ プレイヤーHPバー作成 ★ ----- */
+        // 1. DIV要素作成
+        const PlayerHpBar = document.createElement("div");
+        // 2. クラス設定
+        PlayerHpBar.classList.add("HpBar");
+
+        /* ----- ★ プレイヤーHPバーの残量作成 ★ ----- */
+        // 1. DIV要素作成
+        const PlayerHpFill = document.createElement("div");
+        // 2. クラス設定
+        PlayerHpFill.classList.add("HpFill");
+        
+        /* ----- ★ プレイヤーHPバーの残量幅設定 ★ ----- */
+        // 1. 残量取得
+        const PlayerPercent = Math.max(0, Math.min(100, Math.round(Self.PlayerHp / Self.PlayerMaxHp * 100)));
+        // 2. 幅を設定
+        PlayerHpFill.style.width = PlayerPercent + "%";
+
+        /* ----- ★ プレイヤーステータスのDOM組み立て ★ ----- */
+        // 1. HPバー内部の塗り潰し要素をバー本体へ格納
+        PlayerHpBar.appendChild(PlayerHpFill);
+        // 2. 名前ラベルをステータス行へ格納
+        PlayerStatus.appendChild(PlayerName);
+        // 3. HPのラベルをステータス行へ格納
+        PlayerStatus.appendChild(PlayerLabel);
+        // 4．HPの数値表示をステータス行へ格納
+        PlayerStatus.appendChild(PlayerHp);
+        // 5. HPバーをステータス行へ格納
+        PlayerStatus.appendChild(PlayerHpBar);
+
+        /* ----- ★ 敵ステータス作成 ★ ----- */
+        // 1. DIV要素作成
+        const EnemyStatus = document.createElement("div");
+        // 2. クラス設定
+        EnemyStatus.classList.add("StatusBox");
+
+        /* ----- ★ 敵名作成 ★ ----- */
+        // 1. SPAN要素作成
+        const EnemyName = document.createElement("span");
+        // 2. クラス設定
+        EnemyName.classList.add("StatText");
+        // 3. ラベル設定
+        EnemyName.textContent = "敵";
+
+        /* ----- ★ 敵ラベル作成 ★ ----- */
+        // 1. SPAN要素作成
+        const EnemyLabel = document.createElement("span");
+        // 2. クラス設定
+        EnemyLabel.classList.add("SmallGrey");
+        // 3. ラベル設定
+        EnemyLabel.textContent = " HP: ";
+
+        /* ----- ★ 敵HP作成 ★ ----- */
+        // 1. SPAN要素作成
+        const EnemyHp = document.createElement("span");
+        // 2. クラス設定
+        EnemyHp.classList.add("EnemyHpText");
+        // 3. ラベル設定
+        EnemyHp.textContent = `${Self.EnemyHp} / ${Self.EnemyMaxHp}`;
+
+        /* ----- ★ 敵HPバー作成 ★ ----- */
+        // 1. DIV要素作成
+        const EnemyHpBar = document.createElement("div");
+        // 2. ラベル設定
+        EnemyHpBar.classList.add("HpBar");
+
+        /* ----- ★ 敵HPバーの残量作成 ★ ----- */
+        // 1. DIV要素作成
+        const EnemyHpFill = document.createElement("div");
+        // 2. クラス設定
+        EnemyHpFill.classList.add("HpFill");
+
+        /* ----- ★ 敵HPバーの残量幅設定 ★ ----- */
+        // 1. 残量取得
+        const EnemyPercent = Math.max(0, Math.min(100, Math.round(Self.EnemyHp / Self.EnemyMaxHp * 100)));
+        // 2. 幅取得
+        EnemyHpFill.style.width = EnemyPercent + "%";
+
+        /* ----- ★ 敵ステータスのDOM組み立て ★ ----- */
+        // 1. HPバー内部の塗り潰し要素をバー本体へ格納
+        EnemyHpBar.appendChild(EnemyHpFill);
+        // 2. 敵の名前ラベルをステータス行へ格納
+        EnemyStatus.appendChild(EnemyName);
+        // 3. HPラベルをステータス行へ格納
+        EnemyStatus.appendChild(EnemyLabel);
+        // 4. HPの数値表示をステータス行へ格納
+        EnemyStatus.appendChild(EnemyHp);
+        // 5. HPバーをステータス行へ格納
+        EnemyStatus.appendChild(EnemyHpBar);
+
+        /* ----- ★ 各ステータスのDOM組み立て ★ ----- */
+        // 1. ステータスラッパーにプレイヤーステータスを格納
+        StatWrapeer.appendChild(PlayerStatus);
+        // 2. ステータスラッパーに敵ステータスを格納
+        StatWrapeer.appendChild(EnemyStatus);
 
 
-        // ビジュアルHPバー（テキストの下に置く）
-        const pHpBar = document.createElement("div");
-        pHpBar.classList.add("HpBar");
-        pHpBar.setAttribute("role", "progressbar");
-        pHpBar.setAttribute("aria-valuemin", "0");
-        pHpBar.setAttribute("aria-valuemax", String(Self.PlayerMaxHp));
-        pHpBar.setAttribute("aria-valuenow", String(Self.PlayerHp));
+        /* ----- ★ コマンドボタンラッパーを作成 ★ ----- */
+        // 1. DIV要素作成
+        const ButtonsWrapeer = document.createElement("div");
+        // 2. 横並びに設定
+        ButtonsWrapeer.style.display = "flex";
+        // 3. 要素間隔設定
+        ButtonsWrapeer.style.gap = "8px";
+        // 4. マージン設定
+        ButtonsWrapeer.style.marginTop = "8px";
 
-        const pHpFill = document.createElement("div");
-        pHpFill.classList.add("HpFill");
-        // 幅を初期化
-        const pPercent = Math.max(0, Math.min(100, Math.round(Self.PlayerHp / Self.PlayerMaxHp * 100)));
-        pHpFill.style.width = pPercent + "%";
-        pHpBar.appendChild(pHpFill);
-
-        PlayerStat.appendChild(pName);
-        PlayerStat.appendChild(pLabel);
-        PlayerStat.appendChild(pHp);
-        PlayerStat.appendChild(pHpBar); // HPバーを追加
-
-        // --- 敵ステータス要素 ---------------------------
-        const EnemyStat = document.createElement("div");
-        EnemyStat.classList.add("StatusBox");
-
-        const eName = document.createElement("span");
-        eName.classList.add("StatText");
-        eName.textContent = "敵恵島";
-
-        const eLabel = document.createElement("span");
-        eLabel.classList.add("SmallGrey");
-        eLabel.textContent = " HP: ";
-
-        const eHp = document.createElement("span");
-        eHp.classList.add("EnemyHpText");
-        eHp.textContent = `${Self.EnemyHp} / ${Self.EnemyMaxHp}`;
-        eHp.setAttribute("data-current", String(Self.EnemyHp));
-        eHp.setAttribute("data-max", String(Self.EnemyMaxHp));
-        eHp.setAttribute("aria-live", "polite");
-
-        const eHpBar = document.createElement("div");
-        eHpBar.classList.add("HpBar");
-        eHpBar.setAttribute("role", "progressbar");
-        eHpBar.setAttribute("aria-valuemin", "0");
-        eHpBar.setAttribute("aria-valuemax", String(Self.EnemyMaxHp));
-        eHpBar.setAttribute("aria-valuenow", String(Self.EnemyHp));
-
-        const eHpFill = document.createElement("div");
-        eHpFill.classList.add("HpFill");
-        const ePercent = Math.max(0, Math.min(100, Math.round(Self.EnemyHp / Self.EnemyMaxHp * 100)));
-        eHpFill.style.width = ePercent + "%";
-        eHpBar.appendChild(eHpFill);
-
-        EnemyStat.appendChild(eName);
-        EnemyStat.appendChild(eLabel);
-        EnemyStat.appendChild(eHp);
-        EnemyStat.appendChild(eHpBar);
-
-        // ステータスをラップに追加
-        StatWrap.appendChild(PlayerStat);
-        StatWrap.appendChild(EnemyStat);
-
-
-        // コマンドボタン群を作成（Attack, Debuff, Buff, Guard）
-        const ButtonsWrap = document.createElement("div");
-        ButtonsWrap.style.display = "flex";
-        ButtonsWrap.style.gap = "8px";
-        ButtonsWrap.style.marginTop = "8px";
-
-        // 攻撃ボタンを作成
+        /* ----- ★ 攻撃ボタンを作成 ★ ----- */
+        // 1. ボタン要素を作成
         const AttackButton = document.createElement("button");
-        AttackButton.classList.add("ButtonInfo","RedButton");
+        // 2. クラスを設定
+        AttackButton.classList.add("ButtonInfo", "RedButton");
+        // 3. ラベルを設定
         AttackButton.textContent = "攻撃";
 
-        // 敵デバフボタンを作成
+        /* ----- ★ 敵デバフボタンを作成 ★ ----- */
+        // 1. ボタン要素を作成
         const DebuffButton = document.createElement("button");
-        DebuffButton.classList.add("ButtonInfo","RedButton");
+        // 2. クラスを設定
+        DebuffButton.classList.add("ButtonInfo", "RedButton");
+        // 3. ラベルを設定
         DebuffButton.textContent = "デバフ";
 
-        // 自身バフボタンを作成
+        /* ----- ★ 自身バフボタンを作成 ★ ----- */
+        // 1. ボタン要素を作成
         const BuffButton = document.createElement("button");
-        BuffButton.classList.add("ButtonInfo","RedButton");
+        // 2. クラスを設定
+        BuffButton.classList.add("ButtonInfo", "RedButton");
+        // 3. ラベルを設定
         BuffButton.textContent = "バフ";
 
-        // ガードボタンを作成
+        /* ----- ★ ガードボタンを作成 ★ ----- */
+        // 1. ボタン要素を作成
         const GuardButton = document.createElement("button");
-        GuardButton.classList.add("ButtonInfo","RedButton");
+        // 2. クラスを設定
+        GuardButton.classList.add("ButtonInfo", "RedButton");
+        // 3. ラベルを設定
         GuardButton.textContent = "ガード";
 
-        // インストラクション要素を作成
+       /* ----- ★ 説明表示欄を作成 ★ ----- */
+       // 1. DIV要素作成
         const Instruction = document.createElement("div");
+        // 2. クラスを設定
         Instruction.className = "SmallGrey";
-        Instruction.textContent = "コマンドバトルテスト";
+        // 3. ラベルを設定
+        Instruction.textContent = "敵を倒せ!";
 
         // リザルト表示要素を作成
         const ResultText = document.createElement("div");
@@ -369,18 +430,15 @@ class QuestGame {
         ResultText.style.minHeight = "18px";
         ResultText.style.marginTop = "8px";
 
-        // ステータス表示（バフ／デバフ経過）要素を作成
-        const EffectStatus = document.createElement("div");
-        EffectStatus.className = "EffectStatus";
-        EffectStatus.style.fontSize = "12px";
-        EffectStatus.style.marginTop = "6px";
-        EffectStatus.textContent = Self.PlayerBuffTurns > 0 || Self.EnemyDebuffTurns > 0 ? `Buff:${Self.PlayerBuffTurns} Debuff:${Self.EnemyDebuffTurns}` : "";
-
-        // ボタン群をラップに追加
-        ButtonsWrap.appendChild(AttackButton);
-        ButtonsWrap.appendChild(DebuffButton);
-        ButtonsWrap.appendChild(BuffButton);
-        ButtonsWrap.appendChild(GuardButton);
+        /* ----- ★ DOM組み立て ★ ----- */
+        // 1. 攻撃ボタンをボタンラッパーに格納
+        ButtonsWrapeer.appendChild(AttackButton);
+        // 2. デバフボタンをボタンラッパーに格納
+        ButtonsWrapeer.appendChild(DebuffButton);
+        // 3. バフボタンをボタンラッパーに格納
+        ButtonsWrapeer.appendChild(BuffButton);
+        // 4. ガードボタンをボタンラッパーに格納
+        ButtonsWrapeer.appendChild(GuardButton);
 
         // ダイアログ表示を確実にする
         try { DialogBox.style.display = "flex"; } catch (E) {}
@@ -388,11 +446,10 @@ class QuestGame {
         // DOMへ追加
         try {
           DialogBox.appendChild(Canvas);
-          DialogBox.appendChild(StatWrap);
+          DialogBox.appendChild(StatWrapeer);
           DialogBox.appendChild(Instruction);
-          DialogBox.appendChild(ButtonsWrap);
+          DialogBox.appendChild(ButtonsWrapeer);
           DialogBox.appendChild(ResultText);
-          DialogBox.appendChild(EffectStatus);
         } catch (E) {
           console.error("[QuestGame] Append to DialogBox failed", E);
           SafeResolve(null);
@@ -622,6 +679,51 @@ class QuestGame {
         GuardButton.addEventListener("click", OnGuard);
         Self.Handlers.push({ el: GuardButton, type: "click", fn: OnGuard });
 
+        /**
+         * カード形式の情報表示を作成し、一定時間後にコールバック実行
+         * @param {string} CardText - カードに表示するテキスト
+         * @param {function} onComplete - 表示終了後に実行するコールバック
+         * @param {number} showTime - カード表示時間(ms)
+         */
+        function InfoCardCreate(CardText, onComplete, showTime = 1200) {
+          let Created;
+          try {
+            Created = this.CreateBackdropDialog();
+          } catch (E) {
+            console.error("[QuestGame] CreateBackdropDialog threw:", E);
+            if (typeof SafeResolve === "function") SafeResolve(null);
+            return;
+          }
+
+          const { Backdrop, DialogBox } = Created;
+
+          // 1. 表示用テキスト作成
+          const CardTextEl = document.createElement("p");
+          CardTextEl.textContent = CardText;
+          CardTextEl.style.fontSize = "18px";
+          CardTextEl.style.fontWeight = "700";
+          DialogBox.appendChild(CardTextEl);
+
+          // 2. テキスト更新タイマー（700msで「開始！」などを上書き）
+          const T1 = setTimeout(() => {
+            try { CardTextEl.textContent = "開始！"; } catch (E) {}
+          }, 700);
+          this.Timeouts.push(T1);
+
+          // 3. 表示終了後コールバック呼び出しタイマー
+          const T2 = setTimeout(() => {
+            try { CardTextEl.remove(); } catch (E) {}
+            try {
+              if (typeof onComplete === "function") onComplete(Backdrop, DialogBox);
+            } catch (E) {
+              console.error("[QuestGame] onComplete call failed:", E);
+              if (typeof SafeResolve === "function") SafeResolve(null);
+            }
+          }, showTime);
+          this.Timeouts.push(T2);
+        }
+
+
         // 敵ターン: 敵が反撃する処理
         function EnemyTurn() {
           try {
@@ -799,24 +901,24 @@ class QuestGame {
 
         }
       // 初期UIを作成してゲーム開始をスケジュールする
-      let Created;
-      try { Created = this.CreateBackdropDialog(); } catch (E) { console.error("[QuestGame] CreateBackdropDialog threw:", E); SafeResolve(null); return; }
-      const { Backdrop, DialogBox } = Created;
-      // 準備表示を作成
-      const ReadyText = document.createElement("p");
-      ReadyText.textContent = "よーい…";
-      ReadyText.style.fontSize = "18px";
-      ReadyText.style.fontWeight = "700";
-      DialogBox.appendChild(ReadyText);
-      // テキスト更新タイマー（700msで「開始！」へ）
-      const T1 = setTimeout(() => { try { ReadyText.textContent = "開始！"; } catch (E) {} }, 700);
-      this.Timeouts.push(T1);
-      // 実際のゲームUIを表示するタイマー（1200ms後）
-      const T2 = setTimeout(() => {
-        try { ReadyText.remove(); } catch (E) {}
-        try { BuildGameUI(Backdrop, DialogBox); } catch (E) { console.error("[QuestGame] BuildGameUI call failed:", E); SafeResolve(null); }
-      }, 1200);
-      this.Timeouts.push(T2);
+      this.InfoCardCreate("よーい…", (Backdrop, DialogBox) => {
+        // BuildGameUI を呼ぶ前に ReadyText を「開始！」に更新
+        const ReadyText = DialogBox.querySelector("p");
+        if (ReadyText) {
+          try { ReadyText.textContent = "開始！"; } catch (E) {}
+        }
+
+        // 少し待ってからゲームUIを表示（元の1200msに相当）
+        const T = setTimeout(() => {
+          try { if (ReadyText) ReadyText.remove(); } catch (E) {}
+          try { BuildGameUI(Backdrop, DialogBox); } catch (E) { 
+            console.error("[QuestGame] BuildGameUI call failed:", E); 
+            if (typeof SafeResolve === "function") SafeResolve(null);
+          }
+        }, 500); // InfoCardCreate 内で700msで「開始！」済みなので残り500msで合計1200ms
+        this.Timeouts.push(T);
+      });
+
     });
   } 
 } 
