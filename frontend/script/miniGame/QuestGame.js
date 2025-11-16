@@ -63,7 +63,6 @@ class QuestGame {
     return { Backdrop, DialogBox };
   }
 
-  // 敵スプライトをキャンバスへ描画する
 // 敵スプライトをキャンバスへ描画する
 DrawEnemy(Canvas, HealthRatio) {
   // Canvasの妥当性チェック
