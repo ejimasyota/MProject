@@ -901,7 +901,7 @@ class QuestGame {
 
         }
       // 初期UIを作成してゲーム開始をスケジュールする
-      this.InfoCardCreate("よーい…", (Backdrop, DialogBox) => {
+      InfoCardCreate("よーい…", (Backdrop, DialogBox) => {
         // BuildGameUI を呼ぶ前に ReadyText を「開始！」に更新
         const ReadyText = DialogBox.querySelector("p");
         if (ReadyText) {
