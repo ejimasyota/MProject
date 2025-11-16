@@ -916,6 +916,7 @@ function DisplaySelectButton(SelectArray) {
                 };
                 // 3. バックドロップを削除
                 if (SelectBackdrop) {
+                  console.log("ee")
                    SelectBackdrop.remove();
                 }
             }
