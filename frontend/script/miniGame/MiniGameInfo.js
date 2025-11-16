@@ -58,9 +58,7 @@ async function RunMiniGame(StoryId, ResultObject) {
    * --------------------------------------------*/
   /* 1. インスタンスや振る舞いが存在しない場合 */
   if (!GameInstance || typeof GameInstance.GameRun !== "function") {
-    // 1. デバッグログ
-    console.error("ミニゲームが run() を実装していません。");
-    // 2. 呼び出し元にNULLを返す
+    // 1. 呼び出し元にNULLを返す
     return Promise.resolve(null);
   }
 
@@ -78,7 +76,7 @@ async function RunMiniGame(StoryId, ResultObject) {
   /* 3. 例外処理 */
   } catch (error) {
     // 1. デバッグログ
-    console.error("ミニゲーム実行中に例外:", error);
+    console.error("ミニゲーム実行中に例外 : ", error);
     // 2. 呼び出し元にNULLを返す
     return Promise.resolve(null);
   }

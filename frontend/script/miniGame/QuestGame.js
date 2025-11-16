@@ -1,73 +1,62 @@
-/* QuestGame.js - 完全版（4コマンド対応 / パスカルケース + ターン制 + 1行コメント） */
+/* =========================================================
+ * ドラクエを意識した対戦画面
+ * =========================================================*/
 class QuestGame {
-  // コンストラクタ: 初期設定を行う
-  constructor(Options = {}) {
-    // 外部オプションを保存
-    this.Options = Options;
-    // プレイヤーの最大HP
+ /* --------------------------------------------
+  *  1. コンストラクタ
+  * --------------------------------------------*/
+  constructor() {
+    // 1. プレイヤーの最大HP
     this.PlayerMaxHp = 10;
-    // 敵の最大HP
+    // 2. 敵の最大HP
     this.EnemyMaxHp = 10;
-    // 現在のプレイヤーHP
+    // 3. 現在のプレイヤーHP
     this.PlayerHp = this.PlayerMaxHp;
-    // 現在の敵HP
+    // 4. 現在の敵HP
     this.EnemyHp = this.EnemyMaxHp;
-    // 基本プレイヤー攻撃力
+    // 5. 基本プレイヤー攻撃力
     this.PlayerBaseAttack = 3;
-    // 基本敵攻撃力
+    // 6. 基本敵攻撃力
     this.EnemyBaseAttack = 2;
-    // 現在の敵攻撃力（デバフで変化）
+    // 7. 現在の敵攻撃力
     this.EnemyCurrentAttack = this.EnemyBaseAttack;
-    // 現在のプレイヤー攻撃力（バフで変化）
+    // 8. 現在のプレイヤー攻撃力
     this.PlayerCurrentAttack = this.PlayerBaseAttack;
-    // デバフ残ターン（敵の攻撃力減少ターン数）
+    // 9. デバフ残ターン
     this.EnemyDebuffTurns = 0;
-    // バフ残ターン（プレイヤーの攻撃力上昇ターン数）
+    // 10.バフ残ターン
     this.PlayerBuffTurns = 0;
-    // ガード状態（次の被ダメージを軽減する）
+    // 11.ガード状態
     this.PlayerGuardActive = false;
-    // 使用するインターバルID（保持のみ）
+    // 12.使用するインターバルID
     this.IntervalId = null;
-    // タイマーID配列（後で一括クリア）
+    // 13.タイマーID配列
     this.Timeouts = [];
-    // イベントハンドラ記録配列（後で一括解除）
+    // 14.イベントハンドラ記録配列
     this.Handlers = [];
-    // 現在のターン状態（'player' または 'enemy'）
+    // 15.現在のターン状態
     this.Turn = "player";
   }
 
-  // バックドロップとダイアログを作成して返す
+ /* --------------------------------------------
+  *  2. ダイアログ作成
+  * --------------------------------------------*/
   CreateBackdropDialog() {
-    // 一意のQidを作成
-    const Qid = `q_${Date.now()}_${Math.floor(Math.random() * 10000)}`;
-    // バックドロップ要素を作成
+    /* 1. バックドロップ作成 */
     const Backdrop = document.createElement("div");
+    // 2. クラス設定
     Backdrop.className = "ConfirmContainer";
-    Backdrop.dataset.qid = Qid;
-    Backdrop.style.position = "fixed";
-    Backdrop.style.left = 0;
-    Backdrop.style.top = 0;
-    Backdrop.style.right = 0;
-    Backdrop.style.bottom = 0;
-    Backdrop.style.display = "flex";
-    Backdrop.style.alignItems = "center";
-    Backdrop.style.justifyContent = "center";
-    Backdrop.style.zIndex = 9999;
-    Backdrop.style.background = "rgba(0,0,0,0.6)";
-    // ダイアログボックス要素を作成
+  
+    /* 2. ダイアログ作成 */
+    // 1. DIV要素作成
     const DialogBox = document.createElement("div");
+    // 2. クラス名設定
     DialogBox.className = "DialogBox";
-    DialogBox.dataset.qid = Qid;
-    DialogBox.style.minWidth = "360px";
-    DialogBox.style.gap = "12px";
-    DialogBox.style.padding = "16px";
-    DialogBox.style.background = "#fff";
-    DialogBox.style.borderRadius = "8px";
-    DialogBox.style.display = "flex";
-    DialogBox.style.flexDirection = "column";
-    DialogBox.style.alignItems = "center";
-    // DOMに追加
+
+    /* 3. DOM構築 */
+    // 1. バックドロップにダイアログを格納
     Backdrop.appendChild(DialogBox);
+    // 2. バックドロップをボディに格納
     document.body.appendChild(Backdrop);
     // 作成要素を返す
     return { Backdrop, DialogBox };
