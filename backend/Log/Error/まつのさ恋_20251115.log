@@ -1,0 +1,60 @@
+[2025-11-15 02:20:37] プレイヤー名登録エラー | error : SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "playerinfo_pkey"
+DETAIL:  Key (playerid)=(6b5b94f1-de06-4768-8c51-0b7e22963654) already exists.
+[2025-11-15 02:20:39] プレイヤー名登録エラー | error : SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "playerinfo_pkey"
+DETAIL:  Key (playerid)=(6b5b94f1-de06-4768-8c51-0b7e22963654) already exists.
+[2025-11-15 02:34:58] プレイヤー名登録エラー | error : SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "playerinfo_pkey"
+DETAIL:  Key (playerid)=(6b5b94f1-de06-4768-8c51-0b7e22963654) already exists.
+[2025-11-15 02:34:59] プレイヤー名登録エラー | error : SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "playerinfo_pkey"
+DETAIL:  Key (playerid)=(6b5b94f1-de06-4768-8c51-0b7e22963654) already exists.
+[2025-11-15 02:47:51] プレイヤー名登録エラー | error : SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "playerinfo_pkey"
+DETAIL:  Key (playerid)=(6b5b94f1-de06-4768-8c51-0b7e22963654) already exists.
+[2025-11-15 02:47:52] プレイヤー名登録エラー | error : SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "playerinfo_pkey"
+DETAIL:  Key (playerid)=(6b5b94f1-de06-4768-8c51-0b7e22963654) already exists.
+[2025-11-15 03:02:11] プレイヤー名登録エラー | error : SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "playerinfo_pkey"
+DETAIL:  Key (playerid)=(6b5b94f1-de06-4768-8c51-0b7e22963654) already exists.
+[2025-11-15 03:02:12] プレイヤー名登録エラー | error : SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "playerinfo_pkey"
+DETAIL:  Key (playerid)=(6b5b94f1-de06-4768-8c51-0b7e22963654) already exists.
+[2025-11-15 04:06:52] プレイヤー名登録エラー | error : SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "playerinfo_pkey"
+DETAIL:  Key (playerid)=(6b5b94f1-de06-4768-8c51-0b7e22963654) already exists.
+[2025-11-15 04:20:50] プレイヤー名登録エラー | error : SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "playerinfo_pkey"
+DETAIL:  Key (playerid)=(6b5b94f1-de06-4768-8c51-0b7e22963654) already exists.
+[2025-11-15 04:20:51] プレイヤー名登録エラー | error : SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "playerinfo_pkey"
+DETAIL:  Key (playerid)=(6b5b94f1-de06-4768-8c51-0b7e22963654) already exists.
+[2025-11-15 04:20:51] プレイヤー名登録エラー | error : SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "playerinfo_pkey"
+DETAIL:  Key (playerid)=(6b5b94f1-de06-4768-8c51-0b7e22963654) already exists.
+[2025-11-15 04:20:52] プレイヤー名登録エラー | error : SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "playerinfo_pkey"
+DETAIL:  Key (playerid)=(6b5b94f1-de06-4768-8c51-0b7e22963654) already exists.
+[2025-11-15 04:20:52] プレイヤー名登録エラー | error : SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "playerinfo_pkey"
+DETAIL:  Key (playerid)=(6b5b94f1-de06-4768-8c51-0b7e22963654) already exists.
+[2025-11-15 04:20:52] プレイヤー名登録エラー | error : SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "playerinfo_pkey"
+DETAIL:  Key (playerid)=(6b5b94f1-de06-4768-8c51-0b7e22963654) already exists.
+[2025-11-15 04:20:53] プレイヤー名登録エラー | error : SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "playerinfo_pkey"
+DETAIL:  Key (playerid)=(6b5b94f1-de06-4768-8c51-0b7e22963654) already exists.
+[2025-11-15 04:51:42] プレイヤー名登録エラー | error : SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "playerinfo_pkey"
+DETAIL:  Key (playerid)=(6b5b94f1-de06-4768-8c51-0b7e22963654) already exists.
+[2025-11-15 04:58:03] UpdateSaveDataController エラー | error : SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at or near "WHERE"
+LINE 5:             WHERE logid = $3
+                    ^
+[2025-11-15 04:58:11] UpdateSaveDataController エラー | error : SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at or near "WHERE"
+LINE 5:             WHERE logid = $3
+                    ^
+[2025-11-15 06:01:29] プレイヤー名登録エラー | error : SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "playerinfo_pkey"
+DETAIL:  Key (playerid)=(6b5b94f1-de06-4768-8c51-0b7e22963654) already exists.
+[2025-11-15 06:01:46] プレイヤー名登録エラー | error : SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "playerinfo_pkey"
+DETAIL:  Key (playerid)=(6b5b94f1-de06-4768-8c51-0b7e22963654) already exists.
+[2025-11-15 06:01:47] プレイヤー名登録エラー | error : SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "playerinfo_pkey"
+DETAIL:  Key (playerid)=(6b5b94f1-de06-4768-8c51-0b7e22963654) already exists.
+[2025-11-15 06:34:27] プレイヤー名登録エラー | error : SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "playerinfo_pkey"
+DETAIL:  Key (playerid)=(6b5b94f1-de06-4768-8c51-0b7e22963654) already exists.
+[2025-11-15 07:00:12] プレイヤー名登録エラー | error : SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "playerinfo_pkey"
+DETAIL:  Key (playerid)=(6b5b94f1-de06-4768-8c51-0b7e22963654) already exists.
+[2025-11-15 07:03:56] プレイヤー名登録エラー | error : SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "playerinfo_pkey"
+DETAIL:  Key (playerid)=(6b5b94f1-de06-4768-8c51-0b7e22963654) already exists.
+[2025-11-15 09:56:38] プレイヤー名登録エラー | error : SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "playerinfo_pkey"
+DETAIL:  Key (playerid)=(6b5b94f1-de06-4768-8c51-0b7e22963654) already exists.
+[2025-11-15 10:54:56] プレイヤー名登録エラー | error : SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "playerinfo_pkey"
+DETAIL:  Key (playerid)=(6b5b94f1-de06-4768-8c51-0b7e22963654) already exists.
+[2025-11-15 10:54:57] プレイヤー名登録エラー | error : SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "playerinfo_pkey"
+DETAIL:  Key (playerid)=(6b5b94f1-de06-4768-8c51-0b7e22963654) already exists.
+[2025-11-15 10:55:38] プレイヤー名登録エラー | error : SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "playerinfo_pkey"
+DETAIL:  Key (playerid)=(6b5b94f1-de06-4768-8c51-0b7e22963654) already exists.
