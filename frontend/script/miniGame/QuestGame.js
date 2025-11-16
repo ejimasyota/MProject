@@ -682,6 +682,10 @@ class QuestGame {
 
             // ゲーム用のバックドロップを確実に削除（もし残っていれば）
             try { if (Backdrop && Backdrop.parentNode) Backdrop.parentNode.removeChild(Backdrop); } catch (E) {}
+            // SelectBackdrop が残っている可能性があるので先に削除を試みる
+            try { if (typeof SelectBackdrop !== "undefined" && SelectBackdrop && SelectBackdrop.parentNode) SelectBackdrop.parentNode.removeChild(SelectBackdrop); } catch (E) {}
+            // 同様に選択ダイアログ変数があれば削除
+            try { if (typeof SelectDialog !== "undefined" && SelectDialog && SelectDialog.parentNode) SelectDialog.parentNode.removeChild(SelectDialog); } catch (E) {}
 
             // 結果表示用のバックドロップとダイアログを作成
             const { Backdrop: ResultBackdrop, DialogBox: ResultCard } = Self.CreateBackdropDialog();
@@ -711,41 +715,53 @@ class QuestGame {
               try { if (el && el.parentNode) el.parentNode.removeChild(el); } catch (E) {}
             };
 
-            // 明確に ConfirmContainer を探して削除するユーティリティ
-            const removeConfirmContainer = () => {
+            // 明確に ConfirmContainer / SelectBackdrop を探して削除するユーティリティ
+            const removeConfirmAndSelect = () => {
               try {
-                // 1) まず変数として存在するケース（スコープ内／外で定義されている可能性）
+                // 1) 変数として存在するケース（スコープ内／外で定義されている可能性）
                 try { if (typeof ConfirmContainer !== "undefined" && ConfirmContainer) safeRemove(ConfirmContainer); } catch (E) {}
+                try { if (typeof SelectBackdrop !== "undefined" && SelectBackdrop) safeRemove(SelectBackdrop); } catch (E) {}
+                try { if (typeof SelectDialog !== "undefined" && SelectDialog) safeRemove(SelectDialog); } catch (E) {}
 
-                // 2) 次にクラス名・ID・data 属性で DOM を検索（優先順）
-                const byClass = document.querySelector(".ConfirmContainer");
-                if (byClass) { safeRemove(byClass); return true; }
+                // 2) ConfirmContainer をクラス名・ID・data 属性で検索（優先順）
+                const byConfirmClass = document.querySelector(".ConfirmContainer");
+                if (byConfirmClass) { safeRemove(byConfirmClass); /* continue to also try select */ }
 
-                const byId = document.getElementById("ConfirmContainer");
-                if (byId) { safeRemove(byId); return true; }
+                const byConfirmId = document.getElementById("ConfirmContainer");
+                if (byConfirmId) { safeRemove(byConfirmId); }
 
-                const byData = document.querySelector("[data-confirm='true']");
-                if (byData) { safeRemove(byData); return true; }
+                const byConfirmData = document.querySelector("[data-confirm='true']");
+                if (byConfirmData) { safeRemove(byConfirmData); }
 
-                // 3) 万が一見つからなければ、既知のミニゲーム変数名を試す（最後の手段）
+                // 3) SelectBackdrop をクラス名・ID・data 属性で検索（優先順）
+                const bySelectClass = document.querySelector(".SelectBackdrop");
+                if (bySelectClass) { safeRemove(bySelectClass); }
+
+                const bySelectId = document.getElementById("SelectBackdrop");
+                if (bySelectId) { safeRemove(bySelectId); }
+
+                const bySelectData = document.querySelector("[data-select='true']");
+                if (bySelectData) { safeRemove(bySelectData); }
+
+                // 4) 最後の手段で既知のミニゲーム変数名を試す（副次的）
                 try { if (typeof MiniBackdrop !== "undefined" && MiniBackdrop) safeRemove(MiniBackdrop); } catch (E) {}
                 try { if (typeof MiniDialog !== "undefined" && MiniDialog) safeRemove(MiniDialog); } catch (E) {}
 
-                return false;
+                return true;
               } catch (E) {
-                console.error("[QuestGame] removeConfirmContainer error:", E);
+                console.error("[QuestGame] removeConfirmAndSelect error:", E);
                 return false;
               }
             };
 
-            // 閉じる時の処理: 結果ダイアログ削除＋ConfirmContainer削除＋Promise解決
+            // 閉じる時の処理: 結果ダイアログ削除＋Confirm/Select削除＋Promise解決
             const OnClose = () => {
               try {
                 // 結果ダイアログ本体を削除
                 safeRemove(ResultBackdrop);
 
-                // 明示的に ConfirmContainer を削除（最優先）
-                removeConfirmContainer();
+                // 明示的に ConfirmContainer と SelectBackdrop を削除（最優先）
+                removeConfirmAndSelect();
 
                 // 互換性のため、DialogBox 変数が残っていれば削除（ただし無差別に全 Dialog を消さない）
                 try { if (typeof DialogBox !== "undefined" && DialogBox) safeRemove(DialogBox); } catch (E) {}
@@ -779,6 +795,7 @@ class QuestGame {
             SafeResolve(null);
           }
         }
+
 
         }
       // 初期UIを作成してゲーム開始をスケジュールする
