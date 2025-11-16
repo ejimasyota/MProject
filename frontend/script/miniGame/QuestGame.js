@@ -64,125 +64,80 @@ class QuestGame {
   }
 
   // 敵スプライトをキャンバスへ描画する
-  DrawEnemy(Canvas, HealthRatio) {
-    // Canvasの妥当性チェック
-    if (!Canvas || !Canvas.getContext) {
-      console.error("[QuestGame] Canvas invalid", Canvas);
-      return;
-    }
-    // 2Dコンテキストを取得
-    const Ctx = Canvas.getContext("2d");
-    if (!Ctx) {
-      console.error("[QuestGame] Failed to get 2d context");
-      return;
-    }
-    // 描画スケールを設定
-    const Scale = 4;
-    // キャンバス幅と高さを取得
-    const W = Canvas.width;
-    const H = Canvas.height;
-    // クリア
-    Ctx.clearRect(0, 0, W, H);
-    // ピクセルを滑らかにしない
-    Ctx.imageSmoothingEnabled = false;
-
-    // HPによって色を変える
-    const HpColor =
-      HealthRatio > 0.6 ? "#e74c3c" : HealthRatio > 0.3 ? "#f39c12" : "#c0392b";
-
-    // ---------- 画像読み込みの堅牢化（複数候補を順に試す） ----------
-    // ユーザー指定パス（そのまま）
-    const CandidatePaths = [];
-
-    // 1) 最初にあなたが使っている相対パス候補を追加（そのまま）
-    CandidatePaths.push("../../asetts/img/game/quest/Quest-Img-1.png");
-
-    // 2) ルート（絶対）からの候補（環境によってはここに置くことが多い）
-    CandidatePaths.push("/frontend/asetts/img/game/quest/Quest-Img-1.png");
-    CandidatePaths.push("/asetts/img/game/quest/Quest-Img-1.png");
-    CandidatePaths.push("/frontend/assets/img/game/quest/Quest-Img-1.png");
-    CandidatePaths.push("/assets/img/game/quest/Quest-Img-1.png");
-
-    // 3) 拡張子のバリエーション（.png か .JPG か .png.JPG の可能性）
-    CandidatePaths.push("../../asetts/img/game/quest/Quest-Img-1.JPG");
-    CandidatePaths.push("../../asetts/img/game/quest/Quest-Img-1.png.JPG");
-    CandidatePaths.push("/frontend/asetts/img/game/quest/Quest-Img-1.JPG");
-
-    // 4) 最後に、現在のページ URL を基準にした絶対 URL（念のため）
-    try {
-      const base = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, "/");
-      CandidatePaths.push(base + "frontend/asetts/img/game/quest/Quest-Img-1.png");
-    } catch (e) {}
-
-    // 画像の試行読み込みを行う関数（再試行ロジック）
-    let attemptIndex = 0;
-    const TryLoad = () => {
-      if (attemptIndex >= CandidatePaths.length) {
-        // すべて失敗した場合はドット絵でフォールバック描画
-        console.warn("[QuestGame] All image load attempts failed, falling back to pixel sprite");
-        // フォールバック：既存のドット絵を描く（元のLayoutを使用）
-        const Layout = [
-          "  XXX  ",
-          " XXXXX ",
-          "XXXXXXX",
-          "X XX XX",
-          "XXXXXXX",
-          " X   X ",
-          "  X X  ",
-        ];
-        const Pixel = (x, y, Color) => {
-          Ctx.fillStyle = Color;
-          Ctx.fillRect(x * Scale, y * Scale, Scale, Scale);
-        };
-        const OffsetX = 1;
-        const OffsetY = 1;
-        for (let Y = 0; Y < Layout.length; Y++) {
-          for (let X = 0; X < Layout[Y].length; X++) {
-            const Ch = Layout[Y][X];
-            if (Ch === "X") Pixel(OffsetX + X, OffsetY + Y, HpColor);
-            else Pixel(OffsetX + X, OffsetY + Y, "#111");
-          }
-        }
-        return;
-      }
-
-      const Candidate = CandidatePaths[attemptIndex++];
-      const Img = new Image();
-
-      // 例：キャッシュ強制回避が必要ならクエリを付ける (開発中のみ)
-      // Img.src = Candidate + '?_=' + Date.now();
-
-      Img.onload = () => {
-        try {
-          Ctx.clearRect(0, 0, W, H);
-          // 画像をキャンバスに描画（アスペクト比が違うなら引き延ばされます）
-          Ctx.drawImage(Img, 0, 0, W, H);
-          // HPによる色付け（乗算風に単純に上から乗せる）
-          Ctx.globalCompositeOperation = "source-atop";
-          Ctx.fillStyle = HpColor;
-          Ctx.fillRect(0, 0, W, H);
-          // ブレンドモードを戻す
-          Ctx.globalCompositeOperation = "source-over";
-        } catch (e) {
-          console.error("[QuestGame] DrawEnemy draw error:", e);
-        }
-      };
-
-      Img.onerror = (e) => {
-        // 読み込み失敗 → 次の候補を試す
-        console.warn(`[QuestGame] image load failed for: ${Candidate}`, e);
-        // 少し遅延して次を試す（ブラウザのエラー処理回避）
-        setTimeout(TryLoad, 10);
-      };
-
-      // 最後に src をセットして読み込みを開始
-      Img.src = Candidate;
-    };
-
-    // 試行開始
-    TryLoad();
+// 敵スプライトをキャンバスへ描画する
+DrawEnemy(Canvas, HealthRatio) {
+  // Canvasの妥当性チェック
+  if (!Canvas || !Canvas.getContext) {
+    console.error("[QuestGame] Canvas invalid", Canvas);
+    return;
   }
+  // 2Dコンテキストを取得
+  const Ctx = Canvas.getContext("2d");
+  if (!Ctx) {
+    console.error("[QuestGame] Failed to get 2d context");
+    return;
+  }
+  // 描画スケールを設定
+  const Scale = 4;
+  // キャンバス幅と高さを取得
+  const W = Canvas.width;
+  const H = Canvas.height;
+  // クリア
+  Ctx.clearRect(0, 0, W, H);
+  // ピクセルを滑らかにしない
+  Ctx.imageSmoothingEnabled = false;
 
+  // HPによって色を変える
+  const HpColor =
+    HealthRatio > 0.6 ? "#e74c3c" : HealthRatio > 0.3 ? "#f39c12" : "#c0392b";
+
+  // 敵画像の読み込み（既知の確実なパスを使用）
+  const Img = new Image();
+  Img.src = "/frontend/asetts/img/game/quest/Quest-Img-1.png";
+
+  Img.onload = () => {
+    try {
+      Ctx.clearRect(0, 0, W, H);
+      // 画像をキャンバスに描画（アスペクト比が違う場合は引き延ばされます）
+      Ctx.drawImage(Img, 0, 0, W, H);
+      // HPによる色付け（乗算風に上から塗る）
+      Ctx.globalCompositeOperation = "source-atop";
+      Ctx.fillStyle = HpColor;
+      Ctx.fillRect(0, 0, W, H);
+      // ブレンドモードを戻す
+      Ctx.globalCompositeOperation = "source-over";
+    } catch (e) {
+      console.error("[QuestGame] DrawEnemy draw error:", e);
+    }
+  };
+
+  // 読み込み失敗時はシンプルなドット絵でフォールバック
+  Img.onerror = (e) => {
+    console.error("[QuestGame] Enemy image failed to load", e);
+    const Layout = [
+      "  XXX  ",
+      " XXXXX ",
+      "XXXXXXX",
+      "X XX XX",
+      "XXXXXXX",
+      " X   X ",
+      "  X X  ",
+    ];
+    const Pixel = (x, y, Color) => {
+      Ctx.fillStyle = Color;
+      Ctx.fillRect(x * Scale, y * Scale, Scale, Scale);
+    };
+    const OffsetX = 1;
+    const OffsetY = 1;
+    for (let Y = 0; Y < Layout.length; Y++) {
+      for (let X = 0; X < Layout[Y].length; X++) {
+        const Ch = Layout[Y][X];
+        if (Ch === "X") Pixel(OffsetX + X, OffsetY + Y, HpColor);
+        else Pixel(OffsetX + X, OffsetY + Y, "#111");
+      }
+    }
+  };
+}
 
 
   // タイマーとイベントハンドラをすべて解除する
