@@ -15,7 +15,7 @@ class QuestGame {
     // 4. 現在の敵HP
     this.EnemyHp = this.EnemyMaxHp;
     // 5. 基本プレイヤー攻撃力
-    this.PlayerBaseAttack = 3;
+    this.PlayerBaseAttack = 2;
     // 6. 基本敵攻撃力
     this.EnemyBaseAttack = 2;
     // 7. 現在の敵攻撃力
@@ -416,13 +416,13 @@ class QuestGame {
         // 3. ラベルを設定
         GuardButton.textContent = "ガード";
 
-       /* ----- ★ 説明表示欄を作成 ★ ----- */
-       // 1. DIV要素作成
+        /* ----- ★ 説明欄を作成 ★ ----- */
+        // 1. DIV要素作成
         const Instruction = document.createElement("div");
         // 2. クラスを設定
         Instruction.className = "SmallGrey";
         // 3. ラベルを設定
-        Instruction.textContent = "敵を倒せ!";
+        Instruction.textContent = "敵を倒せ！";
 
         // リザルト表示要素を作成
         const ResultText = document.createElement("div");
@@ -679,51 +679,6 @@ class QuestGame {
         GuardButton.addEventListener("click", OnGuard);
         Self.Handlers.push({ el: GuardButton, type: "click", fn: OnGuard });
 
-        /**
-         * カード形式の情報表示を作成し、一定時間後にコールバック実行
-         * @param {string} CardText - カードに表示するテキスト
-         * @param {function} onComplete - 表示終了後に実行するコールバック
-         * @param {number} showTime - カード表示時間(ms)
-         */
-        function InfoCardCreate(CardText, onComplete, showTime = 1200) {
-          let Created;
-          try {
-            Created = this.CreateBackdropDialog();
-          } catch (E) {
-            console.error("[QuestGame] CreateBackdropDialog threw:", E);
-            if (typeof SafeResolve === "function") SafeResolve(null);
-            return;
-          }
-
-          const { Backdrop, DialogBox } = Created;
-
-          // 1. 表示用テキスト作成
-          const CardTextEl = document.createElement("p");
-          CardTextEl.textContent = CardText;
-          CardTextEl.style.fontSize = "18px";
-          CardTextEl.style.fontWeight = "700";
-          DialogBox.appendChild(CardTextEl);
-
-          // 2. テキスト更新タイマー（700msで「開始！」などを上書き）
-          const T1 = setTimeout(() => {
-            try { CardTextEl.textContent = "開始！"; } catch (E) {}
-          }, 700);
-          this.Timeouts.push(T1);
-
-          // 3. 表示終了後コールバック呼び出しタイマー
-          const T2 = setTimeout(() => {
-            try { CardTextEl.remove(); } catch (E) {}
-            try {
-              if (typeof onComplete === "function") onComplete(Backdrop, DialogBox);
-            } catch (E) {
-              console.error("[QuestGame] onComplete call failed:", E);
-              if (typeof SafeResolve === "function") SafeResolve(null);
-            }
-          }, showTime);
-          this.Timeouts.push(T2);
-        }
-
-
         // 敵ターン: 敵が反撃する処理
         function EnemyTurn() {
           try {
@@ -901,24 +856,24 @@ class QuestGame {
 
         }
       // 初期UIを作成してゲーム開始をスケジュールする
-      InfoCardCreate("よーい…", (Backdrop, DialogBox) => {
-        // BuildGameUI を呼ぶ前に ReadyText を「開始！」に更新
-        const ReadyText = DialogBox.querySelector("p");
-        if (ReadyText) {
-          try { ReadyText.textContent = "開始！"; } catch (E) {}
-        }
-
-        // 少し待ってからゲームUIを表示（元の1200msに相当）
-        const T = setTimeout(() => {
-          try { if (ReadyText) ReadyText.remove(); } catch (E) {}
-          try { BuildGameUI(Backdrop, DialogBox); } catch (E) { 
-            console.error("[QuestGame] BuildGameUI call failed:", E); 
-            if (typeof SafeResolve === "function") SafeResolve(null);
-          }
-        }, 500); // InfoCardCreate 内で700msで「開始！」済みなので残り500msで合計1200ms
-        this.Timeouts.push(T);
-      });
-
+      let Created;
+      try { Created = this.CreateBackdropDialog(); } catch (E) { console.error("[QuestGame] CreateBackdropDialog threw:", E); SafeResolve(null); return; }
+      const { Backdrop, DialogBox } = Created;
+      // 準備表示を作成
+      const ReadyText = document.createElement("p");
+      ReadyText.textContent = "よーい…";
+      ReadyText.style.fontSize = "18px";
+      ReadyText.style.fontWeight = "700";
+      DialogBox.appendChild(ReadyText);
+      // テキスト更新タイマー（700msで「開始！」へ）
+      const T1 = setTimeout(() => { try { ReadyText.textContent = "開始！"; } catch (E) {} }, 700);
+      this.Timeouts.push(T1);
+      // 実際のゲームUIを表示するタイマー（1200ms後）
+      const T2 = setTimeout(() => {
+        try { ReadyText.remove(); } catch (E) {}
+        try { BuildGameUI(Backdrop, DialogBox); } catch (E) { console.error("[QuestGame] BuildGameUI call failed:", E); SafeResolve(null); }
+      }, 1200);
+      this.Timeouts.push(T2);
     });
   } 
 } 
