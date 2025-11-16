@@ -296,7 +296,7 @@ class QuestGame {
 
         const eName = document.createElement("span");
         eName.classList.add("StatText");
-        eName.textContent = "Enemy";
+        eName.textContent = "敵恵島";
 
         const eLabel = document.createElement("span");
         eLabel.classList.add("SmallGrey");
@@ -520,7 +520,7 @@ class QuestGame {
             // 表示更新
             UpdateHpDisplays();
             // 結果テキスト表示
-            ResultText.textContent = `攻撃！ -${Damage}`;
+            ResultText.textContent = `攻撃 敵恵島に${Damage}ダメージ`;
             // 一時テキストクリアのタイマーを追加
             const TempTimeout = setTimeout(()=>{ try{ ResultText.textContent = ""; }catch(e){} }, 400);
             Self.Timeouts.push(TempTimeout);
@@ -551,7 +551,7 @@ class QuestGame {
             Self.EnemyCurrentAttack = Math.max(1, Self.EnemyBaseAttack - DebuffAmount);
             // 表示更新
             UpdateEffectStatus();
-            ResultText.textContent = `敵の攻撃力を-${DebuffAmount}（${DebuffDuration}ターン）`;
+            ResultText.textContent = `敵恵島の攻撃力を-${DebuffAmount}（${DebuffDuration}ターン）`;
             const TempTimeout = setTimeout(()=>{ try{ ResultText.textContent = ""; }catch(e){} }, 600);
             Self.Timeouts.push(TempTimeout);
             // 敵の反撃タイマーをセット
@@ -598,7 +598,7 @@ class QuestGame {
             // ガードを有効化（次の被ダメを軽減する）
             Self.PlayerGuardActive = true;
             // 表示更新
-            ResultText.textContent = "ガード！ 次の被ダメ軽減";
+            ResultText.textContent = "ガードをした。被ダメージ軽減";
             const TempTimeout = setTimeout(()=>{ try{ ResultText.textContent = ""; }catch(e){} }, 600);
             Self.Timeouts.push(TempTimeout);
             // 敵の反撃タイマーをセット
@@ -640,7 +640,7 @@ class QuestGame {
               // プレイヤーHP表示を更新
               UpdateHpDisplays();
               // 被弾テキストを表示
-              ResultText.textContent = `被弾 -${DamageTaken}`;
+              ResultText.textContent = `みぞおちを殴られた。 -${DamageTaken}ダメージを受けた`;
               const TempTimeout2 = setTimeout(()=>{ try{ ResultText.textContent = ""; }catch(e){} }, 400);
               Self.Timeouts.push(TempTimeout2);
               // プレイヤーが倒れたら終了
