@@ -92,6 +92,21 @@ class QuestGame {
     const HpColor =
       HealthRatio > 0.6 ? "#e74c3c" : HealthRatio > 0.3 ? "#f39c12" : "#c0392b";
 
+    // HEX -> RGBA 変換ユーティリティ（アルファ指定）
+    const HexToRgba = (hex, alpha) => {
+      let h = (hex || "").replace("#", "");
+      if (h.length === 3) {
+        h = h.split("").map((c) => c + c).join("");
+      }
+      const r = parseInt(h.slice(0, 2), 16) || 0;
+      const g = parseInt(h.slice(2, 4), 16) || 0;
+      const b = parseInt(h.slice(4, 6), 16) || 0;
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    };
+
+    // 乗せる色（半透明）
+    const OverlayColor = HexToRgba(HpColor, 0.5);
+
     // 敵画像の読み込み（既知の確実なパスを使用）
     const Img = new Image();
     Img.src = "/frontend/asetts/img/game/quest/Quest-Img-1.png";
@@ -101,9 +116,9 @@ class QuestGame {
         Ctx.clearRect(0, 0, W, H);
         // 画像をキャンバスに描画（アスペクト比が違う場合は引き延ばされます）
         Ctx.drawImage(Img, 0, 0, W, H);
-        // HPによる色付け（乗算風に上から塗る）
+        // HPによる色付け（半透明のオーバーレイを乗せる）
         Ctx.globalCompositeOperation = "source-atop";
-        Ctx.fillStyle = HpColor;
+        Ctx.fillStyle = OverlayColor;
         Ctx.fillRect(0, 0, W, H);
         // ブレンドモードを戻す
         Ctx.globalCompositeOperation = "source-over";
@@ -112,33 +127,13 @@ class QuestGame {
       }
     };
 
-    // 読み込み失敗時はシンプルなドット絵でフォールバック
+    // 読み込み失敗時は何もしない（ドット絵フォールバックを削除）
     Img.onerror = (e) => {
       console.error("[QuestGame] Enemy image failed to load", e);
-      const Layout = [
-        "  XXX  ",
-        " XXXXX ",
-        "XXXXXXX",
-        "X XX XX",
-        "XXXXXXX",
-        " X   X ",
-        "  X X  ",
-      ];
-      const Pixel = (x, y, Color) => {
-        Ctx.fillStyle = Color;
-        Ctx.fillRect(x * Scale, y * Scale, Scale, Scale);
-      };
-      const OffsetX = 1;
-      const OffsetY = 1;
-      for (let Y = 0; Y < Layout.length; Y++) {
-        for (let X = 0; X < Layout[Y].length; X++) {
-          const Ch = Layout[Y][X];
-          if (Ch === "X") Pixel(OffsetX + X, OffsetY + Y, HpColor);
-          else Pixel(OffsetX + X, OffsetY + Y, "#111");
-        }
-      }
+      // フォールバック描画は不要とのことなので何も描かない
     };
   }
+
 
 
   // タイマーとイベントハンドラをすべて解除する
