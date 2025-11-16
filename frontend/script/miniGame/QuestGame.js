@@ -255,7 +255,7 @@ class QuestGame {
 
         const pName = document.createElement("span");
         pName.classList.add("StatText");
-        pName.textContent = "Player";
+        pName.textContent = `${sessionStorage.getItem("PlayerName")}`;
 
         const pLabel = document.createElement("span");
         pLabel.classList.add("SmallGrey");
@@ -361,7 +361,7 @@ class QuestGame {
         // インストラクション要素を作成
         const Instruction = document.createElement("div");
         Instruction.className = "SmallGrey";
-        Instruction.textContent = "コマンドを選択して敵を倒そう！ デバフは敵の攻撃力を下げ、バフは自分の攻撃力を上げる。ガードは次の被ダメを軽減する。";
+        Instruction.textContent = "コマンドバトルテスト";
 
         // リザルト表示要素を作成
         const ResultText = document.createElement("div");
@@ -700,13 +700,13 @@ class QuestGame {
             // 詳細メッセージ要素を作成
             const Detail = document.createElement("div");
             Detail.className = "SmallGrey";
-            Detail.textContent = WinFlag ? "おめでとう！" : "また挑戦しよう...";
+            Detail.textContent = WinFlag ? "めでたい" : "雑魚";
             ResultCard.appendChild(Detail);
 
             // 閉じるボタンを作成
             const CloseBtn = document.createElement("button");
             CloseBtn.textContent = "閉じる";
-            CloseBtn.className = "ButtonInfo";
+            CloseBtn.classList.add("ButtonInfo","PinkButton");
             CloseBtn.style.marginTop = "12px";
             CloseBtn.style.cursor = "pointer";
 

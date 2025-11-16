@@ -571,7 +571,7 @@
   {
     "StoryId": 8,
     "Narrator": "A男",
-    "StoryText": "お、挨拶してくれるのか。いいぞ。今日の昼休みにみんなでゲームやらないか？",
+    "StoryText": "test",
     "Next": 10,
     "BgPath": "../asetts/img/bg/Bg-School-1.jpg",
     "SePath": "",
@@ -651,7 +651,7 @@
   {
     "StoryId": 9,
     "Narrator": "{PlayerName}",
-    "StoryText": "俺とゲームで勝負だ！",
+    "StoryText": "ミニゲームテスト開始",
     "Next": 11,
     "BgPath": "../asetts/img/bg/Bg-School-1.jpg",
     "SePath": "",
@@ -731,7 +731,7 @@
   {
     "StoryId": 10,
     "Narrator": "",
-    "StoryText": "（昼休みのゲームに参加する？）",
+    "StoryText": "テスト開始",
     "Next": null,
     "BgPath": "../asetts/img/bg/Bg-School-1.jpg",
     "SePath": "",
@@ -800,11 +800,11 @@
     ],
     "Select": [
       {
-        "StoryText": "参加する",
+        "StoryText": "開始",
         "Next": 11
       },
       {
-        "StoryText": "遠慮する",
+        "StoryText": "開始しない",
         "Next": 12
       }
     ],
@@ -985,7 +985,7 @@
   {
     "StoryId": 13,
     "Narrator": "{PlayerName}",
-    "StoryText": "よっしゃ！ 勝ったぞ！みんな驚いてる。",
+    "StoryText": "勝ち申した",
     "Next": 14,
     "BgPath": "../asetts/img/bg/Bg-School-1.jpg",
     "SePath": "",
@@ -1145,7 +1145,7 @@
   {
     "StoryId": 15,
     "Narrator": "{PlayerName}",
-    "StoryText": "負けた…くっ、次は絶対に……",
+    "StoryText": "負けた",
     "Next": 14,
     "BgPath": "../asetts/img/bg/Bg-School-1.jpg",
     "SePath": "../asetts/sfx/se_sigh.mp3",

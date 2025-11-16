@@ -389,12 +389,15 @@ async function GameDisplayInfo(StoryId){
     *  17. ミニゲーム実行FLG
     * --------------------------------------------*/
     if (StoryItem.Flg[0].GameFlg) {
-      // 1. ストーリーIDの戻り値を保持
+      // 1. プレイヤー名をセッションに登録
+      sessionStorage.setItem("PlayerName", PLAYER_NAME)
+      // 2. ストーリーIDの戻り値を保持
       NEXT_STORY_ID = await RunMiniGame(STORY_ID, StoryItem.GameResult[0]);
-      // 2. 画面表示を設定
+      // 3. 画面表示を設定
       GameDisplayInfo(NEXT_STORY_ID);
-      // 3. 参照をクリア
+      // 4. 参照をクリア
       NEXT_STORY_ID = null;
+      // 5. セッションの登録を解除
     }
 }
 
