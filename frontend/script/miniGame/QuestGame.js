@@ -67,26 +67,35 @@ class QuestGame {
   *  3. 敵の描画
   * --------------------------------------------*/
   DrawEnemy(Canvas, HealthRatio) {
-    // Canvasの妥当性チェック
+    /* 1. CANVASの存在チェック */
     if (!Canvas || !Canvas.getContext) {
-      console.error("[QuestGame] Canvas invalid", Canvas);
+      // 1. デバッグログ出力
+      console.error("Canvas取得失敗");
+      // 2. 処理終了
       return;
     }
-    // 2Dコンテキストを取得
-    const Ctx = Canvas.getContext("2d");
-    if (!Ctx) {
-      console.error("[QuestGame] Failed to get 2d context");
+    
+    /* 2. コンテキスト取得処理 */
+    // 1. コンテキストを取得
+    const ConText = Canvas.getContext("2d");
+
+    /* 3. コンテキスト存在チェック */
+    if (!ConText) {
+      // 1. デバッグログ出力
+      console.error("コンテキスト取得失敗");
+      // 2. 処理終了
       return;
     }
-    // 描画スケールを設定
-    const Scale = 4;
-    // キャンバス幅と高さを取得
-    const W = Canvas.width;
-    const H = Canvas.height;
-    // クリア
-    Ctx.clearRect(0, 0, W, H);
-    // ピクセルを滑らかにしない
-    Ctx.imageSmoothingEnabled = false;
+
+    /* 4. キャンバスサイズ設定 */
+    // 1. キャンバス幅
+    const Width = Canvas.width;
+    // 2. キャンバス高さ
+    const Height = Canvas.height;
+    // 3. キャンバスクリア
+    ConText.clearRect(0, 0, Width, Height);
+    // 4. ピクセルを滑らかにしない
+    ConText.imageSmoothingEnabled = true;
 
     // HPによって色を変える
     const HpColor =
@@ -113,15 +122,15 @@ class QuestGame {
 
     Img.onload = () => {
       try {
-        Ctx.clearRect(0, 0, W, H);
+        ConText.clearRect(0, 0, Width, Height);
         // 画像をキャンバスに描画（アスペクト比が違う場合は引き延ばされます）
-        Ctx.drawImage(Img, 0, 0, W, H);
+        ConText.drawImage(Img, 0, 0, Width, Height);
         // HPによる色付け（半透明のオーバーレイを乗せる）
-        Ctx.globalCompositeOperation = "source-atop";
-        Ctx.fillStyle = OverlayColor;
-        Ctx.fillRect(0, 0, W, H);
+        ConText.globalCompositeOperation = "source-atop";
+        ConText.fillStyle = OverlayColor;
+        ConText.fillRect(0, 0, Width, Height);
         // ブレンドモードを戻す
-        Ctx.globalCompositeOperation = "source-over";
+        ConText.globalCompositeOperation = "source-over";
       } catch (e) {
         console.error("[QuestGame] DrawEnemy draw error:", e);
       }
@@ -147,8 +156,8 @@ class QuestGame {
     });
     this.Timeouts = [];
     // 登録したイベントハンドラをすべて解除
-    this.Handlers.forEach((H) => {
-      try { if (H.el && H.fn) H.el.removeEventListener(H.type, H.fn); } catch (e) {}
+    this.Handlers.forEach((Handler) => {
+      try { if (Handler.el && Handler.fn) Handler.el.removeEventListener(Handler.type, Handler.fn); } catch (e) {}
     });
     this.Handlers = [];
   }
