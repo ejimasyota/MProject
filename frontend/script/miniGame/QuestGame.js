@@ -58,7 +58,8 @@ class QuestGame {
     Backdrop.appendChild(DialogBox);
     // 2. バックドロップをボディに格納
     document.body.appendChild(Backdrop);
-    // 作成要素を返す
+
+    /* 4. 要素を返す */
     return { Backdrop, DialogBox };
   }
 
@@ -84,36 +85,37 @@ class QuestGame {
     Ctx.clearRect(0, 0, W, H);
     // ピクセルを滑らかにしない
     Ctx.imageSmoothingEnabled = false;
-    // 小さなピクセルを書き込むユーティリティ
-    const Pixel = (x, y, Color) => {
-      Ctx.fillStyle = Color;
-      Ctx.fillRect(x * Scale, y * Scale, Scale, Scale);
-    };
+
     // HPによって色を変える
     const HpColor =
       HealthRatio > 0.6 ? "#e74c3c" : HealthRatio > 0.3 ? "#f39c12" : "#c0392b";
-    // スプライトレイアウト（文字列配列）
-    const Layout = [
-      "  XXX  ",
-      " XXXXX ",
-      "XXXXXXX",
-      "X XX XX",
-      "XXXXXXX",
-      " X   X ",
-      "  X X  ",
-    ];
-    // オフセット値
-    const OffsetX = 1;
-    const OffsetY = 1;
-    // レイアウト走査と描画
-    for (let Y = 0; Y < Layout.length; Y++) {
-      for (let X = 0; X < Layout[Y].length; X++) {
-        const Ch = Layout[Y][X];
-        if (Ch === "X") Pixel(OffsetX + X, OffsetY + Y, HpColor);
-        else Pixel(OffsetX + X, OffsetY + Y, "#111");
+
+    // 敵画像の読み込み
+    const Img = new Image();
+    Img.src = "../asetts/img/game/quest/Quest-Img-1.png"; // ← ここに任意のパスを設定
+
+    Img.onload = () => {
+      // 敵画像を描画
+      try {
+        Ctx.drawImage(Img, 0, 0, W, H);
+
+        // HPによる色付け（乗算ブレンド）
+        Ctx.globalCompositeOperation = "source-atop";
+        Ctx.fillStyle = HpColor;
+        Ctx.fillRect(0, 0, W, H);
+
+        // 通常描画モードに戻す
+        Ctx.globalCompositeOperation = "source-over";
+      } catch (e) {
+        console.error("[QuestGame] DrawEnemy draw error:", e);
       }
-    }
+    };
+
+    Img.onerror = (e) => {
+      console.error("[QuestGame] Enemy image failed to load", e);
+    };
   }
+
 
   // タイマーとイベントハンドラをすべて解除する
   Cleanup() {
