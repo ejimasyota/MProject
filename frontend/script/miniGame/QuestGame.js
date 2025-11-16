@@ -17,7 +17,7 @@ class QuestGame {
     // 5. 基本プレイヤー攻撃力
     this.PlayerBaseAttack = 2;
     // 6. 基本敵攻撃力
-    this.EnemyBaseAttack = 2;
+    this.EnemyBaseAttack = 3;
     // 7. 現在の敵攻撃力
     this.EnemyCurrentAttack = this.EnemyBaseAttack;
     // 8. 現在のプレイヤー攻撃力
@@ -41,12 +41,15 @@ class QuestGame {
  /* --------------------------------------------
   *  2. ダイアログ作成
   * --------------------------------------------*/
-  CreateBackdropDialog() {
+  CreateBackdropDialog(BackDropFlg = true) {
     /* 1. バックドロップ作成 */
-    const Backdrop = document.createElement("div");
-    // 2. クラス設定
-    Backdrop.className = "ConfirmContainer";
-  
+    if(BackDropFlg){
+      // 1. DIV要素作成
+      const Backdrop = document.createElement("div");
+      // 2. クラス設定
+      Backdrop.className = "ConfirmContainer";
+    }
+
     /* 2. ダイアログ作成 */
     // 1. DIV要素作成
     const DialogBox = document.createElement("div");
@@ -54,13 +57,24 @@ class QuestGame {
     DialogBox.className = "DialogBox";
 
     /* 3. DOM構築 */
-    // 1. バックドロップにダイアログを格納
-    Backdrop.appendChild(DialogBox);
-    // 2. バックドロップをボディに格納
-    document.body.appendChild(Backdrop);
+    if(BackDropFlg){
+      // 1. バックドロップにダイアログを格納
+      Backdrop.appendChild(DialogBox);
+      // 2. バックドロップをボディに格納
+      document.body.appendChild(Backdrop);
+    }else{
+      // 3. バックドロップを表示しない場合はダイアログをボディに格納
+      document.body.appendChild(DialogBox);
+    }
 
     /* 4. 要素を返す */
-    return { Backdrop, DialogBox };
+    if(BackDropFlg){
+      return { Backdrop, DialogBox };
+    }else{
+      return { DialogBox };
+    }
+
+    
   }
 
  /* --------------------------------------------
@@ -854,7 +868,7 @@ class QuestGame {
         }
 
 
-        }
+      }
       // 初期UIを作成してゲーム開始をスケジュールする
       let Created;
       try { Created = this.CreateBackdropDialog(); } catch (E) { console.error("[QuestGame] CreateBackdropDialog threw:", E); SafeResolve(null); return; }
