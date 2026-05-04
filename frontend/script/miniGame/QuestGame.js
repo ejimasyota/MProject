@@ -540,7 +540,7 @@ class QuestGame {
 
             if (enemyHpFill) {
               enemyHpFill.style.width = `${Math.max(0, Math.min(100, ePercent))}%`;
-              // 色をHP%で変える（任意）
+              // 色をHP%で変える
               if (ePercent <= 25) enemyHpFill.style.background = "linear-gradient(90deg, #ff6b6b, #ff3b3b)"; // 赤
               else if (ePercent <= 60) enemyHpFill.style.background = "linear-gradient(90deg, #ffd76b, #ffb84b)"; // 黄
               else enemyHpFill.style.background = "linear-gradient(90deg, #6bd26b, #2da22d)"; // 緑
